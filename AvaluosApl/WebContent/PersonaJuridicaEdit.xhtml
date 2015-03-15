@@ -1,0 +1,171 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="personaJuridica" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{personaJuridicaHome.managed ? 'Edit' : 'Add'} Persona juridica</f:facet>
+
+
+
+
+
+            <s:decorate id="nitField" template="layout/edit.xhtml">
+                <ui:define name="label">Nit</ui:define>
+                <h:inputText id="nit"
+                       required="true"
+                           size="25"
+                      maxlength="25"
+                          value="#{personaJuridicaHome.instance.nit}">
+                    <a:support event="onblur" reRender="nitField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="razonSocialField" template="layout/edit.xhtml">
+                <ui:define name="label">Razon social</ui:define>
+                <h:inputText id="razonSocial"
+                       required="true"
+                           size="100"
+                      maxlength="120"
+                          value="#{personaJuridicaHome.instance.razonSocial}">
+                    <a:support event="onblur" reRender="razonSocialField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="nombreComercialField" template="layout/edit.xhtml">
+                <ui:define name="label">Nombre comercial</ui:define>
+                <h:inputText id="nombreComercial"
+                       required="true"
+                           size="100"
+                      maxlength="120"
+                          value="#{personaJuridicaHome.instance.nombreComercial}">
+                    <a:support event="onblur" reRender="nombreComercialField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{personaJuridicaHome.persist}"
+                       disabled="#{!personaJuridicaHome.wired}"
+                       rendered="#{!personaJuridicaHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{personaJuridicaHome.update}"
+                       rendered="#{personaJuridicaHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{personaJuridicaHome.remove}"
+                      immediate="true"
+                       rendered="#{personaJuridicaHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/PersonaJuridica.xhtml"
+                rendered="#{personaJuridicaHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty personaJuridicaFrom ? 'PersonaJuridicaList' : personaJuridicaFrom}.xhtml"
+                rendered="#{!personaJuridicaHome.managed}"/>
+
+        </div>
+    </h:form>
+
+<rich:tabPanel switchType="ajax">
+
+    <rich:tab label="A economica *" labelClass="required">
+    <div class="association" id="AEconomicaParent">
+
+        <h:outputText value="There is no AEconomica associated with this personaJuridica."
+                   rendered="#{personaJuridicaHome.instance.AEconomica == null}"/>
+
+        <rich:dataTable var="_aEconomica"
+                   value="#{personaJuridicaHome.instance.AEconomica}"
+                rendered="#{personaJuridicaHome.instance.AEconomica != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="AEconomicaTable">
+            <h:column>
+                <f:facet name="header">Id a economica</f:facet>
+                <h:outputText value="#{_aEconomica.idAEconomica}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Descripcion</f:facet>
+                <h:outputText value="#{_aEconomica.descripcion}"/>
+            </h:column>
+        </rich:dataTable>
+
+        <div class="actionButtons">
+            <s:button id="#{personaJuridicaHome.instance.AEconomica != null ? 'changeParent' : 'selectParent'}" value="#{personaJuridicaHome.instance.AEconomica != null ? 'Change' : 'Select'} AEconomica"
+                       view="/AEconomicaList.xhtml">
+                <f:param name="from" value="PersonaJuridicaEdit"/>
+            </s:button>
+        </div>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab label="Cliente *" labelClass="required">
+    <div class="association" id="clienteParent">
+
+        <h:outputText value="There is no cliente associated with this personaJuridica."
+                   rendered="#{personaJuridicaHome.instance.cliente == null}"/>
+
+        <rich:dataTable var="_cliente"
+                   value="#{personaJuridicaHome.instance.cliente}"
+                rendered="#{personaJuridicaHome.instance.cliente != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="clienteTable">
+            <h:column>
+                <f:facet name="header">Id cliente persona</f:facet>
+                <h:outputText value="#{_cliente.idClientePersona}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Persona id persona</f:facet>
+                <h:outputText value="#{_cliente.persona.idPersona}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Fecha ingreso</f:facet>
+                <h:outputText value="#{_cliente.fechaIngreso}">
+                    <s:convertDateTime type="date" dateStyle="short"/>
+                </h:outputText>
+            </h:column>
+        </rich:dataTable>
+
+        <div class="actionButtons">
+            <s:button id="#{personaJuridicaHome.instance.cliente != null ? 'changeParent' : 'selectParent'}" value="#{personaJuridicaHome.instance.cliente != null ? 'Change' : 'Select'} cliente"
+                       view="/ClienteList.xhtml">
+                <f:param name="from" value="PersonaJuridicaEdit"/>
+            </s:button>
+        </div>
+
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

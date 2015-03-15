@@ -1,0 +1,179 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="cliente" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{clienteHome.managed ? 'Edit' : 'Add'} Cliente</f:facet>
+
+
+
+
+            <s:decorate id="fechaIngresoField" template="layout/edit.xhtml">
+                <ui:define name="label">Fecha ingreso</ui:define>
+                <rich:calendar id="fechaIngreso"
+                       required="true"
+                          value="#{clienteHome.instance.fechaIngreso}" datePattern="MM/dd/yyyy" />
+            </s:decorate>
+
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{clienteHome.persist}"
+                       disabled="#{!clienteHome.wired}"
+                       rendered="#{!clienteHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{clienteHome.update}"
+                       rendered="#{clienteHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{clienteHome.remove}"
+                      immediate="true"
+                       rendered="#{clienteHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/Cliente.xhtml"
+                rendered="#{clienteHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty clienteFrom ? 'ClienteList' : clienteFrom}.xhtml"
+                rendered="#{!clienteHome.managed}"/>
+
+        </div>
+    </h:form>
+
+<rich:tabPanel switchType="ajax">
+
+    <rich:tab label="Persona *" labelClass="required">
+    <div class="association" id="personaParent">
+
+        <h:outputText value="There is no persona associated with this cliente."
+                   rendered="#{clienteHome.instance.persona == null}"/>
+
+        <rich:dataTable var="_persona"
+                   value="#{clienteHome.instance.persona}"
+                rendered="#{clienteHome.instance.persona != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="personaTable">
+            <h:column>
+                <f:facet name="header">Id persona</f:facet>
+                <h:outputText value="#{_persona.idPersona}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Tipo doc id tipo doc</f:facet>
+                <h:outputText value="#{_persona.tipoDoc.idTipoDoc}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Num doc</f:facet>
+                <h:outputText value="#{_persona.numDoc}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Nombres</f:facet>
+                <h:outputText value="#{_persona.nombres}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Apellidos</f:facet>
+                <h:outputText value="#{_persona.apellidos}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Email</f:facet>
+                <h:outputText value="#{_persona.email}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Cliente id cliente persona</f:facet>
+                <h:outputText value="#{_persona.cliente.idClientePersona}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Usuario id usuario persona</f:facet>
+                <h:outputText value="#{_persona.usuario.idUsuarioPersona}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Colaborador id colaborador persona</f:facet>
+                <h:outputText value="#{_persona.colaborador.idColaboradorPersona}"/>
+            </h:column>
+        </rich:dataTable>
+
+        <div class="actionButtons">
+            <s:button id="#{clienteHome.instance.persona != null ? 'changeParent' : 'selectParent'}" value="#{clienteHome.instance.persona != null ? 'Change' : 'Select'} persona"
+                       view="/PersonaList.xhtml">
+                <f:param name="from" value="ClienteEdit"/>
+            </s:button>
+        </div>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab label="Persona juridicas">
+        <h:form styleClass="association" id="personaJuridicasChildren">
+
+            <h:outputText value="There are no personaJuridicas associated with this cliente."
+                       rendered="#{empty clienteHome.personaJuridicas}"/>
+
+            <rich:dataTable value="#{clienteHome.personaJuridicas}"
+                           var="_personaJuridica"
+                      rendered="#{not empty clienteHome.personaJuridicas}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="personaJuridicasTable">
+                <rich:column sortBy="#{_personaJuridica.idPersonaJuridica}">
+                    <f:facet name="header">Id persona juridica</f:facet>
+                    <h:outputText value="#{_personaJuridica.idPersonaJuridica}"/>
+                </rich:column>
+                <rich:column sortBy="#{_personaJuridica.nit}">
+                    <f:facet name="header">Nit</f:facet>
+                    <h:outputText value="#{_personaJuridica.nit}"/>
+                </rich:column>
+                <rich:column sortBy="#{_personaJuridica.razonSocial}">
+                    <f:facet name="header">Razon social</f:facet>
+                    <h:outputText value="#{_personaJuridica.razonSocial}"/>
+                </rich:column>
+                <rich:column sortBy="#{_personaJuridica.nombreComercial}">
+                    <f:facet name="header">Nombre comercial</f:facet>
+                    <h:outputText value="#{_personaJuridica.nombreComercial}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{clienteHome.managed}" id="personaJuridicas">
+        <div class="actionButtons">
+            <s:button id="addpersonaJuridica"
+                   value="Add personaJuridica"
+                    view="/PersonaJuridicaEdit.xhtml"
+             propagation="none">
+                 <f:param name="clienteIdClientePersona"
+                         value="#{clienteHome.instance.idClientePersona}"/>
+                 <f:param name="personaJuridicaFrom" value="Cliente"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

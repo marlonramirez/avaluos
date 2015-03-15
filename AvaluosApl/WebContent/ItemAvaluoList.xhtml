@@ -1,0 +1,175 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="itemAvaluoSearch" styleClass="edit">
+
+        <rich:simpleTogglePanel label="ItemAvaluo Search Filter" switchType="ajax">
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Match</ui:define>
+                <h:selectOneRadio id="logic" value="#{itemAvaluoList.restrictionLogicOperator}" styleClass="radio">
+                    <f:selectItem itemLabel="All" itemValue="and"/>
+                    <f:selectItem itemLabel="Any" itemValue="or"/>
+                </h:selectOneRadio>
+            </s:decorate>
+
+        </rich:simpleTogglePanel>
+
+        <div class="actionButtons">
+            <h:commandButton id="search" value="Search" action="/ItemAvaluoList.xhtml"/>
+            <s:button id="reset" value="Reset" includePageParams="false"/>
+        </div>
+
+    </h:form>
+
+    <rich:panel>
+        <f:facet name="header">ItemAvaluo Search Results (#{empty itemAvaluoList.resultList ? 0 : (itemAvaluoList.paginated ? itemAvaluoList.resultCount : itemAvaluoList.resultList.size)})</f:facet>
+    <div class="results" id="itemAvaluoList">
+
+    <h:outputText value="The itemAvaluo search returned no results."
+               rendered="#{empty itemAvaluoList.resultList}"/>
+
+    <rich:dataTable id="itemAvaluoList"
+                var="_itemAvaluo"
+              value="#{itemAvaluoList.resultList}"
+           rendered="#{not empty itemAvaluoList.resultList}">
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{itemAvaluoList}"/>
+                    <ui:param name="propertyLabel" value="Id item avaluo"/>
+                    <ui:param name="propertyPath" value="itemAvaluo.idItemAvaluo"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_itemAvaluo.idItemAvaluo}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{itemAvaluoList}"/>
+                    <ui:param name="propertyLabel" value="Concepto id concepto"/>
+                    <ui:param name="propertyPath" value="itemAvaluo.concepto.idConcepto"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_itemAvaluo.concepto.idConcepto}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{itemAvaluoList}"/>
+                    <ui:param name="propertyLabel" value="Avaluo id avaluo"/>
+                    <ui:param name="propertyPath" value="itemAvaluo.avaluo.idAvaluo"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_itemAvaluo.avaluo.idAvaluo}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{itemAvaluoList}"/>
+                    <ui:param name="propertyLabel" value="Costo"/>
+                    <ui:param name="propertyPath" value="itemAvaluo.costo"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_itemAvaluo.costo}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{itemAvaluoList}"/>
+                    <ui:param name="propertyLabel" value="Utilidad"/>
+                    <ui:param name="propertyPath" value="itemAvaluo.utilidad"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_itemAvaluo.utilidad}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{itemAvaluoList}"/>
+                    <ui:param name="propertyLabel" value="Item factura id item avaluo fac"/>
+                    <ui:param name="propertyPath" value="itemAvaluo.itemFactura.idItemAvaluoFac"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_itemAvaluo.itemFactura.idItemAvaluoFac}"/>
+        </h:column>
+        <rich:column styleClass="action">
+            <f:facet name="header">Action</f:facet>
+            <s:link view="/#{empty from ? 'ItemAvaluo' : from}.xhtml"
+                   value="#{empty from ? 'View' : 'Select'}"
+             propagation="#{empty from ? 'none' : 'default'}"
+                      id="itemAvaluoViewId">
+                <f:param name="itemAvaluoIdItemAvaluo"
+                        value="#{_itemAvaluo.idItemAvaluo}"/>
+            </s:link>
+            #{' '}
+            <s:link view="/ItemAvaluoEdit.xhtml"
+                   value="Edit"
+             propagation="none"
+                      id="itemAvaluoEdit"
+                rendered="#{empty from}">
+                <f:param name="itemAvaluoIdItemAvaluo"
+                        value="#{_itemAvaluo.idItemAvaluo}"/>
+            </s:link>
+        </rich:column>
+    </rich:dataTable>
+
+    </div>
+    </rich:panel>
+
+    <div class="tableControl">
+
+        <s:link view="/ItemAvaluoList.xhtml"
+            rendered="#{itemAvaluoList.previousExists}"
+               value="#{messages.left}#{messages.left} First Page"
+                  id="firstPage">
+          <f:param name="firstResult" value="0"/>
+        </s:link>
+
+        <s:link view="/ItemAvaluoList.xhtml"
+            rendered="#{itemAvaluoList.previousExists}"
+               value="#{messages.left} Previous Page"
+                  id="previousPage">
+            <f:param name="firstResult"
+                    value="#{itemAvaluoList.previousFirstResult}"/>
+        </s:link>
+
+        <s:link view="/ItemAvaluoList.xhtml"
+            rendered="#{itemAvaluoList.nextExists}"
+               value="Next Page #{messages.right}"
+                  id="nextPage">
+            <f:param name="firstResult"
+                    value="#{itemAvaluoList.nextFirstResult}"/>
+        </s:link>
+
+        <s:link view="/ItemAvaluoList.xhtml"
+            rendered="#{itemAvaluoList.nextExists}"
+               value="Last Page #{messages.right}#{messages.right}"
+                  id="lastPage">
+            <f:param name="firstResult"
+                    value="#{itemAvaluoList.lastFirstResult}"/>
+        </s:link>
+
+    </div>
+
+    <s:div styleClass="actionButtons" rendered="#{empty from}">
+        <s:button view="/ItemAvaluoEdit.xhtml"
+                    id="create"
+           propagation="none"
+                 value="Create itemAvaluo">
+            <f:param name="itemAvaluoIdItemAvaluo"/>
+        </s:button>
+    </s:div>
+
+</ui:define>
+
+</ui:composition>

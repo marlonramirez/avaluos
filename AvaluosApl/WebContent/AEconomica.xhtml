@@ -1,0 +1,101 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <rich:panel>
+        <f:facet name="header">A economica Details</f:facet>
+
+        <s:decorate id="idAEconomica" template="layout/display.xhtml">
+            <ui:define name="label">Id a economica</ui:define>
+            <h:outputText value="#{aEconomicaHome.instance.idAEconomica}"/>
+        </s:decorate>
+
+        <s:decorate id="descripcion" template="layout/display.xhtml">
+            <ui:define name="label">Descripcion</ui:define>
+            <h:outputText value="#{aEconomicaHome.instance.descripcion}"/>
+        </s:decorate>
+
+        <div style="clear:both"/>
+
+    </rich:panel>
+
+    <div class="actionButtons">
+
+        <s:button view="/AEconomicaEdit.xhtml"
+                    id="edit"
+                 value="Edit"/>
+
+        <s:button view="/#{empty aEconomicaFrom ? 'AEconomicaList' : aEconomicaFrom}.xhtml"
+                    id="done"
+                 value="Done"/>
+
+    </div>
+
+    <rich:tabPanel switchType="ajax">
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Persona juridicas</h:panelGroup>
+        </f:facet>
+    <h:form styleClass="association" id="personaJuridicasChildren">
+
+        <h:outputText value="There are no personaJuridicas associated with this aEconomica."
+                   rendered="#{empty aEconomicaHome.personaJuridicas}"/>
+
+        <rich:dataTable value="#{aEconomicaHome.personaJuridicas}"
+                       var="_personaJuridica"
+                  rendered="#{not empty aEconomicaHome.personaJuridicas}"
+                rowClasses="rvgRowOne,rvgRowTwo"
+                        id="personaJuridicasTable">
+            <rich:column sortBy="#{_personaJuridica.idPersonaJuridica}">
+                <f:facet name="header">Id persona juridica</f:facet>
+                <h:outputText value="#{_personaJuridica.idPersonaJuridica}"/>
+            </rich:column>
+            <rich:column sortBy="#{_personaJuridica.nit}">
+                <f:facet name="header">Nit</f:facet>
+                <h:outputText value="#{_personaJuridica.nit}"/>
+            </rich:column>
+            <rich:column sortBy="#{_personaJuridica.razonSocial}">
+                <f:facet name="header">Razon social</f:facet>
+                <h:outputText value="#{_personaJuridica.razonSocial}"/>
+            </rich:column>
+            <rich:column sortBy="#{_personaJuridica.nombreComercial}">
+                <f:facet name="header">Nombre comercial</f:facet>
+                <h:outputText value="#{_personaJuridica.nombreComercial}"/>
+            </rich:column>
+            <h:column>
+                <f:facet name="header">Action</f:facet>
+                <s:link id="selectpersonaJuridica"
+                     value="Select"
+                      view="/PersonaJuridica.xhtml">
+                    <f:param name="personaJuridicaIdPersonaJuridica"
+                            value="#{_personaJuridica.idPersonaJuridica}"/>
+                    <f:param name="personaJuridicaFrom" value="AEconomica"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </h:form>
+
+    <div class="actionButtons">
+        <s:button
+               value="Add personaJuridica"
+                view="/PersonaJuridicaEdit.xhtml">
+            <f:param name="aEconomicaIdAEconomica"
+                    value="#{aEconomicaHome.instance.idAEconomica}"/>
+            <f:param name="personaJuridicaFrom" value="AEconomica"/>
+        </s:button>
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

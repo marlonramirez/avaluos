@@ -1,0 +1,185 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="activoSearch" styleClass="edit">
+
+        <rich:simpleTogglePanel label="Activo Search Filter" switchType="ajax">
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Nombre</ui:define>
+                <h:inputText id="nombre" value="#{activoList.activo.nombre}"/>
+            </s:decorate>
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Descripcion</ui:define>
+                <h:inputText id="descripcion" value="#{activoList.activo.descripcion}"/>
+            </s:decorate>
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Match</ui:define>
+                <h:selectOneRadio id="logic" value="#{activoList.restrictionLogicOperator}" styleClass="radio">
+                    <f:selectItem itemLabel="All" itemValue="and"/>
+                    <f:selectItem itemLabel="Any" itemValue="or"/>
+                </h:selectOneRadio>
+            </s:decorate>
+
+        </rich:simpleTogglePanel>
+
+        <div class="actionButtons">
+            <h:commandButton id="search" value="Search" action="/ActivoList.xhtml"/>
+            <s:button id="reset" value="Reset" includePageParams="false"/>
+        </div>
+
+    </h:form>
+
+    <rich:panel>
+        <f:facet name="header">Activo Search Results (#{empty activoList.resultList ? 0 : (activoList.paginated ? activoList.resultCount : activoList.resultList.size)})</f:facet>
+    <div class="results" id="activoList">
+
+    <h:outputText value="The activo search returned no results."
+               rendered="#{empty activoList.resultList}"/>
+
+    <rich:dataTable id="activoList"
+                var="_activo"
+              value="#{activoList.resultList}"
+           rendered="#{not empty activoList.resultList}">
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activoList}"/>
+                    <ui:param name="propertyLabel" value="Id activo"/>
+                    <ui:param name="propertyPath" value="activo.idActivo"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activo.idActivo}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activoList}"/>
+                    <ui:param name="propertyLabel" value="Nombre"/>
+                    <ui:param name="propertyPath" value="activo.nombre"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activo.nombre}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activoList}"/>
+                    <ui:param name="propertyLabel" value="Descripcion"/>
+                    <ui:param name="propertyPath" value="activo.descripcion"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activo.descripcion}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activoList}"/>
+                    <ui:param name="propertyLabel" value="Estado"/>
+                    <ui:param name="propertyPath" value="activo.estado"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activo.estado}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activoList}"/>
+                    <ui:param name="propertyLabel" value="Id cliente"/>
+                    <ui:param name="propertyPath" value="activo.idCliente"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activo.idCliente}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activoList}"/>
+                    <ui:param name="propertyLabel" value="Tangible id activo tan"/>
+                    <ui:param name="propertyPath" value="activo.tangible.idActivoTan"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activo.tangible.idActivoTan}"/>
+        </h:column>
+        <rich:column styleClass="action">
+            <f:facet name="header">Action</f:facet>
+            <s:link view="/#{empty from ? 'Activo' : from}.xhtml"
+                   value="#{empty from ? 'View' : 'Select'}"
+             propagation="#{empty from ? 'none' : 'default'}"
+                      id="activoViewId">
+                <f:param name="activoIdActivo"
+                        value="#{_activo.idActivo}"/>
+            </s:link>
+            #{' '}
+            <s:link view="/ActivoEdit.xhtml"
+                   value="Edit"
+             propagation="none"
+                      id="activoEdit"
+                rendered="#{empty from}">
+                <f:param name="activoIdActivo"
+                        value="#{_activo.idActivo}"/>
+            </s:link>
+        </rich:column>
+    </rich:dataTable>
+
+    </div>
+    </rich:panel>
+
+    <div class="tableControl">
+
+        <s:link view="/ActivoList.xhtml"
+            rendered="#{activoList.previousExists}"
+               value="#{messages.left}#{messages.left} First Page"
+                  id="firstPage">
+          <f:param name="firstResult" value="0"/>
+        </s:link>
+
+        <s:link view="/ActivoList.xhtml"
+            rendered="#{activoList.previousExists}"
+               value="#{messages.left} Previous Page"
+                  id="previousPage">
+            <f:param name="firstResult"
+                    value="#{activoList.previousFirstResult}"/>
+        </s:link>
+
+        <s:link view="/ActivoList.xhtml"
+            rendered="#{activoList.nextExists}"
+               value="Next Page #{messages.right}"
+                  id="nextPage">
+            <f:param name="firstResult"
+                    value="#{activoList.nextFirstResult}"/>
+        </s:link>
+
+        <s:link view="/ActivoList.xhtml"
+            rendered="#{activoList.nextExists}"
+               value="Last Page #{messages.right}#{messages.right}"
+                  id="lastPage">
+            <f:param name="firstResult"
+                    value="#{activoList.lastFirstResult}"/>
+        </s:link>
+
+    </div>
+
+    <s:div styleClass="actionButtons" rendered="#{empty from}">
+        <s:button view="/ActivoEdit.xhtml"
+                    id="create"
+           propagation="none"
+                 value="Create activo">
+            <f:param name="activoIdActivo"/>
+        </s:button>
+    </s:div>
+
+</ui:define>
+
+</ui:composition>

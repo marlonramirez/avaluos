@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.com/products/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.2.xsd"
+      no-conversation-view-id="/AvaluoList.xhtml"
+      login-required="true">
+
+   <begin-conversation join="true" flush-mode="MANUAL"/>
+
+   <action execute="#{avaluoHome.wire}"/>
+
+   <param name="avaluoFrom"/>
+   <param name="avaluoIdAvaluo" value="#{avaluoHome.avaluoIdAvaluo}"/>
+   <param name="activoFrom"/>
+   <param name="activoIdActivo" value="#{activoHome.activoIdActivo}"/>
+   <param name="tangibleFrom"/>
+   <param name="tangibleIdActivoTan" value="#{tangibleHome.tangibleIdActivoTan}"/>
+
+
+
+
+   <navigation from-action="#{avaluoHome.persist}">
+      <rule if-outcome="persisted">
+         <end-conversation/>
+         <redirect view-id="/Avaluo.xhtml"/>
+      </rule>
+   </navigation>
+
+   <navigation from-action="#{avaluoHome.update}">
+      <rule if-outcome="updated">
+         <end-conversation/>
+         <redirect view-id="/Avaluo.xhtml"/>
+      </rule>
+   </navigation>
+
+   <navigation from-action="#{avaluoHome.remove}">
+      <rule if-outcome="removed">
+         <end-conversation/>
+         <redirect view-id="/AvaluoList.xhtml"/>
+      </rule>
+   </navigation>
+
+</page>

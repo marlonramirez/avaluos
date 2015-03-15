@@ -1,0 +1,146 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <rich:panel>
+        <f:facet name="header">Telefono Details</f:facet>
+
+        <s:decorate id="idTelefono" template="layout/display.xhtml">
+            <ui:define name="label">Id telefono</ui:define>
+            <h:outputText value="#{telefonoHome.instance.idTelefono}"/>
+        </s:decorate>
+
+        <s:decorate id="numero" template="layout/display.xhtml">
+            <ui:define name="label">Numero</ui:define>
+            <h:outputText value="#{telefonoHome.instance.numero}"/>
+        </s:decorate>
+
+        <div style="clear:both"/>
+
+    </rich:panel>
+
+    <div class="actionButtons">
+
+        <s:button view="/TelefonoEdit.xhtml"
+                    id="edit"
+                 value="Edit"/>
+
+        <s:button view="/#{empty telefonoFrom ? 'TelefonoList' : telefonoFrom}.xhtml"
+                    id="done"
+                 value="Done"/>
+
+    </div>
+
+    <rich:tabPanel switchType="ajax">
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Tipo tel</h:panelGroup>
+        </f:facet>
+    <div class="association" id="tipoTelParent">
+
+        <h:outputText value="There is no tipoTel associated with this telefono."
+                   rendered="#{telefonoHome.instance.tipoTel == null}"/>
+
+        <rich:dataTable var="_tipoTel"
+                   value="#{telefonoHome.instance.tipoTel}"
+                rendered="#{telefonoHome.instance.tipoTel != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="tipoTelTable">
+            <h:column>
+                <f:facet name="header">Id tipo tel</f:facet>
+                <h:outputText value="#{_tipoTel.idTipoTel}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Descripcion</f:facet>
+                <h:outputText value="#{_tipoTel.descripcion}"/>
+            </h:column>
+            <h:column styleClass="action">
+                <f:facet name="header">Action</f:facet>
+                <s:link id="viewtipoTel"
+                     value="View"
+                      view="/TipoTel.xhtml">
+                    <f:param name="tipoTelIdTipoTel"
+                           value="#{_tipoTel.idTipoTel}"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Persona</h:panelGroup>
+        </f:facet>
+    <div class="association" id="personaParent">
+
+        <h:outputText value="There is no persona associated with this telefono."
+                   rendered="#{telefonoHome.instance.persona == null}"/>
+
+        <rich:dataTable var="_persona"
+                   value="#{telefonoHome.instance.persona}"
+                rendered="#{telefonoHome.instance.persona != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="personaTable">
+            <h:column>
+                <f:facet name="header">Id persona</f:facet>
+                <h:outputText value="#{_persona.idPersona}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Tipo doc id tipo doc</f:facet>
+                <h:outputText value="#{_persona.tipoDoc.idTipoDoc}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Num doc</f:facet>
+                <h:outputText value="#{_persona.numDoc}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Nombres</f:facet>
+                <h:outputText value="#{_persona.nombres}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Apellidos</f:facet>
+                <h:outputText value="#{_persona.apellidos}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Email</f:facet>
+                <h:outputText value="#{_persona.email}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Cliente id cliente persona</f:facet>
+                <h:outputText value="#{_persona.cliente.idClientePersona}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Usuario id usuario persona</f:facet>
+                <h:outputText value="#{_persona.usuario.idUsuarioPersona}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Colaborador id colaborador persona</f:facet>
+                <h:outputText value="#{_persona.colaborador.idColaboradorPersona}"/>
+            </h:column>
+            <h:column styleClass="action">
+                <f:facet name="header">Action</f:facet>
+                <s:link id="viewpersona"
+                     value="View"
+                      view="/Persona.xhtml">
+                    <f:param name="personaIdPersona"
+                           value="#{_persona.idPersona}"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

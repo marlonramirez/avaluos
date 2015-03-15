@@ -1,0 +1,117 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <rich:panel>
+        <f:facet name="header">Ciudad Details</f:facet>
+
+
+        <s:decorate id="nombre" template="layout/display.xhtml">
+            <ui:define name="label">Nombre</ui:define>
+            <h:outputText value="#{ciudadHome.instance.nombre}"/>
+        </s:decorate>
+
+        <div style="clear:both"/>
+
+    </rich:panel>
+
+    <div class="actionButtons">
+
+        <s:button view="/CiudadEdit.xhtml"
+                    id="edit"
+                 value="Edit"/>
+
+        <s:button view="/#{empty ciudadFrom ? 'CiudadList' : ciudadFrom}.xhtml"
+                    id="done"
+                 value="Done"/>
+
+    </div>
+
+    <rich:tabPanel switchType="ajax">
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Facturas</h:panelGroup>
+        </f:facet>
+    <h:form styleClass="association" id="facturasChildren">
+
+        <h:outputText value="There are no facturas associated with this ciudad."
+                   rendered="#{empty ciudadHome.facturas}"/>
+
+        <rich:dataTable value="#{ciudadHome.facturas}"
+                       var="_factura"
+                  rendered="#{not empty ciudadHome.facturas}"
+                rowClasses="rvgRowOne,rvgRowTwo"
+                        id="facturasTable">
+            <rich:column sortBy="#{_factura.idFactura}">
+                <f:facet name="header">Id factura</f:facet>
+                <h:outputText value="#{_factura.idFactura}"/>
+            </rich:column>
+            <rich:column sortBy="#{_factura.numFactura}">
+                <f:facet name="header">Num factura</f:facet>
+                <h:outputText value="#{_factura.numFactura}"/>
+            </rich:column>
+            <rich:column sortBy="#{_factura.idCliente}">
+                <f:facet name="header">Id cliente</f:facet>
+                <h:outputText value="#{_factura.idCliente}"/>
+            </rich:column>
+            <rich:column sortBy="#{_factura.fechaExp}">
+                <f:facet name="header">Fecha exp</f:facet>
+                <h:outputText value="#{_factura.fechaExp}">
+                    <s:convertDateTime type="date" dateStyle="short"/>
+                </h:outputText>
+            </rich:column>
+            <rich:column sortBy="#{_factura.fechaVenc}">
+                <f:facet name="header">Fecha venc</f:facet>
+                <h:outputText value="#{_factura.fechaVenc}">
+                    <s:convertDateTime type="date" dateStyle="short"/>
+                </h:outputText>
+            </rich:column>
+            <rich:column sortBy="#{_factura.subtotal}">
+                <f:facet name="header">Subtotal</f:facet>
+                <h:outputText value="#{_factura.subtotal}"/>
+            </rich:column>
+            <rich:column sortBy="#{_factura.iva}">
+                <f:facet name="header">Iva</f:facet>
+                <h:outputText value="#{_factura.iva}"/>
+            </rich:column>
+            <rich:column sortBy="#{_factura.total}">
+                <f:facet name="header">Total</f:facet>
+                <h:outputText value="#{_factura.total}"/>
+            </rich:column>
+            <h:column>
+                <f:facet name="header">Action</f:facet>
+                <s:link id="selectfactura"
+                     value="Select"
+                      view="/Factura.xhtml">
+                    <f:param name="facturaIdFactura"
+                            value="#{_factura.idFactura}"/>
+                    <f:param name="facturaFrom" value="Ciudad"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </h:form>
+
+    <div class="actionButtons">
+        <s:button
+               value="Add factura"
+                view="/FacturaEdit.xhtml">
+            <f:param name="ciudadCiudadId"
+                    value="#{ciudadHome.instance.ciudadId}"/>
+            <f:param name="facturaFrom" value="Ciudad"/>
+        </s:button>
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

@@ -1,0 +1,124 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="casoUso" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{casoUsoHome.managed ? 'Edit' : 'Add'} Caso uso</f:facet>
+
+
+
+            <s:decorate id="codigoField" template="layout/edit.xhtml">
+                <ui:define name="label">Codigo</ui:define>
+                <h:inputText id="codigo"
+                       required="true"
+                           size="25"
+                      maxlength="25"
+                          value="#{casoUsoHome.instance.codigo}">
+                    <a:support event="onblur" reRender="codigoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="descripcionField" template="layout/edit.xhtml">
+                <ui:define name="label">Descripcion</ui:define>
+                <h:inputTextarea id="descripcion"
+                               cols="80"
+                               rows="10"
+                              value="#{casoUsoHome.instance.descripcion}"/>
+            </s:decorate>
+
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{casoUsoHome.persist}"
+                       disabled="#{!casoUsoHome.wired}"
+                       rendered="#{!casoUsoHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{casoUsoHome.update}"
+                       rendered="#{casoUsoHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{casoUsoHome.remove}"
+                      immediate="true"
+                       rendered="#{casoUsoHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/CasoUso.xhtml"
+                rendered="#{casoUsoHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty casoUsoFrom ? 'CasoUsoList' : casoUsoFrom}.xhtml"
+                rendered="#{!casoUsoHome.managed}"/>
+
+        </div>
+    </h:form>
+
+<rich:tabPanel switchType="ajax">
+
+    <rich:tab label="Permisos">
+        <h:form styleClass="association" id="permisosChildren">
+
+            <h:outputText value="There are no permisos associated with this casoUso."
+                       rendered="#{empty casoUsoHome.permisos}"/>
+
+            <rich:dataTable value="#{casoUsoHome.permisos}"
+                           var="_permiso"
+                      rendered="#{not empty casoUsoHome.permisos}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="permisosTable">
+                <rich:column sortBy="#{_permiso.idPermiso}">
+                    <f:facet name="header">Id permiso</f:facet>
+                    <h:outputText value="#{_permiso.idPermiso}"/>
+                </rich:column>
+                <rich:column sortBy="#{_permiso.estado}">
+                    <f:facet name="header">Estado</f:facet>
+                    <h:outputText value="#{_permiso.estado}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{casoUsoHome.managed}" id="permisos">
+        <div class="actionButtons">
+            <s:button id="addpermiso"
+                   value="Add permiso"
+                    view="/PermisoEdit.xhtml"
+             propagation="none">
+                 <f:param name="casoUsoIdCasoUso"
+                         value="#{casoUsoHome.instance.idCasoUso}"/>
+                 <f:param name="permisoFrom" value="CasoUso"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

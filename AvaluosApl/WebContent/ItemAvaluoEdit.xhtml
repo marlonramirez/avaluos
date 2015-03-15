@@ -1,0 +1,263 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="itemAvaluo" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{itemAvaluoHome.managed ? 'Edit' : 'Add'} Item avaluo</f:facet>
+
+
+
+
+
+            <s:decorate id="costoField" template="layout/edit.xhtml">
+                <ui:define name="label">Costo</ui:define>
+                <h:inputText id="costo"
+                       required="true"
+                          value="#{itemAvaluoHome.instance.costo}">
+                    <a:support event="onblur" reRender="costoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="utilidadField" template="layout/edit.xhtml">
+                <ui:define name="label">Utilidad</ui:define>
+                <h:inputText id="utilidad"
+                       required="true"
+                          value="#{itemAvaluoHome.instance.utilidad}">
+                    <a:support event="onblur" reRender="utilidadField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{itemAvaluoHome.persist}"
+                       disabled="#{!itemAvaluoHome.wired}"
+                       rendered="#{!itemAvaluoHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{itemAvaluoHome.update}"
+                       rendered="#{itemAvaluoHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{itemAvaluoHome.remove}"
+                      immediate="true"
+                       rendered="#{itemAvaluoHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/ItemAvaluo.xhtml"
+                rendered="#{itemAvaluoHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty itemAvaluoFrom ? 'ItemAvaluoList' : itemAvaluoFrom}.xhtml"
+                rendered="#{!itemAvaluoHome.managed}"/>
+
+        </div>
+    </h:form>
+
+<rich:tabPanel switchType="ajax">
+
+    <rich:tab label="Concepto *" labelClass="required">
+    <div class="association" id="conceptoParent">
+
+        <h:outputText value="There is no concepto associated with this itemAvaluo."
+                   rendered="#{itemAvaluoHome.instance.concepto == null}"/>
+
+        <rich:dataTable var="_concepto"
+                   value="#{itemAvaluoHome.instance.concepto}"
+                rendered="#{itemAvaluoHome.instance.concepto != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="conceptoTable">
+            <h:column>
+                <f:facet name="header">Id concepto</f:facet>
+                <h:outputText value="#{_concepto.idConcepto}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Nombre</f:facet>
+                <h:outputText value="#{_concepto.nombre}"/>
+            </h:column>
+        </rich:dataTable>
+
+        <div class="actionButtons">
+            <s:button id="#{itemAvaluoHome.instance.concepto != null ? 'changeParent' : 'selectParent'}" value="#{itemAvaluoHome.instance.concepto != null ? 'Change' : 'Select'} concepto"
+                       view="/ConceptoList.xhtml">
+                <f:param name="from" value="ItemAvaluoEdit"/>
+            </s:button>
+        </div>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab label="Avaluo *" labelClass="required">
+    <div class="association" id="avaluoParent">
+
+        <h:outputText value="There is no avaluo associated with this itemAvaluo."
+                   rendered="#{itemAvaluoHome.instance.avaluo == null}"/>
+
+        <rich:dataTable var="_avaluo"
+                   value="#{itemAvaluoHome.instance.avaluo}"
+                rendered="#{itemAvaluoHome.instance.avaluo != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="avaluoTable">
+            <h:column>
+                <f:facet name="header">Id avaluo</f:facet>
+                <h:outputText value="#{_avaluo.idAvaluo}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Activo id activo</f:facet>
+                <h:outputText value="#{_avaluo.activo.idActivo}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Num orden</f:facet>
+                <h:outputText value="#{_avaluo.numOrden}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Fecha solicitud</f:facet>
+                <h:outputText value="#{_avaluo.fechaSolicitud}">
+                    <s:convertDateTime type="date" dateStyle="short"/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Descripcion</f:facet>
+                <h:outputText value="#{_avaluo.descripcion}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Fecha entrega</f:facet>
+                <h:outputText value="#{_avaluo.fechaEntrega}">
+                    <s:convertDateTime type="date" dateStyle="short"/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Valor razonable</f:facet>
+                <h:outputText value="#{_avaluo.valorRazonable}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Id asesor</f:facet>
+                <h:outputText value="#{_avaluo.idAsesor}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Id gerente</f:facet>
+                <h:outputText value="#{_avaluo.idGerente}"/>
+            </h:column>
+        </rich:dataTable>
+
+        <div class="actionButtons">
+            <s:button id="#{itemAvaluoHome.instance.avaluo != null ? 'changeParent' : 'selectParent'}" value="#{itemAvaluoHome.instance.avaluo != null ? 'Change' : 'Select'} avaluo"
+                       view="/AvaluoList.xhtml">
+                <f:param name="from" value="ItemAvaluoEdit"/>
+            </s:button>
+        </div>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab label="Item factura">
+    <div class="association" id="itemFacturaParent">
+
+        <h:outputText value="There is no itemFactura associated with this itemAvaluo."
+                   rendered="#{itemAvaluoHome.instance.itemFactura == null}"/>
+
+        <rich:dataTable var="_itemFactura"
+                   value="#{itemAvaluoHome.instance.itemFactura}"
+                rendered="#{itemAvaluoHome.instance.itemFactura != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="itemFacturaTable">
+            <h:column>
+                <f:facet name="header">Id item avaluo fac</f:facet>
+                <h:outputText value="#{_itemFactura.idItemAvaluoFac}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Factura id factura</f:facet>
+                <h:outputText value="#{_itemFactura.factura.idFactura}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Item avaluo id item avaluo</f:facet>
+                <h:outputText value="#{_itemFactura.itemAvaluo.idItemAvaluo}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Cantidad</f:facet>
+                <h:outputText value="#{_itemFactura.cantidad}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Valor unitario</f:facet>
+                <h:outputText value="#{_itemFactura.valorUnitario}"/>
+            </h:column>
+        </rich:dataTable>
+
+        <div class="actionButtons">
+            <s:button id="#{itemAvaluoHome.instance.itemFactura != null ? 'changeParent' : 'selectParent'}" value="#{itemAvaluoHome.instance.itemFactura != null ? 'Change' : 'Select'} itemFactura"
+                       view="/ItemFacturaList.xhtml">
+                <f:param name="from" value="ItemAvaluoEdit"/>
+            </s:button>
+        </div>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab label="Mano obras">
+        <h:form styleClass="association" id="manoObrasChildren">
+
+            <h:outputText value="There are no manoObras associated with this itemAvaluo."
+                       rendered="#{empty itemAvaluoHome.manoObras}"/>
+
+            <rich:dataTable value="#{itemAvaluoHome.manoObras}"
+                           var="_manoObra"
+                      rendered="#{not empty itemAvaluoHome.manoObras}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="manoObrasTable">
+                <rich:column sortBy="#{_manoObra.idManoObra}">
+                    <f:facet name="header">Id mano obra</f:facet>
+                    <h:outputText value="#{_manoObra.idManoObra}"/>
+                </rich:column>
+                <rich:column sortBy="#{_manoObra.descripcion}">
+                    <f:facet name="header">Descripcion</f:facet>
+                    <h:outputText value="#{_manoObra.descripcion}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{itemAvaluoHome.managed}" id="manoObras">
+        <div class="actionButtons">
+            <s:button id="addmanoObra"
+                   value="Add manoObra"
+                    view="/ManoObraEdit.xhtml"
+             propagation="none">
+                 <f:param name="itemAvaluoIdItemAvaluo"
+                         value="#{itemAvaluoHome.instance.idItemAvaluo}"/>
+                 <f:param name="manoObraFrom" value="ItemAvaluo"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

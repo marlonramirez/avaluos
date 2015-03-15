@@ -1,0 +1,106 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <rich:panel>
+        <f:facet name="header">Tipo doc Details</f:facet>
+
+
+        <s:decorate id="abbr" template="layout/display.xhtml">
+            <ui:define name="label">Abbr</ui:define>
+            <h:outputText value="#{tipoDocHome.instance.abbr}"/>
+        </s:decorate>
+
+        <s:decorate id="descripcion" template="layout/display.xhtml">
+            <ui:define name="label">Descripcion</ui:define>
+            <h:outputText value="#{tipoDocHome.instance.descripcion}"/>
+        </s:decorate>
+
+        <div style="clear:both"/>
+
+    </rich:panel>
+
+    <div class="actionButtons">
+
+        <s:button view="/TipoDocEdit.xhtml"
+                    id="edit"
+                 value="Edit"/>
+
+        <s:button view="/#{empty tipoDocFrom ? 'TipoDocList' : tipoDocFrom}.xhtml"
+                    id="done"
+                 value="Done"/>
+
+    </div>
+
+    <rich:tabPanel switchType="ajax">
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Personas</h:panelGroup>
+        </f:facet>
+    <h:form styleClass="association" id="personasChildren">
+
+        <h:outputText value="There are no personas associated with this tipoDoc."
+                   rendered="#{empty tipoDocHome.personas}"/>
+
+        <rich:dataTable value="#{tipoDocHome.personas}"
+                       var="_persona"
+                  rendered="#{not empty tipoDocHome.personas}"
+                rowClasses="rvgRowOne,rvgRowTwo"
+                        id="personasTable">
+            <rich:column sortBy="#{_persona.idPersona}">
+                <f:facet name="header">Id persona</f:facet>
+                <h:outputText value="#{_persona.idPersona}"/>
+            </rich:column>
+            <rich:column sortBy="#{_persona.numDoc}">
+                <f:facet name="header">Num doc</f:facet>
+                <h:outputText value="#{_persona.numDoc}"/>
+            </rich:column>
+            <rich:column sortBy="#{_persona.nombres}">
+                <f:facet name="header">Nombres</f:facet>
+                <h:outputText value="#{_persona.nombres}"/>
+            </rich:column>
+            <rich:column sortBy="#{_persona.apellidos}">
+                <f:facet name="header">Apellidos</f:facet>
+                <h:outputText value="#{_persona.apellidos}"/>
+            </rich:column>
+            <rich:column sortBy="#{_persona.email}">
+                <f:facet name="header">Email</f:facet>
+                <h:outputText value="#{_persona.email}"/>
+            </rich:column>
+            <h:column>
+                <f:facet name="header">Action</f:facet>
+                <s:link id="selectpersona"
+                     value="Select"
+                      view="/Persona.xhtml">
+                    <f:param name="personaIdPersona"
+                            value="#{_persona.idPersona}"/>
+                    <f:param name="personaFrom" value="TipoDoc"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </h:form>
+
+    <div class="actionButtons">
+        <s:button
+               value="Add persona"
+                view="/PersonaEdit.xhtml">
+            <f:param name="tipoDocIdTipoDoc"
+                    value="#{tipoDocHome.instance.idTipoDoc}"/>
+            <f:param name="personaFrom" value="TipoDoc"/>
+        </s:button>
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>
