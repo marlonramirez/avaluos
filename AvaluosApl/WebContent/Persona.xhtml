@@ -11,28 +11,84 @@
 <ui:define name="body">
 
     <rich:panel>
-        <f:facet name="header">Persona Details</f:facet>
+        <f:facet name="header">Detalles de persona</f:facet>
 
-
-        <s:decorate id="numDoc" template="layout/display.xhtml">
-            <ui:define name="label">Num doc</ui:define>
-            <h:outputText value="#{personaHome.instance.numDoc}"/>
-        </s:decorate>
+      <s:decorate id="tipoDocField" template="layout/edit.xhtml">
+              <ui:define name="label">Documento</ui:define>
+              <h:outputText value="#{personaHome.instance.tipoDoc.abbr} #{personaHome.instance.numDoc}"/>
+          </s:decorate>        
 
         <s:decorate id="nombres" template="layout/display.xhtml">
-            <ui:define name="label">Nombres</ui:define>
-            <h:outputText value="#{personaHome.instance.nombres}"/>
-        </s:decorate>
-
-        <s:decorate id="apellidos" template="layout/display.xhtml">
-            <ui:define name="label">Apellidos</ui:define>
-            <h:outputText value="#{personaHome.instance.apellidos}"/>
+            <ui:define name="label">Nombre</ui:define>
+            <h:outputText value="#{personaHome.instance.nombres} #{personaHome.instance.apellidos}"/>
         </s:decorate>
 
         <s:decorate id="email" template="layout/display.xhtml">
             <ui:define name="label">Email</ui:define>
             <h:outputText value="#{personaHome.instance.email}"/>
         </s:decorate>
+        
+        
+    <rich:tabPanel switchType="ajax">
+
+	    <rich:tab>
+	        <f:facet name="label">
+	            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Telefonos</h:panelGroup>
+	        </f:facet>
+	    <h:form styleClass="association" id="telefonosChildren">
+	
+	        <h:outputText value="There are no telefonos associated with this persona."
+	                   rendered="#{empty personaHome.telefonos}"/>
+	
+	        <rich:dataTable value="#{personaHome.telefonos}"
+	                       var="_telefono"
+	                  rendered="#{not empty personaHome.telefonos}"
+	                rowClasses="rvgRowOne,rvgRowTwo"
+	                        id="telefonosTable">
+	            <rich:column sortBy="#{_telefono.idTelefono}">
+	                <f:facet name="header">Id</f:facet>
+	                <h:outputText value="#{_telefono.idTelefono}"/>
+	            </rich:column>
+	            <rich:column sortBy="#{_telefono.tipoTel.idTipoTel}">
+	                <f:facet name="header">Tipo</f:facet>
+	                <h:outputText value="#{_telefono.tipoTel.descripcion}"/>
+	            </rich:column>
+	            <rich:column sortBy="#{_telefono.numero}">
+	                <f:facet name="header">Número</f:facet>
+	                <h:outputText value="#{_telefono.numero}"/>
+	            </rich:column>
+	        </rich:dataTable>
+	
+	    </h:form>
+	    </rich:tab>
+	
+	    <rich:tab>
+	        <f:facet name="label">
+	            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Direcciones</h:panelGroup>
+	        </f:facet>
+	    <h:form styleClass="association" id="direccionsChildren">
+	
+	        <h:outputText value="There are no direccions associated with this persona."
+	                   rendered="#{empty personaHome.direccions}"/>
+	
+	        <rich:dataTable value="#{personaHome.direccions}"
+	                       var="_direccion"
+	                  rendered="#{not empty personaHome.direccions}"
+	                rowClasses="rvgRowOne,rvgRowTwo"
+	                        id="direccionsTable">
+	            <rich:column sortBy="#{_direccion.idDireccion}">
+	                <f:facet name="header">Id</f:facet>
+	                <h:outputText value="#{_direccion.idDireccion}"/>
+	            </rich:column>
+	            <rich:column sortBy="#{_direccion.direccion}">
+	                <f:facet name="header">Dirección</f:facet>
+	                <h:outputText value="#{_direccion.direccion}"/>
+	            </rich:column>
+	        </rich:dataTable>
+	
+	    </h:form>
+	    </rich:tab>
+</rich:tabPanel>
 
         <div style="clear:both"/>
 
@@ -42,300 +98,14 @@
 
         <s:button view="/PersonaEdit.xhtml"
                     id="edit"
-                 value="Edit"/>
+                 value="Editar"/>
 
         <s:button view="/#{empty personaFrom ? 'PersonaList' : personaFrom}.xhtml"
                     id="done"
-                 value="Done"/>
+                 value="Aceptar"/>
 
     </div>
 
-    <rich:tabPanel switchType="ajax">
-
-    <rich:tab>
-        <f:facet name="label">
-            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Tipo doc</h:panelGroup>
-        </f:facet>
-    <div class="association" id="tipoDocParent">
-
-        <h:outputText value="There is no tipoDoc associated with this persona."
-                   rendered="#{personaHome.instance.tipoDoc == null}"/>
-
-        <rich:dataTable var="_tipoDoc"
-                   value="#{personaHome.instance.tipoDoc}"
-                rendered="#{personaHome.instance.tipoDoc != null}"
-              rowClasses="rvgRowOne,rvgRowTwo"
-                      id="tipoDocTable">
-            <h:column>
-                <f:facet name="header">Id tipo doc</f:facet>
-                <h:outputText value="#{_tipoDoc.idTipoDoc}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Abbr</f:facet>
-                <h:outputText value="#{_tipoDoc.abbr}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Descripcion</f:facet>
-                <h:outputText value="#{_tipoDoc.descripcion}"/>
-            </h:column>
-            <h:column styleClass="action">
-                <f:facet name="header">Action</f:facet>
-                <s:link id="viewtipoDoc"
-                     value="View"
-                      view="/TipoDoc.xhtml">
-                    <f:param name="tipoDocIdTipoDoc"
-                           value="#{_tipoDoc.idTipoDoc}"/>
-                </s:link>
-            </h:column>
-        </rich:dataTable>
-
-    </div>
-    </rich:tab>
-
-    <rich:tab>
-        <f:facet name="label">
-            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Telefonos</h:panelGroup>
-        </f:facet>
-    <h:form styleClass="association" id="telefonosChildren">
-
-        <h:outputText value="There are no telefonos associated with this persona."
-                   rendered="#{empty personaHome.telefonos}"/>
-
-        <rich:dataTable value="#{personaHome.telefonos}"
-                       var="_telefono"
-                  rendered="#{not empty personaHome.telefonos}"
-                rowClasses="rvgRowOne,rvgRowTwo"
-                        id="telefonosTable">
-            <rich:column sortBy="#{_telefono.idTelefono}">
-                <f:facet name="header">Id telefono</f:facet>
-                <h:outputText value="#{_telefono.idTelefono}"/>
-            </rich:column>
-            <rich:column sortBy="#{_telefono.numero}">
-                <f:facet name="header">Numero</f:facet>
-                <h:outputText value="#{_telefono.numero}"/>
-            </rich:column>
-            <h:column>
-                <f:facet name="header">Action</f:facet>
-                <s:link id="selecttelefono"
-                     value="Select"
-                      view="/Telefono.xhtml">
-                    <f:param name="telefonoIdTelefono"
-                            value="#{_telefono.idTelefono}"/>
-                    <f:param name="telefonoFrom" value="Persona"/>
-                </s:link>
-            </h:column>
-        </rich:dataTable>
-
-    </h:form>
-
-    <div class="actionButtons">
-        <s:button
-               value="Add telefono"
-                view="/TelefonoEdit.xhtml">
-            <f:param name="personaIdPersona"
-                    value="#{personaHome.instance.idPersona}"/>
-            <f:param name="telefonoFrom" value="Persona"/>
-        </s:button>
-    </div>
-    </rich:tab>
-
-    <rich:tab>
-        <f:facet name="label">
-            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Cliente</h:panelGroup>
-        </f:facet>
-    <div class="association" id="clienteParent">
-
-        <h:outputText value="There is no cliente associated with this persona."
-                   rendered="#{personaHome.instance.cliente == null}"/>
-
-        <rich:dataTable var="_cliente"
-                   value="#{personaHome.instance.cliente}"
-                rendered="#{personaHome.instance.cliente != null}"
-              rowClasses="rvgRowOne,rvgRowTwo"
-                      id="clienteTable">
-            <h:column>
-                <f:facet name="header">Id cliente persona</f:facet>
-                <h:outputText value="#{_cliente.idClientePersona}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Persona id persona</f:facet>
-                <h:outputText value="#{_cliente.persona.idPersona}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Fecha ingreso</f:facet>
-                <h:outputText value="#{_cliente.fechaIngreso}">
-                    <s:convertDateTime type="date" dateStyle="short"/>
-                </h:outputText>
-            </h:column>
-            <h:column styleClass="action">
-                <f:facet name="header">Action</f:facet>
-                <s:link id="viewcliente"
-                     value="View"
-                      view="/Cliente.xhtml">
-                    <f:param name="clienteIdClientePersona"
-                           value="#{_cliente.idClientePersona}"/>
-                </s:link>
-            </h:column>
-        </rich:dataTable>
-
-    </div>
-    </rich:tab>
-
-    <rich:tab>
-        <f:facet name="label">
-            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Usuario</h:panelGroup>
-        </f:facet>
-    <div class="association" id="usuarioParent">
-
-        <h:outputText value="There is no usuario associated with this persona."
-                   rendered="#{personaHome.instance.usuario == null}"/>
-
-        <rich:dataTable var="_usuario"
-                   value="#{personaHome.instance.usuario}"
-                rendered="#{personaHome.instance.usuario != null}"
-              rowClasses="rvgRowOne,rvgRowTwo"
-                      id="usuarioTable">
-            <h:column>
-                <f:facet name="header">Id usuario persona</f:facet>
-                <h:outputText value="#{_usuario.idUsuarioPersona}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Persona id persona</f:facet>
-                <h:outputText value="#{_usuario.persona.idPersona}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Perfil id perfil</f:facet>
-                <h:outputText value="#{_usuario.perfil.idPerfil}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Tipo usuario id tipo usuario</f:facet>
-                <h:outputText value="#{_usuario.tipoUsuario.idTipoUsuario}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Login</f:facet>
-                <h:outputText value="#{_usuario.login}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Clave</f:facet>
-                <h:outputText value="#{_usuario.clave}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Estado</f:facet>
-                <h:outputText value="#{_usuario.estado}"/>
-            </h:column>
-            <h:column styleClass="action">
-                <f:facet name="header">Action</f:facet>
-                <s:link id="viewusuario"
-                     value="View"
-                      view="/Usuario.xhtml">
-                    <f:param name="usuarioIdUsuarioPersona"
-                           value="#{_usuario.idUsuarioPersona}"/>
-                </s:link>
-            </h:column>
-        </rich:dataTable>
-
-    </div>
-    </rich:tab>
-
-    <rich:tab>
-        <f:facet name="label">
-            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Colaborador</h:panelGroup>
-        </f:facet>
-    <div class="association" id="colaboradorParent">
-
-        <h:outputText value="There is no colaborador associated with this persona."
-                   rendered="#{personaHome.instance.colaborador == null}"/>
-
-        <rich:dataTable var="_colaborador"
-                   value="#{personaHome.instance.colaborador}"
-                rendered="#{personaHome.instance.colaborador != null}"
-              rowClasses="rvgRowOne,rvgRowTwo"
-                      id="colaboradorTable">
-            <h:column>
-                <f:facet name="header">Id colaborador persona</f:facet>
-                <h:outputText value="#{_colaborador.idColaboradorPersona}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Tipo contrato id tipo contrato</f:facet>
-                <h:outputText value="#{_colaborador.tipoContrato.idTipoContrato}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Cargo id cargo</f:facet>
-                <h:outputText value="#{_colaborador.cargo.idCargo}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Persona id persona</f:facet>
-                <h:outputText value="#{_colaborador.persona.idPersona}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Calificacion id calificacion</f:facet>
-                <h:outputText value="#{_colaborador.calificacion.idCalificacion}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Area conocim</f:facet>
-                <h:outputText value="#{_colaborador.areaConocim}"/>
-            </h:column>
-            <h:column styleClass="action">
-                <f:facet name="header">Action</f:facet>
-                <s:link id="viewcolaborador"
-                     value="View"
-                      view="/Colaborador.xhtml">
-                    <f:param name="colaboradorIdColaboradorPersona"
-                           value="#{_colaborador.idColaboradorPersona}"/>
-                </s:link>
-            </h:column>
-        </rich:dataTable>
-
-    </div>
-    </rich:tab>
-
-    <rich:tab>
-        <f:facet name="label">
-            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Direccions</h:panelGroup>
-        </f:facet>
-    <h:form styleClass="association" id="direccionsChildren">
-
-        <h:outputText value="There are no direccions associated with this persona."
-                   rendered="#{empty personaHome.direccions}"/>
-
-        <rich:dataTable value="#{personaHome.direccions}"
-                       var="_direccion"
-                  rendered="#{not empty personaHome.direccions}"
-                rowClasses="rvgRowOne,rvgRowTwo"
-                        id="direccionsTable">
-            <rich:column sortBy="#{_direccion.idDireccion}">
-                <f:facet name="header">Id direccion</f:facet>
-                <h:outputText value="#{_direccion.idDireccion}"/>
-            </rich:column>
-            <rich:column sortBy="#{_direccion.direccion}">
-                <f:facet name="header">Direccion</f:facet>
-                <h:outputText value="#{_direccion.direccion}"/>
-            </rich:column>
-            <h:column>
-                <f:facet name="header">Action</f:facet>
-                <s:link id="selectdireccion"
-                     value="Select"
-                      view="/Direccion.xhtml">
-                    <f:param name="direccionIdDireccion"
-                            value="#{_direccion.idDireccion}"/>
-                    <f:param name="direccionFrom" value="Persona"/>
-                </s:link>
-            </h:column>
-        </rich:dataTable>
-
-    </h:form>
-
-    <div class="actionButtons">
-        <s:button
-               value="Add direccion"
-                view="/DireccionEdit.xhtml">
-            <f:param name="personaIdPersona"
-                    value="#{personaHome.instance.idPersona}"/>
-            <f:param name="direccionFrom" value="Persona"/>
-        </s:button>
-    </div>
-    </rich:tab>
-</rich:tabPanel>
 </ui:define>
 
 </ui:composition>

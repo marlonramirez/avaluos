@@ -12,22 +12,42 @@
 
     <h:form id="personaSearch" styleClass="edit">
 
-        <rich:simpleTogglePanel label="Persona Search Filter" switchType="ajax">
+        <rich:simpleTogglePanel label="Busqueda" switchType="ajax">
 
-            <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Num doc</ui:define>
-                <h:inputText id="numDoc" value="#{personaList.persona.numDoc}"/>
-            </s:decorate>
-
-            <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Nombres</ui:define>
-                <h:inputText id="nombres" value="#{personaList.persona.nombres}"/>
-            </s:decorate>
-
-            <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Apellidos</ui:define>
-                <h:inputText id="apellidos" value="#{personaList.persona.apellidos}"/>
-            </s:decorate>
+			<h:panelGrid columns="2">
+				<f:facet name="header">
+			         <h:outputText value="Documento"/>
+			      </f:facet>  
+			      
+			      <s:decorate id="tipoDocField" template="layout/display.xhtml">
+	                <ui:define name="label">Tipo</ui:define>
+	                <h:selectOneMenu id="tipoDoc" 
+			                value="#{personaList.persona.tipoDoc.idTipoDoc}">
+			                <s:selectItems value="#{tipoDocList.resultList}"
+			                  var="_tipo" itemValue="#{_tipo.idTipoDoc}" label="#{_tipo.descripcion}" 
+			                  noSelectionLabel="--SELECCIONAR--" />
+			              </h:selectOneMenu>
+	            </s:decorate>
+			
+	            <s:decorate template="layout/display.xhtml">
+	                <ui:define name="label">Número</ui:define>
+	                <h:inputText id="numDoc" value="#{personaList.persona.numDoc}" />
+	                <ui:param name="next" value="true" />
+	            </s:decorate>
+            </h:panelGrid>
+			
+			<h:panelGrid columns="2">
+	            <s:decorate template="layout/display.xhtml">
+	                <ui:define name="label">Nombres</ui:define>
+	                <h:inputText id="nombres" value="#{personaList.persona.nombres}" size="30"/>
+	            </s:decorate>
+	
+	            <s:decorate template="layout/display.xhtml">
+	                <ui:define name="label">Apellidos</ui:define>
+	                <ui:param name="next" value="true" />
+	                <h:inputText id="apellidos" value="#{personaList.persona.apellidos}" size="30"/>
+	            </s:decorate>
+	        </h:panelGrid>
 
             <s:decorate template="layout/display.xhtml">
                 <ui:define name="label">Email</ui:define>
@@ -35,27 +55,27 @@
             </s:decorate>
 
             <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Match</ui:define>
+                <ui:define name="label">Filtrar por</ui:define>
                 <h:selectOneRadio id="logic" value="#{personaList.restrictionLogicOperator}" styleClass="radio">
-                    <f:selectItem itemLabel="All" itemValue="and"/>
-                    <f:selectItem itemLabel="Any" itemValue="or"/>
+                    <f:selectItem itemLabel="Todas" itemValue="and"/>
+                    <f:selectItem itemLabel="Algunas" itemValue="or"/>
                 </h:selectOneRadio>
             </s:decorate>
 
         </rich:simpleTogglePanel>
 
         <div class="actionButtons">
-            <h:commandButton id="search" value="Search" action="/PersonaList.xhtml"/>
-            <s:button id="reset" value="Reset" includePageParams="false"/>
+            <h:commandButton id="search" value="Buscar" action="/PersonaList.xhtml"/>
+            <s:button id="reset" value="Reiniciar" includePageParams="false"/>
         </div>
 
     </h:form>
 
     <rich:panel>
-        <f:facet name="header">Persona Search Results (#{empty personaList.resultList ? 0 : (personaList.paginated ? personaList.resultCount : personaList.resultList.size)})</f:facet>
+        <f:facet name="header">Personas (#{empty personaList.resultList ? 0 : (personaList.paginated ? personaList.resultCount : personaList.resultList.size)})</f:facet>
     <div class="results" id="personaList">
 
-    <h:outputText value="The persona search returned no results."
+    <h:outputText value="La busqueda no ha retornado resultados."
                rendered="#{empty personaList.resultList}"/>
 
     <rich:dataTable id="personaList"
@@ -66,7 +86,7 @@
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{personaList}"/>
-                    <ui:param name="propertyLabel" value="Id persona"/>
+                    <ui:param name="propertyLabel" value="Id"/>
                     <ui:param name="propertyPath" value="persona.idPersona"/>
                 </ui:include>
             </f:facet>
@@ -76,17 +96,17 @@
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{personaList}"/>
-                    <ui:param name="propertyLabel" value="Tipo doc id tipo doc"/>
-                    <ui:param name="propertyPath" value="persona.tipoDoc.idTipoDoc"/>
+                    <ui:param name="propertyLabel" value="Tipo de documento"/>
+                    <ui:param name="propertyPath" value="persona.tipoDoc.descripcion"/>
                 </ui:include>
             </f:facet>
-            <h:outputText value="#{_persona.tipoDoc.idTipoDoc}"/>
+            <h:outputText value="#{_persona.tipoDoc.descripcion}"/>
         </h:column>
         <h:column>
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{personaList}"/>
-                    <ui:param name="propertyLabel" value="Num doc"/>
+                    <ui:param name="propertyLabel" value="Número de documento"/>
                     <ui:param name="propertyPath" value="persona.numDoc"/>
                 </ui:include>
             </f:facet>
@@ -153,9 +173,9 @@
             <h:outputText value="#{_persona.colaborador.idColaboradorPersona}"/>
         </h:column>
         <rich:column styleClass="action">
-            <f:facet name="header">Action</f:facet>
+            <f:facet name="header">Acción</f:facet>
             <s:link view="/#{empty from ? 'Persona' : from}.xhtml"
-                   value="#{empty from ? 'View' : 'Select'}"
+                   value="#{empty from ? 'Ver' : 'Seleccionar'}"
              propagation="#{empty from ? 'none' : 'default'}"
                       id="personaViewId">
                 <f:param name="personaIdPersona"
@@ -163,7 +183,7 @@
             </s:link>
             #{' '}
             <s:link view="/PersonaEdit.xhtml"
-                   value="Edit"
+                   value="Editar"
              propagation="none"
                       id="personaEdit"
                 rendered="#{empty from}">
@@ -215,7 +235,7 @@
         <s:button view="/PersonaEdit.xhtml"
                     id="create"
            propagation="none"
-                 value="Create persona">
+                 value="Crear persona">
             <f:param name="personaIdPersona"/>
         </s:button>
     </s:div>

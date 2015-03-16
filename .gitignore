@@ -1,6 +1,7 @@
 /.metadata
 /AvaluosApl-ear
 /AvaluosApl-ejb/.classpath
+/AvaluosApl-ejb/.project
 /AvaluosApl-ejb/build
 /AvaluosApl-ejb/.settings
 /AvaluosApl-ejb/ejbModule/META-INF

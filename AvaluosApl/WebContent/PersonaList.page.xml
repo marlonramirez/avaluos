@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <page xmlns="http://jboss.com/products/seam/pages"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.2.xsd">
-
-   <param name="firstResult" value="#{personaList.firstResult}"/>
-   <param name="sort" value="#{personaList.orderColumn}"/>
-   <param name="dir" value="#{personaList.orderDirection}"/>
-   <param name="logic" value="#{personaList.restrictionLogicOperator}"/>
-
-   <param name="from"/>
-   <param name="numDoc" value="#{personaList.persona.numDoc}"/>
-   <param name="nombres" value="#{personaList.persona.nombres}"/>
-   <param name="apellidos" value="#{personaList.persona.apellidos}"/>
-   <param name="email" value="#{personaList.persona.email}"/>
-
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.2.xsd">
+ <param name="firstResult" value="#{personaList.firstResult}"/>
+ <param name="sort" value="#{personaList.orderColumn}"/>
+ <param name="dir" value="#{personaList.orderDirection}"/>
+ <param name="logic" value="#{personaList.restrictionLogicOperator}"/>
+ <param name="from"/>
+ <param name="numDoc" value="#{personaList.persona.numDoc}"/>
+ <param name="nombres" value="#{personaList.persona.nombres}"/>
+ <param name="apellidos" value="#{personaList.persona.apellidos}"/>
+ <param name="email" value="#{personaList.persona.email}"/>
+ <param name="tipoDoc" value="#{personaList.persona.tipoDoc.idTipoDoc}"/>
 </page>

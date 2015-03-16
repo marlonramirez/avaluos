@@ -45,8 +45,11 @@ select {
 
 .footer {
 	text-align: center;
-	font-size: 11px;
+	font: 1.1em verdana;
 	margin-bottom: 10px;
+}
+.footer img {
+	width: 80px;
 }
 
 .rich-table {
@@ -86,7 +89,7 @@ select {
 	background-image: url(../img/msgwarn.png);
 }
 
-.name {
+.name, .name-next {
 	vertical-align: top;
 	font-weight: bold;
 	width: 115px;
@@ -94,6 +97,11 @@ select {
 	padding: 5px;
 	margin-top: 3px;
 	clear: left;
+}
+
+.name-next {
+	width: auto;
+	margin-left: 1em;
 }
 
 .value {

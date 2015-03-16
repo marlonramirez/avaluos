@@ -9,8 +9,9 @@
         <h:outputText value="#{projectName}:"/>
         <s:link id="menuHomeId" view="/home.xhtml" value="Home" propagation="none"/>
     </rich:toolBarGroup>
+    <!-- @Menú avaluos -->
     <rich:dropDownMenu showDelay="250" hideDelay="0" submitMode="none">
-        <f:facet name="label">Browse data</f:facet>
+        <f:facet name="label">Avaluos</f:facet>
 	<rich:menuItem>
     	<s:link view="/AvaluoList.xhtml"
            	value="Avaluo List"
@@ -26,8 +27,69 @@
      		propagation="none"/>
      </rich:menuItem>
 	<rich:menuItem>
+    	<s:link view="/ManoObraList.xhtml"
+           	value="ManoObra List"
+           	id="ManoObraId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/TangibleList.xhtml"
+           	value="Tangible List"
+           	id="TangibleId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/ItemFacturaList.xhtml"
+           	value="ItemFactura List"
+           	id="ItemFacturaId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/ConceptoList.xhtml"
+           	value="Concepto List"
+           	id="ConceptoId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/ItemAvaluoList.xhtml"
+           	value="ItemAvaluo List"
+           	id="ItemAvaluoId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/ActivoList.xhtml"
+           	value="Activo List"
+           	id="ActivoId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/CiudadList.xhtml"
+           	value="Ciudad List"
+           	id="CiudadId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/FacturaList.xhtml"
+           	value="Factura List"
+           	id="FacturaId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+    </rich:dropDownMenu>
+    <!-- :Menú avaluos -->
+    <!-- @Menú Perfiles -->
+    <rich:dropDownMenu showDelay="250" hideDelay="0" submitMode="none">
+        <f:facet name="label">Perfiles</f:facet>
+     <rich:menuItem>
     	<s:link view="/PersonaList.xhtml"
-           	value="Persona List"
+           	value="Personas"
            	id="PersonaId"
 			includePageParams="false"
      		propagation="none"/>
@@ -61,37 +123,9 @@
      		propagation="none"/>
      </rich:menuItem>
 	<rich:menuItem>
-    	<s:link view="/ManoObraList.xhtml"
-           	value="ManoObra List"
-           	id="ManoObraId"
-			includePageParams="false"
-     		propagation="none"/>
-     </rich:menuItem>
-	<rich:menuItem>
-    	<s:link view="/TangibleList.xhtml"
-           	value="Tangible List"
-           	id="TangibleId"
-			includePageParams="false"
-     		propagation="none"/>
-     </rich:menuItem>
-	<rich:menuItem>
     	<s:link view="/TipoDocList.xhtml"
-           	value="TipoDoc List"
+           	value="Tipos de documento"
            	id="TipoDocId"
-			includePageParams="false"
-     		propagation="none"/>
-     </rich:menuItem>
-	<rich:menuItem>
-    	<s:link view="/ItemFacturaList.xhtml"
-           	value="ItemFactura List"
-           	id="ItemFacturaId"
-			includePageParams="false"
-     		propagation="none"/>
-     </rich:menuItem>
-	<rich:menuItem>
-    	<s:link view="/ConceptoList.xhtml"
-           	value="Concepto List"
-           	id="ConceptoId"
 			includePageParams="false"
      		propagation="none"/>
      </rich:menuItem>
@@ -106,20 +140,6 @@
     	<s:link view="/TipoUsuarioList.xhtml"
            	value="TipoUsuario List"
            	id="TipoUsuarioId"
-			includePageParams="false"
-     		propagation="none"/>
-     </rich:menuItem>
-	<rich:menuItem>
-    	<s:link view="/ItemAvaluoList.xhtml"
-           	value="ItemAvaluo List"
-           	id="ItemAvaluoId"
-			includePageParams="false"
-     		propagation="none"/>
-     </rich:menuItem>
-	<rich:menuItem>
-    	<s:link view="/ActivoList.xhtml"
-           	value="Activo List"
-           	id="ActivoId"
 			includePageParams="false"
      		propagation="none"/>
      </rich:menuItem>
@@ -166,23 +186,9 @@
      		propagation="none"/>
      </rich:menuItem>
 	<rich:menuItem>
-    	<s:link view="/CiudadList.xhtml"
-           	value="Ciudad List"
-           	id="CiudadId"
-			includePageParams="false"
-     		propagation="none"/>
-     </rich:menuItem>
-	<rich:menuItem>
     	<s:link view="/CalificacionList.xhtml"
            	value="Calificacion List"
            	id="CalificacionId"
-			includePageParams="false"
-     		propagation="none"/>
-     </rich:menuItem>
-	<rich:menuItem>
-    	<s:link view="/FacturaList.xhtml"
-           	value="Factura List"
-           	id="FacturaId"
 			includePageParams="false"
      		propagation="none"/>
      </rich:menuItem>
@@ -202,16 +208,16 @@
      </rich:menuItem>
 	<rich:menuItem>
     	<s:link view="/TipoTelList.xhtml"
-           	value="TipoTel List"
+           	value="Tipos de teléfono"
            	id="TipoTelId"
 			includePageParams="false"
      		propagation="none"/>
      </rich:menuItem>
     </rich:dropDownMenu>
-    <!-- @newMenuItem@ -->
+    <!-- :Menú perfiles -->
     <rich:toolBarGroup location="right">
-        <h:outputText id="menuWelcomeId" value="signed in as: #{credentials.username}" rendered="#{identity.loggedIn}"/>
+        <h:outputText id="menuWelcomeId" value="Autenticado como: #{credentials.username}" rendered="#{identity.loggedIn}"/>
         <s:link id="menuLoginId" view="/login.xhtml" value="Login" rendered="#{not identity.loggedIn}" propagation="none"/>
-        <s:link id="menuLogoutId" view="/home.xhtml" action="#{identity.logout}" value="Logout" rendered="#{identity.loggedIn}" propagation="none"/>
+        <s:link id="menuLogoutId" view="/home.xhtml" action="#{identity.logout}" value="Salir" rendered="#{identity.loggedIn}" propagation="none"/>
     </rich:toolBarGroup>
 </rich:toolBar>

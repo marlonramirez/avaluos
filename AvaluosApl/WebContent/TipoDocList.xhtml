@@ -12,40 +12,40 @@
 
     <h:form id="tipoDocSearch" styleClass="edit">
 
-        <rich:simpleTogglePanel label="TipoDoc Search Filter" switchType="ajax">
+        <rich:simpleTogglePanel label="Busqueda" switchType="ajax">
 
             <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Abbr</ui:define>
+                <ui:define name="label">Abreviatura</ui:define>
                 <h:inputText id="abbr" value="#{tipoDocList.tipoDoc.abbr}"/>
             </s:decorate>
 
             <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Descripcion</ui:define>
+                <ui:define name="label">Descripción</ui:define>
                 <h:inputText id="descripcion" value="#{tipoDocList.tipoDoc.descripcion}"/>
             </s:decorate>
 
             <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Match</ui:define>
+                <ui:define name="label">Filtrar por</ui:define>
                 <h:selectOneRadio id="logic" value="#{tipoDocList.restrictionLogicOperator}" styleClass="radio">
-                    <f:selectItem itemLabel="All" itemValue="and"/>
-                    <f:selectItem itemLabel="Any" itemValue="or"/>
+                    <f:selectItem itemLabel="Todos" itemValue="and"/>
+                    <f:selectItem itemLabel="Algunos" itemValue="or"/>
                 </h:selectOneRadio>
             </s:decorate>
 
         </rich:simpleTogglePanel>
 
         <div class="actionButtons">
-            <h:commandButton id="search" value="Search" action="/TipoDocList.xhtml"/>
-            <s:button id="reset" value="Reset" includePageParams="false"/>
+            <h:commandButton id="search" value="Buscar" action="/TipoDocList.xhtml"/>
+            <s:button id="reset" value="Reiniciar" includePageParams="false"/>
         </div>
 
     </h:form>
 
     <rich:panel>
-        <f:facet name="header">TipoDoc Search Results (#{empty tipoDocList.resultList ? 0 : (tipoDocList.paginated ? tipoDocList.resultCount : tipoDocList.resultList.size)})</f:facet>
+        <f:facet name="header">Tipos de documento (#{empty tipoDocList.resultList ? 0 : (tipoDocList.paginated ? tipoDocList.resultCount : tipoDocList.resultList.size)})</f:facet>
     <div class="results" id="tipoDocList">
 
-    <h:outputText value="The tipoDoc search returned no results."
+    <h:outputText value="La busqueda no ha retornado resultados."
                rendered="#{empty tipoDocList.resultList}"/>
 
     <rich:dataTable id="tipoDocList"
@@ -56,7 +56,7 @@
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{tipoDocList}"/>
-                    <ui:param name="propertyLabel" value="Id tipo doc"/>
+                    <ui:param name="propertyLabel" value="Id"/>
                     <ui:param name="propertyPath" value="tipoDoc.idTipoDoc"/>
                 </ui:include>
             </f:facet>
@@ -66,7 +66,7 @@
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{tipoDocList}"/>
-                    <ui:param name="propertyLabel" value="Abbr"/>
+                    <ui:param name="propertyLabel" value="Abreviatura"/>
                     <ui:param name="propertyPath" value="tipoDoc.abbr"/>
                 </ui:include>
             </f:facet>
@@ -76,16 +76,16 @@
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{tipoDocList}"/>
-                    <ui:param name="propertyLabel" value="Descripcion"/>
+                    <ui:param name="propertyLabel" value="Descripción"/>
                     <ui:param name="propertyPath" value="tipoDoc.descripcion"/>
                 </ui:include>
             </f:facet>
             <h:outputText value="#{_tipoDoc.descripcion}"/>
         </h:column>
         <rich:column styleClass="action">
-            <f:facet name="header">Action</f:facet>
+            <f:facet name="header">Acción</f:facet>
             <s:link view="/#{empty from ? 'TipoDoc' : from}.xhtml"
-                   value="#{empty from ? 'View' : 'Select'}"
+                   value="#{empty from ? 'Ver' : 'Seleccionar'}"
              propagation="#{empty from ? 'none' : 'default'}"
                       id="tipoDocViewId">
                 <f:param name="tipoDocIdTipoDoc"
@@ -93,7 +93,7 @@
             </s:link>
             #{' '}
             <s:link view="/TipoDocEdit.xhtml"
-                   value="Edit"
+                   value="Editar"
              propagation="none"
                       id="tipoDocEdit"
                 rendered="#{empty from}">
@@ -145,7 +145,7 @@
         <s:button view="/TipoDocEdit.xhtml"
                     id="create"
            propagation="none"
-                 value="Create tipoDoc">
+                 value="Crear tipo de documento">
             <f:param name="tipoDocIdTipoDoc"/>
         </s:button>
     </s:div>

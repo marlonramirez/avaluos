@@ -12,35 +12,35 @@
 
     <h:form id="tipoTelSearch" styleClass="edit">
 
-        <rich:simpleTogglePanel label="TipoTel Search Filter" switchType="ajax">
+        <rich:simpleTogglePanel label="Busqueda" switchType="ajax">
 
             <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Descripcion</ui:define>
+                <ui:define name="label">Descripción</ui:define>
                 <h:inputText id="descripcion" value="#{tipoTelList.tipoTel.descripcion}"/>
             </s:decorate>
 
             <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Match</ui:define>
+                <ui:define name="label">Filtrar por</ui:define>
                 <h:selectOneRadio id="logic" value="#{tipoTelList.restrictionLogicOperator}" styleClass="radio">
-                    <f:selectItem itemLabel="All" itemValue="and"/>
-                    <f:selectItem itemLabel="Any" itemValue="or"/>
+                    <f:selectItem itemLabel="Todos" itemValue="and"/>
+                    <f:selectItem itemLabel="Algunos" itemValue="or"/>
                 </h:selectOneRadio>
             </s:decorate>
 
         </rich:simpleTogglePanel>
 
         <div class="actionButtons">
-            <h:commandButton id="search" value="Search" action="/TipoTelList.xhtml"/>
-            <s:button id="reset" value="Reset" includePageParams="false"/>
+            <h:commandButton id="search" value="Buscar" action="/TipoTelList.xhtml"/>
+            <s:button id="reset" value="Reiniciar" includePageParams="false"/>
         </div>
 
     </h:form>
 
     <rich:panel>
-        <f:facet name="header">TipoTel Search Results (#{empty tipoTelList.resultList ? 0 : (tipoTelList.paginated ? tipoTelList.resultCount : tipoTelList.resultList.size)})</f:facet>
+        <f:facet name="header">Tipos de teléfono (#{empty tipoTelList.resultList ? 0 : (tipoTelList.paginated ? tipoTelList.resultCount : tipoTelList.resultList.size)})</f:facet>
     <div class="results" id="tipoTelList">
 
-    <h:outputText value="The tipoTel search returned no results."
+    <h:outputText value="La busqueda no ha retornado resultados."
                rendered="#{empty tipoTelList.resultList}"/>
 
     <rich:dataTable id="tipoTelList"
@@ -51,7 +51,7 @@
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{tipoTelList}"/>
-                    <ui:param name="propertyLabel" value="Id tipo tel"/>
+                    <ui:param name="propertyLabel" value="Id"/>
                     <ui:param name="propertyPath" value="tipoTel.idTipoTel"/>
                 </ui:include>
             </f:facet>
@@ -61,16 +61,16 @@
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{tipoTelList}"/>
-                    <ui:param name="propertyLabel" value="Descripcion"/>
+                    <ui:param name="propertyLabel" value="Descripción"/>
                     <ui:param name="propertyPath" value="tipoTel.descripcion"/>
                 </ui:include>
             </f:facet>
             <h:outputText value="#{_tipoTel.descripcion}"/>
         </h:column>
         <rich:column styleClass="action">
-            <f:facet name="header">Action</f:facet>
+            <f:facet name="header">Acción</f:facet>
             <s:link view="/#{empty from ? 'TipoTel' : from}.xhtml"
-                   value="#{empty from ? 'View' : 'Select'}"
+                   value="#{empty from ? 'Ver' : 'Seleccionar'}"
              propagation="#{empty from ? 'none' : 'default'}"
                       id="tipoTelViewId">
                 <f:param name="tipoTelIdTipoTel"
@@ -78,7 +78,7 @@
             </s:link>
             #{' '}
             <s:link view="/TipoTelEdit.xhtml"
-                   value="Edit"
+                   value="Editar"
              propagation="none"
                       id="tipoTelEdit"
                 rendered="#{empty from}">
@@ -130,7 +130,7 @@
         <s:button view="/TipoTelEdit.xhtml"
                     id="create"
            propagation="none"
-                 value="Create tipoTel">
+                 value="Crear tipo de teléfono">
             <f:param name="tipoTelIdTipoTel"/>
         </s:button>
     </s:div>
