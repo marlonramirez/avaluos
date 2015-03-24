@@ -9,15 +9,15 @@ import org.jboss.seam.framework.EntityHome;
 
 @Name("personaHome")
 public class PersonaHome extends EntityHome<Persona> {
-
 	@In(create = true)
 	TipoDocHome tipoDocHome;
 	@In(create = true)
-	ClienteHome clienteHome;
+	TelefonoHome telefonoHome;
 	@In(create = true)
-	UsuarioHome usuarioHome;
-	@In(create = true)
-	ColaboradorHome colaboradorHome;
+	DireccionHome direccionHome;
+	
+	private ArrayList<Telefono> deleteTels = new ArrayList<Telefono>();
+	private ArrayList<Direccion> deleteDirs = new ArrayList<Direccion>();
 
 	public void setPersonaIdPersona(Integer id) {
 		setId(id);
@@ -45,23 +45,18 @@ public class PersonaHome extends EntityHome<Persona> {
 		if (tipoDoc != null) {
 			getInstance().setTipoDoc(tipoDoc);
 		}
-		Cliente cliente = clienteHome.getDefinedInstance();
-		if (cliente != null) {
-			getInstance().setCliente(cliente);
-		}
-		Usuario usuario = usuarioHome.getDefinedInstance();
-		if (usuario != null) {
-			getInstance().setUsuario(usuario);
-		}
-		Colaborador colaborador = colaboradorHome.getDefinedInstance();
-		if (colaborador != null) {
-			getInstance().setColaborador(colaborador);
-		}
 	}
 
 	public boolean isWired() {
-		if (getInstance().getTipoDoc() == null)
+		Persona instance = getInstance();
+		if (instance.getTipoDoc() == null)
 			return false;
+		if (instance.getTelefonos().isEmpty()) {
+			return false;
+		}
+		if (instance.getDireccions().isEmpty()) {
+			return false;
+		}
 		return true;
 	}
 
@@ -77,6 +72,69 @@ public class PersonaHome extends EntityHome<Persona> {
 	public List<Direccion> getDireccions() {
 		return getInstance() == null ? null : new ArrayList<Direccion>(
 				getInstance().getDireccions());
+	}
+	
+	public void addTelefono() {
+		Persona persona = getInstance();
+		Telefono tel = telefonoHome.getInstance();
+		tel.setPersona(persona);
+		persona.getTelefonos().add(tel);
+	}
+	
+	public void addDireccion() {
+		Persona persona = getInstance();
+		Direccion dir = direccionHome.getInstance();
+		dir.setPersona(persona);
+		persona.getDireccions().add(dir);
+	}
+	
+	public void removeTelefono(Telefono tel) {
+		if (tel.getIdTelefono() != null) {
+			deleteTels.add(tel);
+		}
+		getInstance().getTelefonos().remove(tel);
+	}
+	
+	public void removeDireccion(Direccion dir) {
+		if (dir.getIdDireccion() != null) {
+			deleteDirs.add(dir);
+		}
+		getInstance().getDireccions().remove(dir);
+	}
+	
+	public void guardar() {
+		persist();
+		Persona instance = getInstance();
+		for (Telefono tel: instance.getTelefonos()) {
+			getEntityManager().persist(tel);
+		}
+		getEntityManager().flush();
+		for (Direccion dir: instance.getDireccions()) {
+			getEntityManager().persist(dir);
+		}
+		getEntityManager().flush();
+	}
+	
+	public void actualizar() {
+		update();
+		Persona instance = getInstance();
+		for (Telefono tel: deleteTels) {
+			getEntityManager().remove(tel);
+		}
+		for (Telefono tel: instance.getTelefonos()) {
+			if (tel.getIdTelefono() == null) {
+				getEntityManager().persist(tel);
+			}
+		}
+		for (Direccion dir: deleteDirs) {
+			getEntityManager().remove(dir);
+		}
+		for (Direccion dir: instance.getDireccions()) {
+			if (dir.getIdDireccion() == null) {
+				getEntityManager().persist(dir);
+			}
+		}
+		getEntityManager().flush();
 	}
 
 }

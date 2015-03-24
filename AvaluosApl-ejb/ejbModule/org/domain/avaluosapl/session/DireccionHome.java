@@ -48,5 +48,13 @@ public class DireccionHome extends EntityHome<Direccion> {
 	public Direccion getDefinedInstance() {
 		return isIdDefined() ? getInstance() : null;
 	}
+	
+	public void newDireccion() {
+		clearInstance();
+	}
+	
+	public void loadDireccion(Direccion dir) {
+		setInstance(dir);
+	}
 
 }

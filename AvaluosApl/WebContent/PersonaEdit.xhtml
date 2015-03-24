@@ -86,82 +86,91 @@
 
 
 
-			<rich:tabPanel switchType="ajax">	        
-		        
-			    <rich:tab label="Telefonos">
-			        <h:form styleClass="association" id="telefonosChildren">
+			<rich:tabPanel switchType="ajax" immediate="true" id="telefonosTab">
+
+			    <rich:tab>
+			        <f:facet name="label">
+			            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Telefonos</h:panelGroup>
+			        </f:facet>
+			    <h:form styleClass="association" id="telefonosChildren">
+
+					<s:div>
+				    	<a:commandButton value="Agregar teléfono" actionListener="#{telefonoHome.newTelefono()}"
+				    	onclick="#{rich:component('modalTelefonoEdit')}.show()" reRender="telefono" ajaxSingle="true">
+				    	</a:commandButton>
+				    </s:div>			
+			        <h:outputText value="No existen teléfonos asociados a esta persona."
+	                   rendered="#{empty personaHome.telefonos}"/>
 			
-			            <h:outputText value="Aun no se ha agregado ningún telefono."
-			                       rendered="#{empty personaHome.telefonos}"/>
+			        <rich:dataTable value="#{personaHome.telefonos}"
+			                       var="_telefono"
+			                  rendered="#{not empty personaHome.telefonos}"
+			                rowClasses="rvgRowOne,rvgRowTwo"
+			                        id="telefonosTable">
+			            <rich:column sortBy="#{_telefono.tipoTel.idTipoTel}">
+			                <f:facet name="header">Tipo</f:facet>
+			                <h:outputText value="#{_telefono.tipoTel.descripcion}"/>
+			            </rich:column>
+			            <rich:column sortBy="#{_telefono.numero}">
+			                <f:facet name="header">Número</f:facet>
+			                <h:outputText value="#{_telefono.numero}"/>
+			            </rich:column>
+			            <rich:column styleClass="center">
+			                <f:facet name="header">Editar</f:facet>
+							<a:commandLink value="Editar" actionListener="#{telefonoHome.loadTelefono(_telefono)}"
+							onclick="#{rich:component('modalTelefonoEdit')}.show()" reRender="telefono" ajaxSingle="true"></a:commandLink>
+			            </rich:column>
+			            <rich:column  styleClass="center">
+			                <f:facet name="header">Eliminar</f:facet>
+			                <a:commandLink value="Eliminar" actionListener="#{personaHome.removeTelefono(_telefono)}" 
+			                reRender="telefonosTab,save" ajaxSingle="true"></a:commandLink>
+			            </rich:column>
+			        </rich:dataTable>
 			
-			            <rich:dataTable value="#{personaHome.telefonos}"
-			                           var="_telefono"
-			                      rendered="#{not empty personaHome.telefonos}"
-			                    rowClasses="rvgRowOne,rvgRowTwo"
-			                            id="telefonosTable">
-			                <rich:column sortBy="#{_telefono.idTelefono}">
-			                    <f:facet name="header">Id telefono</f:facet>
-			                    <h:outputText value="#{_telefono.idTelefono}"/>
-			                </rich:column>
-			                <rich:column sortBy="#{_telefono.numero}">
-			                    <f:facet name="header">Numero</f:facet>
-			                    <h:outputText value="#{_telefono.numero}"/>
-			                </rich:column>
-			            </rich:dataTable>
-			
-			        </h:form>
-			
-			        <f:subview rendered="#{personaHome.managed}" id="telefonos">
-			        <div class="actionButtons">
-			            <s:button id="addtelefono"
-			                   value="Agregar telefono"
-			                    view="/TelefonoEdit.xhtml"
-			             propagation="none">
-			                 <f:param name="personaIdPersona"
-			                         value="#{personaHome.instance.idPersona}"/>
-			                 <f:param name="telefonoFrom" value="Persona"/>
-			            </s:button>
-			        </div>
-			        </f:subview>
+			    </h:form>
 			    </rich:tab>
+			
+			    <rich:tab>
+			        <f:facet name="label">
+			            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Direcciones</h:panelGroup>
+			        </f:facet>
+			    <h:form styleClass="association" id="direccionsChildren">
 			    
-			    <rich:tab label="Direcciones">
-			        <h:form styleClass="association" id="direccionsChildren">
+			    <s:div>
+			    	<a:commandButton value="Agregar dirección" actionListener="#{direccionHome.newDireccion()}"
+				    	onclick="#{rich:component('modalDireccionEdit')}.show()" reRender="direccion" ajaxSingle="true">
+				    	</a:commandButton>
+			    </s:div>
 			
-			            <h:outputText value="Aún no se ha agregado ninguna dirección."
-			                       rendered="#{empty personaHome.direccions}"/>
+			        <h:outputText value="No existen direcciones asociadas a esta persona."
+	                   rendered="#{empty personaHome.direccions}"/>
 			
-			            <rich:dataTable value="#{personaHome.direccions}"
-			                           var="_direccion"
-			                      rendered="#{not empty personaHome.direccions}"
-			                    rowClasses="rvgRowOne,rvgRowTwo"
-			                            id="direccionsTable">
-			                <rich:column sortBy="#{_direccion.idDireccion}">
-			                    <f:facet name="header">Id direccion</f:facet>
-			                    <h:outputText value="#{_direccion.idDireccion}"/>
-			                </rich:column>
-			                <rich:column sortBy="#{_direccion.direccion}">
-			                    <f:facet name="header">Direccion</f:facet>
-			                    <h:outputText value="#{_direccion.direccion}"/>
-			                </rich:column>
-			            </rich:dataTable>
+			        <rich:dataTable value="#{personaHome.direccions}"
+			                       var="_direccion"
+			                  rendered="#{not empty personaHome.direccions}"
+			                rowClasses="rvgRowOne,rvgRowTwo"
+			                        id="direccionsTable">
+			            <rich:column sortBy="#{_direccion.direccion}">
+			                <f:facet name="header">Dirección</f:facet>
+			                <h:outputText value="#{_direccion.direccion}"/>
+			            </rich:column>
+			            
+			            <rich:column styleClass="center">
+			                <f:facet name="header">Editar</f:facet>
+							<a:commandLink value="Editar" actionListener="#{direccionHome.loadDireccion(_direccion)}"
+							onclick="#{rich:component('modalDireccionEdit')}.show()" reRender="direccion" ajaxSingle="true"></a:commandLink>
+			            </rich:column>
+			            <rich:column  styleClass="center">
+			                <f:facet name="header">Eliminar</f:facet>
+			                <a:commandLink value="Eliminar" actionListener="#{personaHome.removeDireccion(_direccion)}" 
+			                reRender="telefonosTab,save" ajaxSingle="true"></a:commandLink>
+			            </rich:column>
+			        </rich:dataTable>
 			
-			        </h:form>
-			
-			        <f:subview rendered="#{personaHome.managed}" id="direccions">
-			        <div class="actionButtons">
-			            <s:button id="adddireccion"
-			                   value="Agregar direccion"
-			                    view="/DireccionEdit.xhtml"
-			             propagation="none">
-			                 <f:param name="personaIdPersona"
-			                         value="#{personaHome.instance.idPersona}"/>
-			                 <f:param name="direccionFrom" value="Persona"/>
-			            </s:button>
-			        </div>
-			        </f:subview>
+			    </h:form>
 			    </rich:tab>
-	</rich:tabPanel>
+		</rich:tabPanel>
+
 			
 
 
@@ -177,13 +186,13 @@
 
             <h:commandButton id="save"
                           value="Guardar"
-                         action="#{personaHome.persist}"
+                         action="#{personaHome.guardar}"
                        disabled="#{!personaHome.wired}"
                        rendered="#{!personaHome.managed}"/>
 
             <h:commandButton id="update"
                           value="Guardar"
-                         action="#{personaHome.update}"
+                         action="#{personaHome.actualizar}"
                        rendered="#{personaHome.managed}"/>
 
             <h:commandButton id="delete"
@@ -205,6 +214,13 @@
                 rendered="#{!personaHome.managed}"/>
 
         </div>
+        
+        <f:subview>
+			<a:include viewId="/modals/DireccionEdit.xhtml" />
+		</f:subview>
+		<f:subview>
+			<a:include viewId="/modals/TelefonoEdit.xhtml" />
+		</f:subview>
     </h:form>
     
 </ui:define>

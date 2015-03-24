@@ -1,0 +1,58 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<rich:modalPanel id="modalTelefonoEdit" width="450">
+	
+		<f:facet name="header">
+		      <h:outputText value="#{telefonoHome.managed ? 'Editar' : 'Agregar'} Teléfono" />
+		      <f:facet name="controls">
+			      <a:commandLink id="hideModalTelefonoEdit" value="x" actionListener="#{personaHome.refresh()}">
+			        <rich:componentControl for="modalTelefonoEdit"
+			          attachTo="hideModalTelefonoEdit" operation="hide" event="onclick" />
+			      </a:commandLink>
+		    </f:facet>
+	    </f:facet>
+			<h:form id="telefono" styleClass="edit">
+				<s:decorate id="tipoTelField" template="../layout/edit.xhtml">
+	                <ui:define name="label">Tipo</ui:define>
+	                <h:selectOneMenu id="tipoTel" 
+			                value="#{telefonoHome.instance.tipoTel}" required="true">
+			                <s:selectItems value="#{tipoTelList.resultList}"
+			                  var="_tipo" label="#{_tipo.descripcion}" 
+			                  noSelectionLabel="--SELECCIONAR--" />
+			                <s:convertEntity />
+			                <a:support event="onchange" reRender="tipoTelField" ajaxSingle="true"/>
+			              </h:selectOneMenu>
+	            </s:decorate>
+				
+	            <s:decorate id="numeroField" template="../layout/edit.xhtml">
+	                <ui:define name="label">Número</ui:define>
+	                <h:inputText id="numero"
+	                       required="true"
+	                           size="25"
+	                      maxlength="25"
+	                          value="#{telefonoHome.instance.numero}">
+	                    <a:support event="onblur" reRender="numeroField" ajaxSingle="true"/>
+	                </h:inputText>
+	            </s:decorate>
+	
+	            <div style="clear:both">
+	                <span class="required">*</span>
+	                Campos requeridos
+	            </div>
+			<div class="actionButtons">
+		        <a:commandButton actionListener="#{personaHome.addTelefono()}" oncomplete="if( #{validation.succeeded} ) #{rich:component('modalTelefonoEdit')}.hide()"
+		        value="Aceptar" ajaxSingle="true" reRender="telefonosTab,telefono,save" process="telefono">
+		        </a:commandButton>
+		    </div>
+	</h:form>
+	</rich:modalPanel>
+
+</ui:composition>

@@ -14,12 +14,12 @@
     <h:form id="tipoUsuario" styleClass="edit">
 
         <rich:panel>
-            <f:facet name="header">#{tipoUsuarioHome.managed ? 'Edit' : 'Add'} Tipo usuario</f:facet>
+            <f:facet name="header">#{tipoUsuarioHome.managed ? 'Editar' : 'Agregar'} Tipo de usuario</f:facet>
 
 
 
             <s:decorate id="descripcionField" template="layout/edit.xhtml">
-                <ui:define name="label">Descripcion</ui:define>
+                <ui:define name="label">Descripción</ui:define>
                 <h:inputText id="descripcion"
                        required="true"
                            size="60"
@@ -32,7 +32,7 @@
 
             <div style="clear:both">
                 <span class="required">*</span>
-                required fields
+                Campos requeridos
             </div>
 
         </rich:panel>
@@ -40,30 +40,30 @@
         <div class="actionButtons">
 
             <h:commandButton id="save"
-                          value="Save"
+                          value="Guardar"
                          action="#{tipoUsuarioHome.persist}"
                        disabled="#{!tipoUsuarioHome.wired}"
                        rendered="#{!tipoUsuarioHome.managed}"/>
 
             <h:commandButton id="update"
-                          value="Save"
+                          value="Guardar"
                          action="#{tipoUsuarioHome.update}"
                        rendered="#{tipoUsuarioHome.managed}"/>
 
             <h:commandButton id="delete"
-                          value="Delete"
+                          value="Eliminar"
                          action="#{tipoUsuarioHome.remove}"
                       immediate="true"
                        rendered="#{tipoUsuarioHome.managed}"/>
 
             <s:button id="cancelEdit"
-                   value="Cancel"
+                   value="Cancelar"
              propagation="end"
                     view="/TipoUsuario.xhtml"
                 rendered="#{tipoUsuarioHome.managed}"/>
 
             <s:button id="cancelAdd"
-                   value="Cancel"
+                   value="Cancelar"
              propagation="end"
                     view="/#{empty tipoUsuarioFrom ? 'TipoUsuarioList' : tipoUsuarioFrom}.xhtml"
                 rendered="#{!tipoUsuarioHome.managed}"/>
@@ -71,53 +71,6 @@
         </div>
     </h:form>
 
-<rich:tabPanel switchType="ajax">
-
-    <rich:tab label="Usuarios">
-        <h:form styleClass="association" id="usuariosChildren">
-
-            <h:outputText value="There are no usuarios associated with this tipoUsuario."
-                       rendered="#{empty tipoUsuarioHome.usuarios}"/>
-
-            <rich:dataTable value="#{tipoUsuarioHome.usuarios}"
-                           var="_usuario"
-                      rendered="#{not empty tipoUsuarioHome.usuarios}"
-                    rowClasses="rvgRowOne,rvgRowTwo"
-                            id="usuariosTable">
-                <rich:column sortBy="#{_usuario.idUsuarioPersona}">
-                    <f:facet name="header">Id usuario persona</f:facet>
-                    <h:outputText value="#{_usuario.idUsuarioPersona}"/>
-                </rich:column>
-                <rich:column sortBy="#{_usuario.login}">
-                    <f:facet name="header">Login</f:facet>
-                    <h:outputText value="#{_usuario.login}"/>
-                </rich:column>
-                <rich:column sortBy="#{_usuario.clave}">
-                    <f:facet name="header">Clave</f:facet>
-                    <h:outputText value="#{_usuario.clave}"/>
-                </rich:column>
-                <rich:column sortBy="#{_usuario.estado}">
-                    <f:facet name="header">Estado</f:facet>
-                    <h:outputText value="#{_usuario.estado}"/>
-                </rich:column>
-            </rich:dataTable>
-
-        </h:form>
-
-        <f:subview rendered="#{tipoUsuarioHome.managed}" id="usuarios">
-        <div class="actionButtons">
-            <s:button id="addusuario"
-                   value="Add usuario"
-                    view="/UsuarioEdit.xhtml"
-             propagation="none">
-                 <f:param name="tipoUsuarioIdTipoUsuario"
-                         value="#{tipoUsuarioHome.instance.idTipoUsuario}"/>
-                 <f:param name="usuarioFrom" value="TipoUsuario"/>
-            </s:button>
-        </div>
-        </f:subview>
-    </rich:tab>
-</rich:tabPanel>
 </ui:define>
 
 </ui:composition>

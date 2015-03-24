@@ -12,7 +12,7 @@
 
     <h:form id="usuarioSearch" styleClass="edit">
 
-        <rich:simpleTogglePanel label="Usuario Search Filter" switchType="ajax">
+        <rich:simpleTogglePanel label="Busqueda" switchType="ajax">
 
             <s:decorate template="layout/display.xhtml">
                 <ui:define name="label">Login</ui:define>
@@ -25,27 +25,27 @@
             </s:decorate>
 
             <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Match</ui:define>
+                <ui:define name="label">Filtrar por</ui:define>
                 <h:selectOneRadio id="logic" value="#{usuarioList.restrictionLogicOperator}" styleClass="radio">
-                    <f:selectItem itemLabel="All" itemValue="and"/>
-                    <f:selectItem itemLabel="Any" itemValue="or"/>
+                    <f:selectItem itemLabel="Todas" itemValue="and"/>
+                    <f:selectItem itemLabel="Algunas" itemValue="or"/>
                 </h:selectOneRadio>
             </s:decorate>
 
         </rich:simpleTogglePanel>
 
         <div class="actionButtons">
-            <h:commandButton id="search" value="Search" action="/UsuarioList.xhtml"/>
-            <s:button id="reset" value="Reset" includePageParams="false"/>
+            <h:commandButton id="search" value="Buscar" action="/UsuarioList.xhtml"/>
+            <s:button id="reset" value="Reiniciar" includePageParams="false"/>
         </div>
 
     </h:form>
 
     <rich:panel>
-        <f:facet name="header">Usuario Search Results (#{empty usuarioList.resultList ? 0 : (usuarioList.paginated ? usuarioList.resultCount : usuarioList.resultList.size)})</f:facet>
+        <f:facet name="header">Usuarios (#{empty usuarioList.resultList ? 0 : (usuarioList.paginated ? usuarioList.resultCount : usuarioList.resultList.size)})</f:facet>
     <div class="results" id="usuarioList">
 
-    <h:outputText value="The usuario search returned no results."
+    <h:outputText value="La busqueda no ha retornado resultados."
                rendered="#{empty usuarioList.resultList}"/>
 
     <rich:dataTable id="usuarioList"
@@ -185,7 +185,7 @@
         <s:button view="/UsuarioEdit.xhtml"
                     id="create"
            propagation="none"
-                 value="Create usuario">
+                 value="Crear usuario">
             <f:param name="usuarioIdUsuarioPersona"/>
         </s:button>
     </s:div>

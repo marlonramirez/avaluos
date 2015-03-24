@@ -14,7 +14,7 @@
     <h:form id="usuario" styleClass="edit">
 
         <rich:panel>
-            <f:facet name="header">#{usuarioHome.managed ? 'Edit' : 'Add'} Usuario</f:facet>
+            <f:facet name="header">#{usuarioHome.managed ? 'Editar' : 'Agregar'} Usuario</f:facet>
 
 
 
@@ -47,11 +47,11 @@
 
             <s:decorate id="estadoField" template="layout/edit.xhtml">
                 <ui:define name="label">Estado</ui:define>
-                <h:inputText id="estado"
-                       required="true"
-                          value="#{usuarioHome.instance.estado}">
-                    <a:support event="onblur" reRender="estadoField" bypassUpdates="true" ajaxSingle="true"/>
-                </h:inputText>
+                <h:selectOneMenu id="subscriptions"
+                     value="#{subscriptionController.subscriptions}">
+			        <f:selectItem id="item1" itemLabel="Activo" itemValue="1" />
+			        <f:selectItem id="item2" itemLabel="Inactivo" itemValue="0" />
+			    </h:selectOneMenu>
             </s:decorate>
 
             <div style="clear:both">
@@ -147,7 +147,7 @@
         </rich:dataTable>
 
         <div class="actionButtons">
-            <s:button id="#{usuarioHome.instance.persona != null ? 'changeParent' : 'selectParent'}" value="#{usuarioHome.instance.persona != null ? 'Change' : 'Select'} persona"
+            <s:button id="#{usuarioHome.instance.persona != null ? 'changeParentPersona' : 'selectParentPersona'}" value="#{usuarioHome.instance.persona != null ? 'Change' : 'Select'} persona"
                        view="/PersonaList.xhtml">
                 <f:param name="from" value="UsuarioEdit"/>
             </s:button>
@@ -182,7 +182,7 @@
         </rich:dataTable>
 
         <div class="actionButtons">
-            <s:button id="#{usuarioHome.instance.perfil != null ? 'changeParent' : 'selectParent'}" value="#{usuarioHome.instance.perfil != null ? 'Change' : 'Select'} perfil"
+            <s:button id="#{usuarioHome.instance.perfil != null ? 'changeParentPerfil' : 'selectParentPerfil'}" value="#{usuarioHome.instance.perfil != null ? 'Change' : 'Select'} perfil"
                        view="/PerfilList.xhtml">
                 <f:param name="from" value="UsuarioEdit"/>
             </s:button>
@@ -213,7 +213,7 @@
         </rich:dataTable>
 
         <div class="actionButtons">
-            <s:button id="#{usuarioHome.instance.tipoUsuario != null ? 'changeParent' : 'selectParent'}" value="#{usuarioHome.instance.tipoUsuario != null ? 'Change' : 'Select'} tipoUsuario"
+            <s:button id="#{usuarioHome.instance.tipoUsuario != null ? 'changeParentTipoUsuario' : 'selectParentTipoUsuario'}" value="#{usuarioHome.instance.tipoUsuario != null ? 'Change' : 'Select'} tipoUsuario"
                        view="/TipoUsuarioList.xhtml">
                 <f:param name="from" value="UsuarioEdit"/>
             </s:button>

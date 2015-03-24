@@ -20,13 +20,13 @@ public class PersonaList extends EntityQuery<Persona> {
 	private Persona persona = new Persona();
 
 	public PersonaList() {
+		persona.setTipoDoc(new TipoDoc());
 		setEjbql(EJBQL);
 		setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));
 		setMaxResults(25);
 	}
 
 	public Persona getPersona() {
-		persona.setTipoDoc(new TipoDoc());
 		return persona;
 	}
 }

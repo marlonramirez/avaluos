@@ -224,3 +224,7 @@ table.radio td {
 table.radio input[type=radio] {
    vertical-align: bottom;
 }
+
+.center {
+	text-align: center;
+}

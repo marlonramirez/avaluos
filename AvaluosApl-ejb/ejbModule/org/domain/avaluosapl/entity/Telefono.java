@@ -2,9 +2,12 @@ package org.domain.avaluosapl.entity;
 
 // Generated 14/03/2015 10:40:33 PM by Hibernate Tools 3.4.0.CR1
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,7 +22,7 @@ import org.hibernate.validator.NotNull;
 @Table(name = "telefono", catalog = "db_acinversiones")
 public class Telefono implements java.io.Serializable {
 
-	private int idTelefono;
+	private Integer idTelefono;
 	private TipoTel tipoTel;
 	private Persona persona;
 	private String numero;
@@ -27,21 +30,21 @@ public class Telefono implements java.io.Serializable {
 	public Telefono() {
 	}
 
-	public Telefono(int idTelefono, TipoTel tipoTel, Persona persona,
+	public Telefono(TipoTel tipoTel, Persona persona,
 			String numero) {
-		this.idTelefono = idTelefono;
 		this.tipoTel = tipoTel;
 		this.persona = persona;
 		this.numero = numero;
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id_telefono", unique = true, nullable = false)
-	public int getIdTelefono() {
+	public Integer getIdTelefono() {
 		return this.idTelefono;
 	}
 
-	public void setIdTelefono(int idTelefono) {
+	public void setIdTelefono(Integer idTelefono) {
 		this.idTelefono = idTelefono;
 	}
 

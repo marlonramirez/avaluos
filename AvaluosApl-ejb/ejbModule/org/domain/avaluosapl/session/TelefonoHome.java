@@ -1,5 +1,7 @@
 package org.domain.avaluosapl.session;
 
+import javax.faces.context.FacesContext;
+
 import org.domain.avaluosapl.entity.*;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -55,6 +57,14 @@ public class TelefonoHome extends EntityHome<Telefono> {
 
 	public Telefono getDefinedInstance() {
 		return isIdDefined() ? getInstance() : null;
+	}
+	
+	public void newTelefono() {
+		clearInstance();
+	}
+	
+	public void loadTelefono(Telefono tel) {
+		setInstance(tel);
 	}
 
 }
