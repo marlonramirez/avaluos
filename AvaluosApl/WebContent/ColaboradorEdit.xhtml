@@ -16,10 +16,122 @@
         <rich:panel>
             <f:facet name="header">#{colaboradorHome.managed ? 'Edit' : 'Add'} Colaborador</f:facet>
 
+			<rich:dataTable var="_persona"
+                   value="#{colaboradorHome.instance.persona}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="personaTable">
+            <h:column>
+                <f:facet name="header">Tipo de documento</f:facet>
+                <h:outputText value="#{_persona.tipoDoc.descripcion}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Número de documento</f:facet>
+                <h:outputText value="#{_persona.numDoc}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Nombres</f:facet>
+                <h:outputText value="#{_persona.nombres}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Apellidos</f:facet>
+                <h:outputText value="#{_persona.apellidos}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Email</f:facet>
+                <h:outputText value="#{_persona.email}"/>
+            </h:column>
+            <rich:column styleClass="action">
+            	<f:facet name="header">Buscar</f:facet>
+				<s:link id="searchPersona" view="/PersonaList.xhtml">
+					<h:graphicImage value="/img/search.png" />
+	                <f:param name="from" value="ColaboradorEdit"/>
+	            </s:link>
+            </rich:column>
+        </rich:dataTable>
+
+		<h:panelGrid columns="2">
+	    	<s:decorate id="tipoContratoField" template="layout/edit.xhtml">
+	            <ui:define name="label">Contrato</ui:define>
+	            <h:selectOneMenu id="tipoContrato" required="true"
+	                 value="#{colaboradorHome.instance.tipoContrato}">
+	                 <s:selectItems value="#{tipoContratoList.resultList}"
+	               var="_contrato" label="#{_contrato.descripcion}" 
+	               noSelectionLabel="--SELECCIONAR--" />
+	             <s:convertEntity />
+	             <a:support event="onchange" reRender="tipoContratoField,save" ajaxSingle="true"/>
+	           </h:selectOneMenu>
+	        </s:decorate>
+	        
+	        <s:decorate id="areaConocField" template="layout/edit.xhtml">
+		            <ui:define name="label">Area conocimiento</ui:define>
+		            <h:selectOneMenu id="areaConoc" required="true"
+		                 value="#{colaboradorHome.instance.areaConoc}">
+		                 <s:selectItems value="#{areaConocList.resultList}"
+		               var="_area" label="#{_area.descripcion}" 
+		               noSelectionLabel="--SELECCIONAR--" />
+		             <s:convertEntity />
+		             <a:support event="onchange" reRender="areaConocField,save" ajaxSingle="true"/>
+		           </h:selectOneMenu>
+	        </s:decorate>
+	    </h:panelGrid>
+	    
+	    <h:panelGrid columns="2">
+	    	<s:decorate id="cargoField" template="layout/edit.xhtml">
+	            <ui:define name="label">Cargo</ui:define>
+	            <h:selectOneMenu id="cargo" required="true"
+	                 value="#{colaboradorHome.instance.cargo}">
+	                 <s:selectItems value="#{cargoList.resultList}"
+	               var="_cargo" label="#{_cargo.descripcion}" 
+	               noSelectionLabel="--SELECCIONAR--" />
+	             <s:convertEntity />
+	             <a:support event="onchange" reRender="cargoField,save" ajaxSingle="true"/>
+	           </h:selectOneMenu>
+	        </s:decorate>
+	        
+	        <s:decorate id="calificacionField" template="layout/edit.xhtml">
+		            <ui:define name="label">Calificación</ui:define>
+		            <ui:param name="next" value="true" />
+		            <h:selectOneMenu id="calificacion" required="true"
+		                 value="#{colaboradorHome.instance.calificacion}">
+		                 <s:selectItems value="#{calificacionList.resultList}"
+		               var="_calificacion" label="#{_calificacion.descripcion}" 
+		               noSelectionLabel="--SELECCIONAR--" />
+		             <s:convertEntity />
+		             <a:support event="onchange" reRender="calificacionField,save" ajaxSingle="true"/>
+		           </h:selectOneMenu>
+	        </s:decorate>
+	    </h:panelGrid>
 
 
-
-
+		<rich:tabPanel switchType="ajax" id="competenciaTab">
+		
+		    <rich:tab>
+		    	<f:facet name="label">
+		            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Competencias</h:panelGroup>
+		        </f:facet>
+		        <h:form styleClass="association" id="competenciasChildren">
+					<s:div>
+			    	<a:commandButton value="Agregar competencia" actionListener="#{competenciaHome.newCompetencia()}"
+				    	onclick="#{rich:component('modalCompetenciaEdit')}.show()" reRender="competencia" ajaxSingle="true">
+				    	</a:commandButton>
+			    </s:div>
+		            <h:outputText value="No existen competencias asociadas a este colaborador."
+		                       rendered="#{empty colaboradorHome.competencias}"/>
+		
+		            <rich:dataTable value="#{colaboradorHome.competencias}"
+		                           var="_competencia"
+		                      rendered="#{not empty colaboradorHome.competencias}"
+		                    rowClasses="rvgRowOne,rvgRowTwo"
+		                            id="competenciasTable">
+		                <rich:column sortBy="#{_competencia.descripcion}">
+		                    <f:facet name="header">Descripción</f:facet>
+		                    <h:outputText value="#{_competencia.descripcion}"/>
+		                </rich:column>
+		            </rich:dataTable>
+		
+		        </h:form>
+		    </rich:tab>
+		</rich:tabPanel>
 
 
 
@@ -34,13 +146,13 @@
 
             <h:commandButton id="save"
                           value="Guardar"
-                         action="#{colaboradorHome.persist}"
+                         action="#{colaboradorHome.guardar}"
                        disabled="#{!colaboradorHome.wired}"
                        rendered="#{!colaboradorHome.managed}"/>
 
             <h:commandButton id="update"
                           value="Guardar"
-                         action="#{colaboradorHome.update}"
+                         action="#{colaboradorHome.actualizar}"
                        rendered="#{colaboradorHome.managed}"/>
 
             <h:commandButton id="delete"
@@ -62,230 +174,12 @@
                 rendered="#{!colaboradorHome.managed}"/>
 
         </div>
+        
+        <f:subview>
+			<a:include viewId="/modals/CompetenciaEdit.xhtml" />
+		</f:subview>
     </h:form>
 
-<rich:tabPanel switchType="ajax">
-
-    <rich:tab label="Tipo contrato *" labelClass="required">
-    <div class="association" id="tipoContratoParent">
-
-        <h:outputText value="There is no tipoContrato associated with this colaborador."
-                   rendered="#{colaboradorHome.instance.tipoContrato == null}"/>
-
-        <rich:dataTable var="_tipoContrato"
-                   value="#{colaboradorHome.instance.tipoContrato}"
-                rendered="#{colaboradorHome.instance.tipoContrato != null}"
-              rowClasses="rvgRowOne,rvgRowTwo"
-                      id="tipoContratoTable">
-            <h:column>
-                <f:facet name="header">Id tipo contrato</f:facet>
-                <h:outputText value="#{_tipoContrato.idTipoContrato}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Descripcion</f:facet>
-                <h:outputText value="#{_tipoContrato.descripcion}"/>
-            </h:column>
-        </rich:dataTable>
-
-        <div class="actionButtons">
-            <s:button id="#{colaboradorHome.instance.tipoContrato != null ? 'changeParentContrato' : 'selectParentContrato'}" value="#{colaboradorHome.instance.tipoContrato != null ? 'Change' : 'Select'} tipoContrato"
-                       view="/TipoContratoList.xhtml">
-                <f:param name="from" value="ColaboradorEdit"/>
-            </s:button>
-        </div>
-
-    </div>
-    </rich:tab>
-
-    <rich:tab label="Area conoc *" labelClass="required">
-    <div class="association" id="areaConocParent">
-
-        <h:outputText value="There is no areaConoc associated with this colaborador."
-                   rendered="#{colaboradorHome.instance.areaConoc == null}"/>
-
-        <rich:dataTable var="_areaConoc"
-                   value="#{colaboradorHome.instance.areaConoc}"
-                rendered="#{colaboradorHome.instance.areaConoc != null}"
-              rowClasses="rvgRowOne,rvgRowTwo"
-                      id="areaConocTable">
-            <h:column>
-                <f:facet name="header">Id area conoc</f:facet>
-                <h:outputText value="#{_areaConoc.idAreaConoc}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Descripcion</f:facet>
-                <h:outputText value="#{_areaConoc.descripcion}"/>
-            </h:column>
-        </rich:dataTable>
-
-        <div class="actionButtons">
-            <s:button id="#{colaboradorHome.instance.areaConoc != null ? 'changeParentAreaConoc' : 'selectParentAreaConoc'}" value="#{colaboradorHome.instance.areaConoc != null ? 'Change' : 'Select'} areaConoc"
-                       view="/AreaConocList.xhtml">
-                <f:param name="from" value="ColaboradorEdit"/>
-            </s:button>
-        </div>
-
-    </div>
-    </rich:tab>
-
-    <rich:tab label="Cargo *" labelClass="required">
-    <div class="association" id="cargoParent">
-
-        <h:outputText value="There is no cargo associated with this colaborador."
-                   rendered="#{colaboradorHome.instance.cargo == null}"/>
-
-        <rich:dataTable var="_cargo"
-                   value="#{colaboradorHome.instance.cargo}"
-                rendered="#{colaboradorHome.instance.cargo != null}"
-              rowClasses="rvgRowOne,rvgRowTwo"
-                      id="cargoTable">
-            <h:column>
-                <f:facet name="header">Id cargo</f:facet>
-                <h:outputText value="#{_cargo.idCargo}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Descripción</f:facet>
-                <h:outputText value="#{_cargo.descripcion}"/>
-            </h:column>
-        </rich:dataTable>
-
-        <div class="actionButtons">
-            <s:button id="#{colaboradorHome.instance.cargo != null ? 'changeParentCargo' : 'selectParentCargo'}" value="#{colaboradorHome.instance.cargo != null ? 'Change' : 'Select'} cargo"
-                       view="/CargoList.xhtml">
-                <f:param name="from" value="ColaboradorEdit"/>
-            </s:button>
-        </div>
-
-    </div>
-    </rich:tab>
-
-    <rich:tab label="Persona *" labelClass="required">
-    <div class="association" id="personaParent">
-
-        <h:outputText value="There is no persona associated with this colaborador."
-                   rendered="#{colaboradorHome.instance.persona == null}"/>
-
-        <rich:dataTable var="_persona"
-                   value="#{colaboradorHome.instance.persona}"
-                rendered="#{colaboradorHome.instance.persona != null}"
-              rowClasses="rvgRowOne,rvgRowTwo"
-                      id="personaTable">
-            <h:column>
-                <f:facet name="header">Id persona</f:facet>
-                <h:outputText value="#{_persona.idPersona}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Tipo doc id tipo doc</f:facet>
-                <h:outputText value="#{_persona.tipoDoc.idTipoDoc}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Num doc</f:facet>
-                <h:outputText value="#{_persona.numDoc}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Nombres</f:facet>
-                <h:outputText value="#{_persona.nombres}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Apellidos</f:facet>
-                <h:outputText value="#{_persona.apellidos}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Email</f:facet>
-                <h:outputText value="#{_persona.email}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Cliente id cliente persona</f:facet>
-                <h:outputText value="#{_persona.cliente.idClientePersona}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Usuario id usuario persona</f:facet>
-                <h:outputText value="#{_persona.usuario.idUsuarioPersona}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Colaborador id colaborador persona</f:facet>
-                <h:outputText value="#{_persona.colaborador.idColaboradorPersona}"/>
-            </h:column>
-        </rich:dataTable>
-
-        <div class="actionButtons">
-            <s:button id="#{colaboradorHome.instance.persona != null ? 'changeParentPersona' : 'selectParentPersona'}" value="#{colaboradorHome.instance.persona != null ? 'Change' : 'Select'} persona"
-                       view="/PersonaList.xhtml">
-                <f:param name="from" value="ColaboradorEdit"/>
-            </s:button>
-        </div>
-
-    </div>
-    </rich:tab>
-
-    <rich:tab label="Calificacion *" labelClass="required">
-    <div class="association" id="calificacionParent">
-
-        <h:outputText value="There is no calificacion associated with this colaborador."
-                   rendered="#{colaboradorHome.instance.calificacion == null}"/>
-
-        <rich:dataTable var="_calificacion"
-                   value="#{colaboradorHome.instance.calificacion}"
-                rendered="#{colaboradorHome.instance.calificacion != null}"
-              rowClasses="rvgRowOne,rvgRowTwo"
-                      id="calificacionTable">
-            <h:column>
-                <f:facet name="header">Id calificacion</f:facet>
-                <h:outputText value="#{_calificacion.idCalificacion}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Descripcion</f:facet>
-                <h:outputText value="#{_calificacion.descripcion}"/>
-            </h:column>
-        </rich:dataTable>
-
-        <div class="actionButtons">
-            <s:button id="#{colaboradorHome.instance.calificacion != null ? 'changeParentCalificacion' : 'selectParentCalificacion'}" value="#{colaboradorHome.instance.calificacion != null ? 'Change' : 'Select'} calificacion"
-                       view="/CalificacionList.xhtml">
-                <f:param name="from" value="ColaboradorEdit"/>
-            </s:button>
-        </div>
-
-    </div>
-    </rich:tab>
-
-    <rich:tab label="Competencias">
-        <h:form styleClass="association" id="competenciasChildren">
-
-            <h:outputText value="There are no competencias associated with this colaborador."
-                       rendered="#{empty colaboradorHome.competencias}"/>
-
-            <rich:dataTable value="#{colaboradorHome.competencias}"
-                           var="_competencia"
-                      rendered="#{not empty colaboradorHome.competencias}"
-                    rowClasses="rvgRowOne,rvgRowTwo"
-                            id="competenciasTable">
-                <rich:column sortBy="#{_competencia.idCompetencia}">
-                    <f:facet name="header">Id competencia</f:facet>
-                    <h:outputText value="#{_competencia.idCompetencia}"/>
-                </rich:column>
-                <rich:column sortBy="#{_competencia.descripcion}">
-                    <f:facet name="header">Descripcion</f:facet>
-                    <h:outputText value="#{_competencia.descripcion}"/>
-                </rich:column>
-            </rich:dataTable>
-
-        </h:form>
-
-        <f:subview rendered="#{colaboradorHome.managed}" id="competencias">
-        <div class="actionButtons">
-            <s:button id="addcompetencia"
-                   value="Add competencia"
-                    view="/CompetenciaEdit.xhtml"
-             propagation="none">
-                 <f:param name="colaboradorIdColaboradorPersona"
-                         value="#{colaboradorHome.instance.idColaboradorPersona}"/>
-                 <f:param name="competenciaFrom" value="Colaborador"/>
-            </s:button>
-        </div>
-        </f:subview>
-    </rich:tab>
-</rich:tabPanel>
 </ui:define>
 
 </ui:composition>

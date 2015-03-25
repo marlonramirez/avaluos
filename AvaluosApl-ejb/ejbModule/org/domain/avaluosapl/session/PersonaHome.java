@@ -108,7 +108,6 @@ public class PersonaHome extends EntityHome<Persona> {
 		for (Telefono tel: instance.getTelefonos()) {
 			getEntityManager().persist(tel);
 		}
-		getEntityManager().flush();
 		for (Direccion dir: instance.getDireccions()) {
 			getEntityManager().persist(dir);
 		}

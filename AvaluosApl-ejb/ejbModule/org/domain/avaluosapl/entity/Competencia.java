@@ -1,10 +1,12 @@
 package org.domain.avaluosapl.entity;
 
-// Generated 24/03/2015 11:16:57 PM by Hibernate Tools 3.4.0.CR1
+// Generated 25/03/2015 01:35:07 PM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,27 +21,26 @@ import org.hibernate.validator.NotNull;
 @Table(name = "competencia", catalog = "db_acinversiones")
 public class Competencia implements java.io.Serializable {
 
-	private int idCompetencia;
+	private Integer idCompetencia;
 	private Colaborador colaborador;
 	private String descripcion;
 
 	public Competencia() {
 	}
 
-	public Competencia(int idCompetencia, Colaborador colaborador,
-			String descripcion) {
-		this.idCompetencia = idCompetencia;
+	public Competencia(Colaborador colaborador, String descripcion) {
 		this.colaborador = colaborador;
 		this.descripcion = descripcion;
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id_competencia", unique = true, nullable = false)
-	public int getIdCompetencia() {
+	public Integer getIdCompetencia() {
 		return this.idCompetencia;
 	}
 
-	public void setIdCompetencia(int idCompetencia) {
+	public void setIdCompetencia(Integer idCompetencia) {
 		this.idCompetencia = idCompetencia;
 	}
 

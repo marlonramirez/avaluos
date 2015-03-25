@@ -40,13 +40,19 @@ public class CompetenciaHome extends EntityHome<Competencia> {
 	}
 
 	public boolean isWired() {
-		if (getInstance().getColaborador() == null)
-			return false;
 		return true;
 	}
 
 	public Competencia getDefinedInstance() {
 		return isIdDefined() ? getInstance() : null;
+	}
+	
+	public void newCompetencia() {
+		setInstance( createInstance() );
+	}
+	
+	public void loadCompetencia(Competencia comp) {
+		setInstance(comp);
 	}
 
 }

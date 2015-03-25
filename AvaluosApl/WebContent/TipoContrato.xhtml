@@ -11,11 +11,11 @@
 <ui:define name="body">
 
     <rich:panel>
-        <f:facet name="header">Tipo contrato Details</f:facet>
+        <f:facet name="header">Detalles del tipo de contrato</f:facet>
 
 
         <s:decorate id="descripcion" template="layout/display.xhtml">
-            <ui:define name="label">Descripcion</ui:define>
+            <ui:define name="label">Descripción</ui:define>
             <h:outputText value="#{tipoContratoHome.instance.descripcion}"/>
         </s:decorate>
 
@@ -27,63 +27,14 @@
 
         <s:button view="/TipoContratoEdit.xhtml"
                     id="edit"
-                 value="Edit"/>
+                 value="Editar"/>
 
         <s:button view="/#{empty tipoContratoFrom ? 'TipoContratoList' : tipoContratoFrom}.xhtml"
                     id="done"
-                 value="Done"/>
+                 value="Aceptar"/>
 
     </div>
 
-    <rich:tabPanel switchType="ajax">
-
-    <rich:tab>
-        <f:facet name="label">
-            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Colaboradors</h:panelGroup>
-        </f:facet>
-    <h:form styleClass="association" id="colaboradorsChildren">
-
-        <h:outputText value="There are no colaboradors associated with this tipoContrato."
-                   rendered="#{empty tipoContratoHome.colaboradors}"/>
-
-        <rich:dataTable value="#{tipoContratoHome.colaboradors}"
-                       var="_colaborador"
-                  rendered="#{not empty tipoContratoHome.colaboradors}"
-                rowClasses="rvgRowOne,rvgRowTwo"
-                        id="colaboradorsTable">
-            <rich:column sortBy="#{_colaborador.idColaboradorPersona}">
-                <f:facet name="header">Id colaborador persona</f:facet>
-                <h:outputText value="#{_colaborador.idColaboradorPersona}"/>
-            </rich:column>
-            <rich:column sortBy="#{_colaborador.areaConocim}">
-                <f:facet name="header">Area conocim</f:facet>
-                <h:outputText value="#{_colaborador.areaConocim}"/>
-            </rich:column>
-            <h:column>
-                <f:facet name="header">Action</f:facet>
-                <s:link id="selectcolaborador"
-                     value="Select"
-                      view="/Colaborador.xhtml">
-                    <f:param name="colaboradorIdColaboradorPersona"
-                            value="#{_colaborador.idColaboradorPersona}"/>
-                    <f:param name="colaboradorFrom" value="TipoContrato"/>
-                </s:link>
-            </h:column>
-        </rich:dataTable>
-
-    </h:form>
-
-    <div class="actionButtons">
-        <s:button
-               value="Add colaborador"
-                view="/ColaboradorEdit.xhtml">
-            <f:param name="tipoContratoIdTipoContrato"
-                    value="#{tipoContratoHome.instance.idTipoContrato}"/>
-            <f:param name="colaboradorFrom" value="TipoContrato"/>
-        </s:button>
-    </div>
-    </rich:tab>
-</rich:tabPanel>
 </ui:define>
 
 </ui:composition>

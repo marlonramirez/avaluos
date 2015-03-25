@@ -35,7 +35,7 @@
         <f:facet name="header">Colaboradores (#{empty colaboradorList.resultList ? 0 : (colaboradorList.paginated ? colaboradorList.resultCount : colaboradorList.resultList.size)})</f:facet>
     <div class="results" id="colaboradorList">
 
-    <h:outputText value="La busqueda no ha retornado resultados"
+    <h:outputText value="La busqueda no ha retornado resultados."
                rendered="#{empty colaboradorList.resultList}"/>
 
     <rich:dataTable id="colaboradorList"

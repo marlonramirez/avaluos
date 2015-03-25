@@ -14,12 +14,12 @@
     <h:form id="tipoContrato" styleClass="edit">
 
         <rich:panel>
-            <f:facet name="header">#{tipoContratoHome.managed ? 'Edit' : 'Add'} Tipo contrato</f:facet>
+            <f:facet name="header">#{tipoContratoHome.managed ? 'Editar' : 'Agregar'} Tipo de contrato</f:facet>
 
 
 
             <s:decorate id="descripcionField" template="layout/edit.xhtml">
-                <ui:define name="label">Descripcion</ui:define>
+                <ui:define name="label">Descripción</ui:define>
                 <h:inputText id="descripcion"
                        required="true"
                            size="100"
@@ -32,7 +32,7 @@
 
             <div style="clear:both">
                 <span class="required">*</span>
-                required fields
+                Campos requeridos
             </div>
 
         </rich:panel>
@@ -40,30 +40,30 @@
         <div class="actionButtons">
 
             <h:commandButton id="save"
-                          value="Save"
+                          value="Guardar"
                          action="#{tipoContratoHome.persist}"
                        disabled="#{!tipoContratoHome.wired}"
                        rendered="#{!tipoContratoHome.managed}"/>
 
             <h:commandButton id="update"
-                          value="Save"
+                          value="Guardar"
                          action="#{tipoContratoHome.update}"
                        rendered="#{tipoContratoHome.managed}"/>
 
             <h:commandButton id="delete"
-                          value="Delete"
+                          value="Eliminar"
                          action="#{tipoContratoHome.remove}"
                       immediate="true"
                        rendered="#{tipoContratoHome.managed}"/>
 
             <s:button id="cancelEdit"
-                   value="Cancel"
+                   value="Cancelar"
              propagation="end"
                     view="/TipoContrato.xhtml"
                 rendered="#{tipoContratoHome.managed}"/>
 
             <s:button id="cancelAdd"
-                   value="Cancel"
+                   value="Cancelar"
              propagation="end"
                     view="/#{empty tipoContratoFrom ? 'TipoContratoList' : tipoContratoFrom}.xhtml"
                 rendered="#{!tipoContratoHome.managed}"/>
@@ -71,45 +71,6 @@
         </div>
     </h:form>
 
-<rich:tabPanel switchType="ajax">
-
-    <rich:tab label="Colaboradors">
-        <h:form styleClass="association" id="colaboradorsChildren">
-
-            <h:outputText value="There are no colaboradors associated with this tipoContrato."
-                       rendered="#{empty tipoContratoHome.colaboradors}"/>
-
-            <rich:dataTable value="#{tipoContratoHome.colaboradors}"
-                           var="_colaborador"
-                      rendered="#{not empty tipoContratoHome.colaboradors}"
-                    rowClasses="rvgRowOne,rvgRowTwo"
-                            id="colaboradorsTable">
-                <rich:column sortBy="#{_colaborador.idColaboradorPersona}">
-                    <f:facet name="header">Id colaborador persona</f:facet>
-                    <h:outputText value="#{_colaborador.idColaboradorPersona}"/>
-                </rich:column>
-                <rich:column sortBy="#{_colaborador.areaConocim}">
-                    <f:facet name="header">Area conocim</f:facet>
-                    <h:outputText value="#{_colaborador.areaConocim}"/>
-                </rich:column>
-            </rich:dataTable>
-
-        </h:form>
-
-        <f:subview rendered="#{tipoContratoHome.managed}" id="colaboradors">
-        <div class="actionButtons">
-            <s:button id="addcolaborador"
-                   value="Add colaborador"
-                    view="/ColaboradorEdit.xhtml"
-             propagation="none">
-                 <f:param name="tipoContratoIdTipoContrato"
-                         value="#{tipoContratoHome.instance.idTipoContrato}"/>
-                 <f:param name="colaboradorFrom" value="TipoContrato"/>
-            </s:button>
-        </div>
-        </f:subview>
-    </rich:tab>
-</rich:tabPanel>
 </ui:define>
 
 </ui:composition>

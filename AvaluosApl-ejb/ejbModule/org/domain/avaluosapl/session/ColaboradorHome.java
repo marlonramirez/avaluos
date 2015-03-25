@@ -1,6 +1,7 @@
 package org.domain.avaluosapl.session;
 
 import org.domain.avaluosapl.entity.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.jboss.seam.annotations.In;
@@ -20,6 +21,10 @@ public class ColaboradorHome extends EntityHome<Colaborador> {
 	PersonaHome personaHome;
 	@In(create = true)
 	CalificacionHome calificacionHome;
+	@In(create = true)
+	CompetenciaHome competenciaHome;
+	
+	private ArrayList<Competencia> deleteComps = new ArrayList<Competencia>();
 
 	public void setColaboradorIdColaboradorPersona(Integer id) {
 		setId(id);
@@ -32,6 +37,7 @@ public class ColaboradorHome extends EntityHome<Colaborador> {
 	@Override
 	protected Colaborador createInstance() {
 		Colaborador colaborador = new Colaborador();
+		colaborador.setPersona(new Persona());
 		return colaborador;
 	}
 
@@ -72,9 +78,11 @@ public class ColaboradorHome extends EntityHome<Colaborador> {
 			return false;
 		if (getInstance().getCargo() == null)
 			return false;
-		if (getInstance().getPersona() == null)
+		if (getInstance().getPersona().getIdPersona() == null)
 			return false;
 		if (getInstance().getCalificacion() == null)
+			return false;
+		if (getInstance().getCompetencias().isEmpty())
 			return false;
 		return true;
 	}
@@ -86,6 +94,43 @@ public class ColaboradorHome extends EntityHome<Colaborador> {
 	public List<Competencia> getCompetencias() {
 		return getInstance() == null ? null : new ArrayList<Competencia>(
 				getInstance().getCompetencias());
+	}
+	
+	public void addCompetencia() {
+		Colaborador colaborador = getInstance();
+		Competencia comp = competenciaHome.getInstance();
+		comp.setColaborador(colaborador);
+		colaborador.getCompetencias().add(comp);
+	}
+	
+	public void removeCompetencia(Competencia comp) {
+		if (comp.getIdCompetencia() != null) {
+			deleteComps.add(comp);
+		}
+		getInstance().getCompetencias().remove(comp);
+	}
+	
+	public void guardar() {
+		persist();
+		Colaborador instance = getInstance();
+		for (Competencia comp: instance.getCompetencias()) {
+			getEntityManager().persist(comp);
+		}
+		getEntityManager().flush();
+	}
+	
+	public void actualizar() {
+		update();
+		Colaborador instance = getInstance();
+		for (Competencia comp: deleteComps) {
+			getEntityManager().remove(comp);
+		}
+		for (Competencia comp: instance.getCompetencias()) {
+			if (comp.getDescripcion() == null) {
+				getEntityManager().persist(comp);
+			}
+		}
+		getEntityManager().flush();
 	}
 
 }

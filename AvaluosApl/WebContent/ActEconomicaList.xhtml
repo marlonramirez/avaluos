@@ -12,35 +12,35 @@
 
     <h:form id="actEconomicaSearch" styleClass="edit">
 
-        <rich:simpleTogglePanel label="ActEconomica Search Filter" switchType="ajax">
+        <rich:simpleTogglePanel label="Busqueda" switchType="ajax">
 
             <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Descripcion</ui:define>
+                <ui:define name="label">Descripción</ui:define>
                 <h:inputText id="descripcion" value="#{actEconomicaList.actEconomica.descripcion}"/>
             </s:decorate>
 
             <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Match</ui:define>
+                <ui:define name="label">Filtrar por</ui:define>
                 <h:selectOneRadio id="logic" value="#{actEconomicaList.restrictionLogicOperator}" styleClass="radio">
-                    <f:selectItem itemLabel="All" itemValue="and"/>
-                    <f:selectItem itemLabel="Any" itemValue="or"/>
+                    <f:selectItem itemLabel="Todas" itemValue="and"/>
+                    <f:selectItem itemLabel="Algunas" itemValue="or"/>
                 </h:selectOneRadio>
             </s:decorate>
 
         </rich:simpleTogglePanel>
 
         <div class="actionButtons">
-            <h:commandButton id="search" value="Search" action="/ActEconomicaList.xhtml"/>
-            <s:button id="reset" value="Reset" includePageParams="false"/>
+            <h:commandButton id="search" value="Buscar" action="/ActEconomicaList.xhtml"/>
+            <s:button id="reset" value="Reiniciar" includePageParams="false"/>
         </div>
 
     </h:form>
 
     <rich:panel>
-        <f:facet name="header">ActEconomica Search Results (#{empty actEconomicaList.resultList ? 0 : (actEconomicaList.paginated ? actEconomicaList.resultCount : actEconomicaList.resultList.size)})</f:facet>
+        <f:facet name="header">Actividades economicas (#{empty actEconomicaList.resultList ? 0 : (actEconomicaList.paginated ? actEconomicaList.resultCount : actEconomicaList.resultList.size)})</f:facet>
     <div class="results" id="actEconomicaList">
 
-    <h:outputText value="The actEconomica search returned no results."
+    <h:outputText value="La busqueda no ha retornado resultados."
                rendered="#{empty actEconomicaList.resultList}"/>
 
     <rich:dataTable id="actEconomicaList"
@@ -51,7 +51,7 @@
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{actEconomicaList}"/>
-                    <ui:param name="propertyLabel" value="Id act economica"/>
+                    <ui:param name="propertyLabel" value="Id"/>
                     <ui:param name="propertyPath" value="actEconomica.idActEconomica"/>
                 </ui:include>
             </f:facet>
@@ -61,16 +61,16 @@
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{actEconomicaList}"/>
-                    <ui:param name="propertyLabel" value="Descripcion"/>
+                    <ui:param name="propertyLabel" value="Descripción"/>
                     <ui:param name="propertyPath" value="actEconomica.descripcion"/>
                 </ui:include>
             </f:facet>
             <h:outputText value="#{_actEconomica.descripcion}"/>
         </h:column>
-        <rich:column styleClass="action">
-            <f:facet name="header">Action</f:facet>
+        <rich:column styleClass="acción">
+            <f:facet name="header">Acción</f:facet>
             <s:link view="/#{empty from ? 'ActEconomica' : from}.xhtml"
-                   value="#{empty from ? 'View' : 'Select'}"
+                   value="#{empty from ? 'Ver' : 'Seleccionar'}"
              propagation="#{empty from ? 'none' : 'default'}"
                       id="actEconomicaViewId">
                 <f:param name="actEconomicaIdActEconomica"
@@ -78,7 +78,7 @@
             </s:link>
             #{' '}
             <s:link view="/ActEconomicaEdit.xhtml"
-                   value="Edit"
+                   value="Editar"
              propagation="none"
                       id="actEconomicaEdit"
                 rendered="#{empty from}">
@@ -130,7 +130,7 @@
         <s:button view="/ActEconomicaEdit.xhtml"
                     id="create"
            propagation="none"
-                 value="Create actEconomica">
+                 value="Crear actividad economica">
             <f:param name="actEconomicaIdActEconomica"/>
         </s:button>
     </s:div>
