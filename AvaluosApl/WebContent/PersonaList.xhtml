@@ -142,36 +142,6 @@
             </f:facet>
             <h:outputText value="#{_persona.email}"/>
         </h:column>
-        <h:column>
-            <f:facet name="header">
-                <ui:include src="layout/sort.xhtml">
-                    <ui:param name="entityList" value="#{personaList}"/>
-                    <ui:param name="propertyLabel" value="Cliente"/>
-                    <ui:param name="propertyPath" value="persona.cliente.idClientePersona"/>
-                </ui:include>
-            </f:facet>
-            <s:link value="#{_persona.cliente.idClientePersona? 'Actualizar': 'crear'}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">
-                <ui:include src="layout/sort.xhtml">
-                    <ui:param name="entityList" value="#{personaList}"/>
-                    <ui:param name="propertyLabel" value="Usuario"/>
-                    <ui:param name="propertyPath" value="persona.usuario.idUsuarioPersona"/>
-                </ui:include>
-            </f:facet>
-            <s:link value="#{_persona.usuario.idUsuarioPersona? 'Actualizar': 'Crear'}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">
-                <ui:include src="layout/sort.xhtml">
-                    <ui:param name="entityList" value="#{personaList}"/>
-                    <ui:param name="propertyLabel" value="Colaborador"/>
-                    <ui:param name="propertyPath" value="persona.colaborador.idColaboradorPersona"/>
-                </ui:include>
-            </f:facet>
-            <s:link value="#{_persona.colaborador.idColaboradorPersona? 'Actualizar': 'Crear'}"/>
-        </h:column>
         <rich:column styleClass="action">
             <f:facet name="header">Acción</f:facet>
             <s:link view="/#{empty from ? 'Persona' : from}.xhtml"

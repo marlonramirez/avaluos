@@ -1,0 +1,138 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="tipoDoc" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{tipoDocHome.managed ? 'Edit' : 'Add'} Tipo doc</f:facet>
+
+
+
+            <s:decorate id="abbrField" template="layout/edit.xhtml">
+                <ui:define name="label">Abbr</ui:define>
+                <h:inputText id="abbr"
+                           size="5"
+                      maxlength="5"
+                          value="#{tipoDocHome.instance.abbr}">
+                    <a:support event="onblur" reRender="abbrField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="descripcionField" template="layout/edit.xhtml">
+                <ui:define name="label">Descripcion</ui:define>
+                <h:inputText id="descripcion"
+                       required="true"
+                           size="60"
+                      maxlength="60"
+                          value="#{tipoDocHome.instance.descripcion}">
+                    <a:support event="onblur" reRender="descripcionField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{tipoDocHome.persist}"
+                       disabled="#{!tipoDocHome.wired}"
+                       rendered="#{!tipoDocHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{tipoDocHome.update}"
+                       rendered="#{tipoDocHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{tipoDocHome.remove}"
+                      immediate="true"
+                       rendered="#{tipoDocHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/TipoDoc.xhtml"
+                rendered="#{tipoDocHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty tipoDocFrom ? 'TipoDocList' : tipoDocFrom}.xhtml"
+                rendered="#{!tipoDocHome.managed}"/>
+
+        </div>
+    </h:form>
+
+<rich:tabPanel switchType="ajax">
+
+    <rich:tab label="Personas">
+        <h:form styleClass="association" id="personasChildren">
+
+            <h:outputText value="There are no personas associated with this tipoDoc."
+                       rendered="#{empty tipoDocHome.personas}"/>
+
+            <rich:dataTable value="#{tipoDocHome.personas}"
+                           var="_persona"
+                      rendered="#{not empty tipoDocHome.personas}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="personasTable">
+                <rich:column sortBy="#{_persona.idPersona}">
+                    <f:facet name="header">Id persona</f:facet>
+                    <h:outputText value="#{_persona.idPersona}"/>
+                </rich:column>
+                <rich:column sortBy="#{_persona.numDoc}">
+                    <f:facet name="header">Num doc</f:facet>
+                    <h:outputText value="#{_persona.numDoc}"/>
+                </rich:column>
+                <rich:column sortBy="#{_persona.nombres}">
+                    <f:facet name="header">Nombres</f:facet>
+                    <h:outputText value="#{_persona.nombres}"/>
+                </rich:column>
+                <rich:column sortBy="#{_persona.apellidos}">
+                    <f:facet name="header">Apellidos</f:facet>
+                    <h:outputText value="#{_persona.apellidos}"/>
+                </rich:column>
+                <rich:column sortBy="#{_persona.email}">
+                    <f:facet name="header">Email</f:facet>
+                    <h:outputText value="#{_persona.email}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{tipoDocHome.managed}" id="personas">
+        <div class="actionButtons">
+            <s:button id="addpersona"
+                   value="Add persona"
+                    view="/PersonaEdit.xhtml"
+             propagation="none">
+                 <f:param name="tipoDocIdTipoDoc"
+                         value="#{tipoDocHome.instance.idTipoDoc}"/>
+                 <f:param name="personaFrom" value="TipoDoc"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

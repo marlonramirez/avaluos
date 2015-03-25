@@ -12,35 +12,35 @@
 
     <h:form id="calificacionSearch" styleClass="edit">
 
-        <rich:simpleTogglePanel label="Calificacion Search Filter" switchType="ajax">
+        <rich:simpleTogglePanel label="Busqueda" switchType="ajax">
 
             <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Descripcion</ui:define>
+                <ui:define name="label">Descripción</ui:define>
                 <h:inputText id="descripcion" value="#{calificacionList.calificacion.descripcion}"/>
             </s:decorate>
 
             <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Match</ui:define>
+                <ui:define name="label">Filtrar por</ui:define>
                 <h:selectOneRadio id="logic" value="#{calificacionList.restrictionLogicOperator}" styleClass="radio">
-                    <f:selectItem itemLabel="All" itemValue="and"/>
-                    <f:selectItem itemLabel="Any" itemValue="or"/>
+                    <f:selectItem itemLabel="Todas" itemValue="and"/>
+                    <f:selectItem itemLabel="Algunas" itemValue="or"/>
                 </h:selectOneRadio>
             </s:decorate>
 
         </rich:simpleTogglePanel>
 
         <div class="actionButtons">
-            <h:commandButton id="search" value="Search" action="/CalificacionList.xhtml"/>
-            <s:button id="reset" value="Reset" includePageParams="false"/>
+            <h:commandButton id="search" value="Buscar" action="/CalificacionList.xhtml"/>
+            <s:button id="reset" value="Reiniciar" includePageParams="false"/>
         </div>
 
     </h:form>
 
     <rich:panel>
-        <f:facet name="header">Calificacion Search Results (#{empty calificacionList.resultList ? 0 : (calificacionList.paginated ? calificacionList.resultCount : calificacionList.resultList.size)})</f:facet>
+        <f:facet name="header">Calificaciones (#{empty calificacionList.resultList ? 0 : (calificacionList.paginated ? calificacionList.resultCount : calificacionList.resultList.size)})</f:facet>
     <div class="results" id="calificacionList">
 
-    <h:outputText value="The calificacion search returned no results."
+    <h:outputText value="La busqueda no ha retornado resultados."
                rendered="#{empty calificacionList.resultList}"/>
 
     <rich:dataTable id="calificacionList"
@@ -51,7 +51,7 @@
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{calificacionList}"/>
-                    <ui:param name="propertyLabel" value="Id calificacion"/>
+                    <ui:param name="propertyLabel" value="Id"/>
                     <ui:param name="propertyPath" value="calificacion.idCalificacion"/>
                 </ui:include>
             </f:facet>
@@ -68,9 +68,9 @@
             <h:outputText value="#{_calificacion.descripcion}"/>
         </h:column>
         <rich:column styleClass="action">
-            <f:facet name="header">Action</f:facet>
+            <f:facet name="header">Acción</f:facet>
             <s:link view="/#{empty from ? 'Calificacion' : from}.xhtml"
-                   value="#{empty from ? 'View' : 'Select'}"
+                   value="#{empty from ? 'Ver' : 'Seleccionar'}"
              propagation="#{empty from ? 'none' : 'default'}"
                       id="calificacionViewId">
                 <f:param name="calificacionIdCalificacion"
@@ -78,7 +78,7 @@
             </s:link>
             #{' '}
             <s:link view="/CalificacionEdit.xhtml"
-                   value="Edit"
+                   value="Editar"
              propagation="none"
                       id="calificacionEdit"
                 rendered="#{empty from}">
@@ -130,7 +130,7 @@
         <s:button view="/CalificacionEdit.xhtml"
                     id="create"
            propagation="none"
-                 value="Create calificacion">
+                 value="Crear calificación">
             <f:param name="calificacionIdCalificacion"/>
         </s:button>
     </s:div>

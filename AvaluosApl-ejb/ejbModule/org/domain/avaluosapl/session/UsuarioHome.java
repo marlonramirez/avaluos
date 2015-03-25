@@ -12,8 +12,6 @@ public class UsuarioHome extends EntityHome<Usuario> {
 	PersonaHome personaHome;
 	@In(create = true)
 	PerfilHome perfilHome;
-	@In(create = true)
-	TipoUsuarioHome tipoUsuarioHome;
 
 	public void setUsuarioIdUsuarioPersona(Integer id) {
 		setId(id);
@@ -26,6 +24,7 @@ public class UsuarioHome extends EntityHome<Usuario> {
 	@Override
 	protected Usuario createInstance() {
 		Usuario usuario = new Usuario();
+		usuario.setPersona(new Persona());
 		return usuario;
 	}
 
@@ -45,18 +44,12 @@ public class UsuarioHome extends EntityHome<Usuario> {
 		if (perfil != null) {
 			getInstance().setPerfil(perfil);
 		}
-		TipoUsuario tipoUsuario = tipoUsuarioHome.getDefinedInstance();
-		if (tipoUsuario != null) {
-			getInstance().setTipoUsuario(tipoUsuario);
-		}
 	}
 
 	public boolean isWired() {
-		if (getInstance().getPersona() == null)
+		if (getInstance().getPersona().getIdPersona() == null)
 			return false;
 		if (getInstance().getPerfil() == null)
-			return false;
-		if (getInstance().getTipoUsuario() == null)
 			return false;
 		return true;
 	}

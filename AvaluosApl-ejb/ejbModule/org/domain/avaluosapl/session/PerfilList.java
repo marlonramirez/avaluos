@@ -4,6 +4,7 @@ import org.domain.avaluosapl.entity.*;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.framework.EntityQuery;
 import java.util.Arrays;
+import java.util.List;
 
 @Name("perfilList")
 public class PerfilList extends EntityQuery<Perfil> {
@@ -22,5 +23,10 @@ public class PerfilList extends EntityQuery<Perfil> {
 
 	public Perfil getPerfil() {
 		return perfil;
+	}
+	
+	public List<Perfil> getPerfilesActivos() {
+		String ejbql = EJBQL+" WHERE perfil.estado = 1";
+		return getEntityManager().createQuery(ejbql).getResultList();
 	}
 }

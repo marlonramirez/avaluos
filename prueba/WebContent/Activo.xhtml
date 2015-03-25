@@ -1,0 +1,178 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <rich:panel>
+        <f:facet name="header">Activo Details</f:facet>
+
+
+        <s:decorate id="nombre" template="layout/display.xhtml">
+            <ui:define name="label">Nombre</ui:define>
+            <h:outputText value="#{activoHome.instance.nombre}"/>
+        </s:decorate>
+
+        <s:decorate id="descripcion" template="layout/display.xhtml">
+            <ui:define name="label">Descripcion</ui:define>
+            <h:outputText value="#{activoHome.instance.descripcion}"/>
+        </s:decorate>
+
+        <s:decorate id="estado" template="layout/display.xhtml">
+            <ui:define name="label">Estado</ui:define>
+            <h:outputText value="#{activoHome.instance.estado}"/>
+        </s:decorate>
+
+        <s:decorate id="idCliente" template="layout/display.xhtml">
+            <ui:define name="label">Id cliente</ui:define>
+            <h:outputText value="#{activoHome.instance.idCliente}"/>
+        </s:decorate>
+
+        <div style="clear:both"/>
+
+    </rich:panel>
+
+    <div class="actionButtons">
+
+        <s:button view="/ActivoEdit.xhtml"
+                    id="edit"
+                 value="Edit"/>
+
+        <s:button view="/#{empty activoFrom ? 'ActivoList' : activoFrom}.xhtml"
+                    id="done"
+                 value="Done"/>
+
+    </div>
+
+    <rich:tabPanel switchType="ajax">
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Avaluos</h:panelGroup>
+        </f:facet>
+    <h:form styleClass="association" id="avaluosChildren">
+
+        <h:outputText value="There are no avaluos associated with this activo."
+                   rendered="#{empty activoHome.avaluos}"/>
+
+        <rich:dataTable value="#{activoHome.avaluos}"
+                       var="_avaluo"
+                  rendered="#{not empty activoHome.avaluos}"
+                rowClasses="rvgRowOne,rvgRowTwo"
+                        id="avaluosTable">
+            <rich:column sortBy="#{_avaluo.idAvaluo}">
+                <f:facet name="header">Id avaluo</f:facet>
+                <h:outputText value="#{_avaluo.idAvaluo}"/>
+            </rich:column>
+            <rich:column sortBy="#{_avaluo.numOrden}">
+                <f:facet name="header">Num orden</f:facet>
+                <h:outputText value="#{_avaluo.numOrden}"/>
+            </rich:column>
+            <rich:column sortBy="#{_avaluo.fechaSolicitud}">
+                <f:facet name="header">Fecha solicitud</f:facet>
+                <h:outputText value="#{_avaluo.fechaSolicitud}">
+                    <s:convertDateTime type="date" dateStyle="short"/>
+                </h:outputText>
+            </rich:column>
+            <rich:column sortBy="#{_avaluo.descripcion}">
+                <f:facet name="header">Descripcion</f:facet>
+                <h:outputText value="#{_avaluo.descripcion}"/>
+            </rich:column>
+            <rich:column sortBy="#{_avaluo.fechaEntrega}">
+                <f:facet name="header">Fecha entrega</f:facet>
+                <h:outputText value="#{_avaluo.fechaEntrega}">
+                    <s:convertDateTime type="date" dateStyle="short"/>
+                </h:outputText>
+            </rich:column>
+            <rich:column sortBy="#{_avaluo.valorRazonable}">
+                <f:facet name="header">Valor razonable</f:facet>
+                <h:outputText value="#{_avaluo.valorRazonable}"/>
+            </rich:column>
+            <rich:column sortBy="#{_avaluo.idAsesor}">
+                <f:facet name="header">Id asesor</f:facet>
+                <h:outputText value="#{_avaluo.idAsesor}"/>
+            </rich:column>
+            <rich:column sortBy="#{_avaluo.idGerente}">
+                <f:facet name="header">Id gerente</f:facet>
+                <h:outputText value="#{_avaluo.idGerente}"/>
+            </rich:column>
+            <h:column>
+                <f:facet name="header">Action</f:facet>
+                <s:link id="selectavaluo"
+                     value="Select"
+                      view="/Avaluo.xhtml">
+                    <f:param name="avaluoIdAvaluo"
+                            value="#{_avaluo.idAvaluo}"/>
+                    <f:param name="avaluoFrom" value="Activo"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </h:form>
+
+    <div class="actionButtons">
+        <s:button
+               value="Add avaluo"
+                view="/AvaluoEdit.xhtml">
+            <f:param name="activoIdActivo"
+                    value="#{activoHome.instance.idActivo}"/>
+            <f:param name="avaluoFrom" value="Activo"/>
+        </s:button>
+    </div>
+    </rich:tab>
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Tangible</h:panelGroup>
+        </f:facet>
+    <div class="association" id="tangibleParent">
+
+        <h:outputText value="There is no tangible associated with this activo."
+                   rendered="#{activoHome.instance.tangible == null}"/>
+
+        <rich:dataTable var="_tangible"
+                   value="#{activoHome.instance.tangible}"
+                rendered="#{activoHome.instance.tangible != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="tangibleTable">
+            <h:column>
+                <f:facet name="header">Id activo tan</f:facet>
+                <h:outputText value="#{_tangible.idActivoTan}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Activo id activo</f:facet>
+                <h:outputText value="#{_tangible.activo.idActivo}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Valor num</f:facet>
+                <h:outputText value="#{_tangible.valorNum}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Fecha adq</f:facet>
+                <h:outputText value="#{_tangible.fechaAdq}">
+                    <s:convertDateTime type="date" dateStyle="short"/>
+                </h:outputText>
+            </h:column>
+            <h:column styleClass="action">
+                <f:facet name="header">Action</f:facet>
+                <s:link id="viewtangible"
+                     value="View"
+                      view="/Tangible.xhtml">
+                    <f:param name="tangibleIdActivoTan"
+                           value="#{_tangible.idActivoTan}"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

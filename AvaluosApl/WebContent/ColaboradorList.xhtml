@@ -12,35 +12,30 @@
 
     <h:form id="colaboradorSearch" styleClass="edit">
 
-        <rich:simpleTogglePanel label="Colaborador Search Filter" switchType="ajax">
+        <rich:simpleTogglePanel label="Busqueda" switchType="ajax">
 
             <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Area conocim</ui:define>
-                <h:inputText id="areaConocim" value="#{colaboradorList.colaborador.areaConocim}"/>
-            </s:decorate>
-
-            <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Match</ui:define>
+                <ui:define name="label">Filtrar por</ui:define>
                 <h:selectOneRadio id="logic" value="#{colaboradorList.restrictionLogicOperator}" styleClass="radio">
-                    <f:selectItem itemLabel="All" itemValue="and"/>
-                    <f:selectItem itemLabel="Any" itemValue="or"/>
+                    <f:selectItem itemLabel="Todas" itemValue="and"/>
+                    <f:selectItem itemLabel="Algunas" itemValue="or"/>
                 </h:selectOneRadio>
             </s:decorate>
 
         </rich:simpleTogglePanel>
 
         <div class="actionButtons">
-            <h:commandButton id="search" value="Search" action="/ColaboradorList.xhtml"/>
-            <s:button id="reset" value="Reset" includePageParams="false"/>
+            <h:commandButton id="search" value="Buscar" action="/ColaboradorList.xhtml"/>
+            <s:button id="reset" value="Reiniciar" includePageParams="false"/>
         </div>
 
     </h:form>
 
     <rich:panel>
-        <f:facet name="header">Colaborador Search Results (#{empty colaboradorList.resultList ? 0 : (colaboradorList.paginated ? colaboradorList.resultCount : colaboradorList.resultList.size)})</f:facet>
+        <f:facet name="header">Colaboradores (#{empty colaboradorList.resultList ? 0 : (colaboradorList.paginated ? colaboradorList.resultCount : colaboradorList.resultList.size)})</f:facet>
     <div class="results" id="colaboradorList">
 
-    <h:outputText value="The colaborador search returned no results."
+    <h:outputText value="La busqueda no ha retornado resultados"
                rendered="#{empty colaboradorList.resultList}"/>
 
     <rich:dataTable id="colaboradorList"
@@ -51,7 +46,7 @@
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{colaboradorList}"/>
-                    <ui:param name="propertyLabel" value="Id colaborador persona"/>
+                    <ui:param name="propertyLabel" value="Id"/>
                     <ui:param name="propertyPath" value="colaborador.idColaboradorPersona"/>
                 </ui:include>
             </f:facet>
@@ -61,56 +56,56 @@
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{colaboradorList}"/>
-                    <ui:param name="propertyLabel" value="Tipo contrato id tipo contrato"/>
+                    <ui:param name="propertyLabel" value="Tipo de contrato"/>
                     <ui:param name="propertyPath" value="colaborador.tipoContrato.idTipoContrato"/>
                 </ui:include>
             </f:facet>
-            <h:outputText value="#{_colaborador.tipoContrato.idTipoContrato}"/>
+            <h:outputText value="#{_colaborador.tipoContrato.descripcion}"/>
         </h:column>
         <h:column>
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{colaboradorList}"/>
-                    <ui:param name="propertyLabel" value="Cargo id cargo"/>
+                    <ui:param name="propertyLabel" value="Area de conocimiento"/>
+                    <ui:param name="propertyPath" value="colaborador.areaConoc.idAreaConoc"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_colaborador.areaConoc.descripcion}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{colaboradorList}"/>
+                    <ui:param name="propertyLabel" value="Cargo"/>
                     <ui:param name="propertyPath" value="colaborador.cargo.idCargo"/>
                 </ui:include>
             </f:facet>
-            <h:outputText value="#{_colaborador.cargo.idCargo}"/>
+            <h:outputText value="#{_colaborador.cargo.descripcion}"/>
         </h:column>
         <h:column>
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{colaboradorList}"/>
-                    <ui:param name="propertyLabel" value="Persona id persona"/>
+                    <ui:param name="propertyLabel" value="Persona"/>
                     <ui:param name="propertyPath" value="colaborador.persona.idPersona"/>
                 </ui:include>
             </f:facet>
-            <h:outputText value="#{_colaborador.persona.idPersona}"/>
+            <h:outputText value="#{_colaborador.persona.nombres} #{_colaborador.persona.apellidos}"/>
         </h:column>
         <h:column>
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{colaboradorList}"/>
-                    <ui:param name="propertyLabel" value="Calificacion id calificacion"/>
+                    <ui:param name="propertyLabel" value="Calificacion"/>
                     <ui:param name="propertyPath" value="colaborador.calificacion.idCalificacion"/>
                 </ui:include>
             </f:facet>
-            <h:outputText value="#{_colaborador.calificacion.idCalificacion}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">
-                <ui:include src="layout/sort.xhtml">
-                    <ui:param name="entityList" value="#{colaboradorList}"/>
-                    <ui:param name="propertyLabel" value="Area conocim"/>
-                    <ui:param name="propertyPath" value="colaborador.areaConocim"/>
-                </ui:include>
-            </f:facet>
-            <h:outputText value="#{_colaborador.areaConocim}"/>
+            <h:outputText value="#{_colaborador.calificacion.descripcion}"/>
         </h:column>
         <rich:column styleClass="action">
-            <f:facet name="header">Action</f:facet>
+            <f:facet name="header">Acción</f:facet>
             <s:link view="/#{empty from ? 'Colaborador' : from}.xhtml"
-                   value="#{empty from ? 'View' : 'Select'}"
+                   value="#{empty from ? 'Ver' : 'Seleccionar'}"
              propagation="#{empty from ? 'none' : 'default'}"
                       id="colaboradorViewId">
                 <f:param name="colaboradorIdColaboradorPersona"
@@ -118,7 +113,7 @@
             </s:link>
             #{' '}
             <s:link view="/ColaboradorEdit.xhtml"
-                   value="Edit"
+                   value="Editar"
              propagation="none"
                       id="colaboradorEdit"
                 rendered="#{empty from}">
@@ -165,12 +160,12 @@
         </s:link>
 
     </div>
-
+    
     <s:div styleClass="actionButtons" rendered="#{empty from}">
         <s:button view="/ColaboradorEdit.xhtml"
                     id="create"
            propagation="none"
-                 value="Create colaborador">
+                 value="Crear colaborador">
             <f:param name="colaboradorIdColaboradorPersona"/>
         </s:button>
     </s:div>

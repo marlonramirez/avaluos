@@ -1,0 +1,17 @@
+#Tue Mar 24 22:43:21 COT 2015
+action.package=org.domain.prueba.session
+action.sources=/prueba-ejb/ejbModule
+eclipse.preferences.version=1
+model.package=org.domain.prueba.entity
+model.sources=/prueba-ejb/ejbModule
+seam.ear.project=prueba-ear
+seam.ejb.project=prueba-ejb
+seam.project.connection.profile=New MySQL
+seam.project.deployment.type=ear
+seam.project.settings.version=1.1
+seam.project.web.root.folder=/prueba/WebContent
+seam.runtime.name=jboss-seam-2.2.2.Final
+seam.test.creating=false
+seam.test.project=prueba-test
+test.package=org.domain.prueba.test
+test.sources=/prueba-test/test-src

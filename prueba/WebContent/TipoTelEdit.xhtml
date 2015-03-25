@@ -1,0 +1,115 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="tipoTel" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{tipoTelHome.managed ? 'Edit' : 'Add'} Tipo tel</f:facet>
+
+
+
+            <s:decorate id="descripcionField" template="layout/edit.xhtml">
+                <ui:define name="label">Descripcion</ui:define>
+                <h:inputText id="descripcion"
+                       required="true"
+                           size="100"
+                      maxlength="120"
+                          value="#{tipoTelHome.instance.descripcion}">
+                    <a:support event="onblur" reRender="descripcionField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{tipoTelHome.persist}"
+                       disabled="#{!tipoTelHome.wired}"
+                       rendered="#{!tipoTelHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{tipoTelHome.update}"
+                       rendered="#{tipoTelHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{tipoTelHome.remove}"
+                      immediate="true"
+                       rendered="#{tipoTelHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/TipoTel.xhtml"
+                rendered="#{tipoTelHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty tipoTelFrom ? 'TipoTelList' : tipoTelFrom}.xhtml"
+                rendered="#{!tipoTelHome.managed}"/>
+
+        </div>
+    </h:form>
+
+<rich:tabPanel switchType="ajax">
+
+    <rich:tab label="Telefonos">
+        <h:form styleClass="association" id="telefonosChildren">
+
+            <h:outputText value="There are no telefonos associated with this tipoTel."
+                       rendered="#{empty tipoTelHome.telefonos}"/>
+
+            <rich:dataTable value="#{tipoTelHome.telefonos}"
+                           var="_telefono"
+                      rendered="#{not empty tipoTelHome.telefonos}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="telefonosTable">
+                <rich:column sortBy="#{_telefono.idTelefono}">
+                    <f:facet name="header">Id telefono</f:facet>
+                    <h:outputText value="#{_telefono.idTelefono}"/>
+                </rich:column>
+                <rich:column sortBy="#{_telefono.numero}">
+                    <f:facet name="header">Numero</f:facet>
+                    <h:outputText value="#{_telefono.numero}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{tipoTelHome.managed}" id="telefonos">
+        <div class="actionButtons">
+            <s:button id="addtelefono"
+                   value="Add telefono"
+                    view="/TelefonoEdit.xhtml"
+             propagation="none">
+                 <f:param name="tipoTelIdTipoTel"
+                         value="#{tipoTelHome.instance.idTipoTel}"/>
+                 <f:param name="telefonoFrom" value="TipoTel"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

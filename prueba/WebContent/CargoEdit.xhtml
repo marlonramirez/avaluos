@@ -1,0 +1,111 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="cargo" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{cargoHome.managed ? 'Edit' : 'Add'} Cargo</f:facet>
+
+
+
+            <s:decorate id="descripcionField" template="layout/edit.xhtml">
+                <ui:define name="label">Descripcion</ui:define>
+                <h:inputText id="descripcion"
+                       required="true"
+                           size="60"
+                      maxlength="60"
+                          value="#{cargoHome.instance.descripcion}">
+                    <a:support event="onblur" reRender="descripcionField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{cargoHome.persist}"
+                       disabled="#{!cargoHome.wired}"
+                       rendered="#{!cargoHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{cargoHome.update}"
+                       rendered="#{cargoHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{cargoHome.remove}"
+                      immediate="true"
+                       rendered="#{cargoHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/Cargo.xhtml"
+                rendered="#{cargoHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty cargoFrom ? 'CargoList' : cargoFrom}.xhtml"
+                rendered="#{!cargoHome.managed}"/>
+
+        </div>
+    </h:form>
+
+<rich:tabPanel switchType="ajax">
+
+    <rich:tab label="Colaboradors">
+        <h:form styleClass="association" id="colaboradorsChildren">
+
+            <h:outputText value="There are no colaboradors associated with this cargo."
+                       rendered="#{empty cargoHome.colaboradors}"/>
+
+            <rich:dataTable value="#{cargoHome.colaboradors}"
+                           var="_colaborador"
+                      rendered="#{not empty cargoHome.colaboradors}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="colaboradorsTable">
+                <rich:column sortBy="#{_colaborador.idColaboradorPersona}">
+                    <f:facet name="header">Id colaborador persona</f:facet>
+                    <h:outputText value="#{_colaborador.idColaboradorPersona}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{cargoHome.managed}" id="colaboradors">
+        <div class="actionButtons">
+            <s:button id="addcolaborador"
+                   value="Add colaborador"
+                    view="/ColaboradorEdit.xhtml"
+             propagation="none">
+                 <f:param name="cargoIdCargo"
+                         value="#{cargoHome.instance.idCargo}"/>
+                 <f:param name="colaboradorFrom" value="Cargo"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

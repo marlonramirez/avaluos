@@ -1,0 +1,122 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <rich:panel>
+        <f:facet name="header">Permiso Details</f:facet>
+
+
+        <s:decorate id="estado" template="layout/display.xhtml">
+            <ui:define name="label">Estado</ui:define>
+            <h:outputText value="#{permisoHome.instance.estado}"/>
+        </s:decorate>
+
+        <div style="clear:both"/>
+
+    </rich:panel>
+
+    <div class="actionButtons">
+
+        <s:button view="/PermisoEdit.xhtml"
+                    id="edit"
+                 value="Edit"/>
+
+        <s:button view="/#{empty permisoFrom ? 'PermisoList' : permisoFrom}.xhtml"
+                    id="done"
+                 value="Done"/>
+
+    </div>
+
+    <rich:tabPanel switchType="ajax">
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Caso uso</h:panelGroup>
+        </f:facet>
+    <div class="association" id="casoUsoParent">
+
+        <h:outputText value="There is no casoUso associated with this permiso."
+                   rendered="#{permisoHome.instance.casoUso == null}"/>
+
+        <rich:dataTable var="_casoUso"
+                   value="#{permisoHome.instance.casoUso}"
+                rendered="#{permisoHome.instance.casoUso != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="casoUsoTable">
+            <h:column>
+                <f:facet name="header">Id caso uso</f:facet>
+                <h:outputText value="#{_casoUso.idCasoUso}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Codigo</f:facet>
+                <h:outputText value="#{_casoUso.codigo}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Descripcion</f:facet>
+                <h:outputText value="#{_casoUso.descripcion}"/>
+            </h:column>
+            <h:column styleClass="action">
+                <f:facet name="header">Action</f:facet>
+                <s:link id="viewcasoUso"
+                     value="View"
+                      view="/CasoUso.xhtml">
+                    <f:param name="casoUsoIdCasoUso"
+                           value="#{_casoUso.idCasoUso}"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Perfil</h:panelGroup>
+        </f:facet>
+    <div class="association" id="perfilParent">
+
+        <h:outputText value="There is no perfil associated with this permiso."
+                   rendered="#{permisoHome.instance.perfil == null}"/>
+
+        <rich:dataTable var="_perfil"
+                   value="#{permisoHome.instance.perfil}"
+                rendered="#{permisoHome.instance.perfil != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="perfilTable">
+            <h:column>
+                <f:facet name="header">Id perfil</f:facet>
+                <h:outputText value="#{_perfil.idPerfil}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Nombre</f:facet>
+                <h:outputText value="#{_perfil.nombre}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Estado</f:facet>
+                <h:outputText value="#{_perfil.estado}"/>
+            </h:column>
+            <h:column styleClass="action">
+                <f:facet name="header">Action</f:facet>
+                <s:link id="viewperfil"
+                     value="View"
+                      view="/Perfil.xhtml">
+                    <f:param name="perfilIdPerfil"
+                           value="#{_perfil.idPerfil}"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

@@ -1,6 +1,6 @@
 package org.domain.avaluosapl.entity;
 
-// Generated 14/03/2015 10:40:33 PM by Hibernate Tools 3.4.0.CR1
+// Generated 24/03/2015 11:16:57 PM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,7 +28,6 @@ public class Usuario implements java.io.Serializable {
 	private int idUsuarioPersona;
 	private Persona persona;
 	private Perfil perfil;
-	private TipoUsuario tipoUsuario;
 	private String login;
 	private String clave;
 	private byte estado;
@@ -36,11 +35,10 @@ public class Usuario implements java.io.Serializable {
 	public Usuario() {
 	}
 
-	public Usuario(Persona persona, Perfil perfil, TipoUsuario tipoUsuario,
-			String login, String clave, byte estado) {
+	public Usuario(Persona persona, Perfil perfil, String login, String clave,
+			byte estado) {
 		this.persona = persona;
 		this.perfil = perfil;
-		this.tipoUsuario = tipoUsuario;
 		this.login = login;
 		this.clave = clave;
 		this.estado = estado;
@@ -78,17 +76,6 @@ public class Usuario implements java.io.Serializable {
 
 	public void setPerfil(Perfil perfil) {
 		this.perfil = perfil;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_tipo_usuario_usr", nullable = false)
-	@NotNull
-	public TipoUsuario getTipoUsuario() {
-		return this.tipoUsuario;
-	}
-
-	public void setTipoUsuario(TipoUsuario tipoUsuario) {
-		this.tipoUsuario = tipoUsuario;
 	}
 
 	@Column(name = "login", unique = true, nullable = false, length = 60)

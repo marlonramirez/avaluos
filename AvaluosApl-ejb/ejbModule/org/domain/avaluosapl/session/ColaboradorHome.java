@@ -13,6 +13,8 @@ public class ColaboradorHome extends EntityHome<Colaborador> {
 	@In(create = true)
 	TipoContratoHome tipoContratoHome;
 	@In(create = true)
+	AreaConocHome areaConocHome;
+	@In(create = true)
 	CargoHome cargoHome;
 	@In(create = true)
 	PersonaHome personaHome;
@@ -45,6 +47,10 @@ public class ColaboradorHome extends EntityHome<Colaborador> {
 		if (tipoContrato != null) {
 			getInstance().setTipoContrato(tipoContrato);
 		}
+		AreaConoc areaConoc = areaConocHome.getDefinedInstance();
+		if (areaConoc != null) {
+			getInstance().setAreaConoc(areaConoc);
+		}
 		Cargo cargo = cargoHome.getDefinedInstance();
 		if (cargo != null) {
 			getInstance().setCargo(cargo);
@@ -61,6 +67,8 @@ public class ColaboradorHome extends EntityHome<Colaborador> {
 
 	public boolean isWired() {
 		if (getInstance().getTipoContrato() == null)
+			return false;
+		if (getInstance().getAreaConoc() == null)
 			return false;
 		if (getInstance().getCargo() == null)
 			return false;

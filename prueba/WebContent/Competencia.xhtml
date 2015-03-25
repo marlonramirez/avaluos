@@ -1,0 +1,98 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <rich:panel>
+        <f:facet name="header">Competencia Details</f:facet>
+
+        <s:decorate id="idCompetencia" template="layout/display.xhtml">
+            <ui:define name="label">Id competencia</ui:define>
+            <h:outputText value="#{competenciaHome.instance.idCompetencia}"/>
+        </s:decorate>
+
+        <s:decorate id="descripcion" template="layout/display.xhtml">
+            <ui:define name="label">Descripcion</ui:define>
+            <h:outputText value="#{competenciaHome.instance.descripcion}"/>
+        </s:decorate>
+
+        <div style="clear:both"/>
+
+    </rich:panel>
+
+    <div class="actionButtons">
+
+        <s:button view="/CompetenciaEdit.xhtml"
+                    id="edit"
+                 value="Edit"/>
+
+        <s:button view="/#{empty competenciaFrom ? 'CompetenciaList' : competenciaFrom}.xhtml"
+                    id="done"
+                 value="Done"/>
+
+    </div>
+
+    <rich:tabPanel switchType="ajax">
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Colaborador</h:panelGroup>
+        </f:facet>
+    <div class="association" id="colaboradorParent">
+
+        <h:outputText value="There is no colaborador associated with this competencia."
+                   rendered="#{competenciaHome.instance.colaborador == null}"/>
+
+        <rich:dataTable var="_colaborador"
+                   value="#{competenciaHome.instance.colaborador}"
+                rendered="#{competenciaHome.instance.colaborador != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="colaboradorTable">
+            <h:column>
+                <f:facet name="header">Id colaborador persona</f:facet>
+                <h:outputText value="#{_colaborador.idColaboradorPersona}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Tipo contrato id tipo contrato</f:facet>
+                <h:outputText value="#{_colaborador.tipoContrato.idTipoContrato}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Area conoc id area conoc</f:facet>
+                <h:outputText value="#{_colaborador.areaConoc.idAreaConoc}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Cargo id cargo</f:facet>
+                <h:outputText value="#{_colaborador.cargo.idCargo}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Persona id persona</f:facet>
+                <h:outputText value="#{_colaborador.persona.idPersona}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Calificacion id calificacion</f:facet>
+                <h:outputText value="#{_colaborador.calificacion.idCalificacion}"/>
+            </h:column>
+            <h:column styleClass="action">
+                <f:facet name="header">Action</f:facet>
+                <s:link id="viewcolaborador"
+                     value="View"
+                      view="/Colaborador.xhtml">
+                    <f:param name="colaboradorIdColaboradorPersona"
+                           value="#{_colaborador.idColaboradorPersona}"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

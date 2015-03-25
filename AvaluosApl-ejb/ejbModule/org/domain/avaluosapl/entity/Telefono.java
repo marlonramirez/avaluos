@@ -1,13 +1,12 @@
 package org.domain.avaluosapl.entity;
 
-// Generated 14/03/2015 10:40:33 PM by Hibernate Tools 3.4.0.CR1
-
-import static javax.persistence.GenerationType.IDENTITY;
+// Generated 24/03/2015 11:16:57 PM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -30,8 +29,7 @@ public class Telefono implements java.io.Serializable {
 	public Telefono() {
 	}
 
-	public Telefono(TipoTel tipoTel, Persona persona,
-			String numero) {
+	public Telefono(TipoTel tipoTel, Persona persona, String numero) {
 		this.tipoTel = tipoTel;
 		this.persona = persona;
 		this.numero = numero;

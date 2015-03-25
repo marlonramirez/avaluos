@@ -17,107 +17,16 @@
             <f:facet name="header">#{usuarioHome.managed ? 'Editar' : 'Agregar'} Usuario</f:facet>
 
 
-
-
-
-
-            <s:decorate id="loginField" template="layout/edit.xhtml">
-                <ui:define name="label">Login</ui:define>
-                <h:inputText id="login"
-                       required="true"
-                           size="60"
-                      maxlength="60"
-                          value="#{usuarioHome.instance.login}">
-                    <a:support event="onblur" reRender="loginField" bypassUpdates="true" ajaxSingle="true"/>
-                </h:inputText>
-            </s:decorate>
-
-
-            <s:decorate id="claveField" template="layout/edit.xhtml">
-                <ui:define name="label">Clave</ui:define>
-                <h:inputText id="clave"
-                       required="true"
-                           size="40"
-                      maxlength="40"
-                          value="#{usuarioHome.instance.clave}">
-                    <a:support event="onblur" reRender="claveField" bypassUpdates="true" ajaxSingle="true"/>
-                </h:inputText>
-            </s:decorate>
-
-
-            <s:decorate id="estadoField" template="layout/edit.xhtml">
-                <ui:define name="label">Estado</ui:define>
-                <h:selectOneMenu id="subscriptions"
-                     value="#{subscriptionController.subscriptions}">
-			        <f:selectItem id="item1" itemLabel="Activo" itemValue="1" />
-			        <f:selectItem id="item2" itemLabel="Inactivo" itemValue="0" />
-			    </h:selectOneMenu>
-            </s:decorate>
-
-            <div style="clear:both">
-                <span class="required">*</span>
-                required fields
-            </div>
-
-        </rich:panel>
-
-        <div class="actionButtons">
-
-            <h:commandButton id="save"
-                          value="Save"
-                         action="#{usuarioHome.persist}"
-                       disabled="#{!usuarioHome.wired}"
-                       rendered="#{!usuarioHome.managed}"/>
-
-            <h:commandButton id="update"
-                          value="Save"
-                         action="#{usuarioHome.update}"
-                       rendered="#{usuarioHome.managed}"/>
-
-            <h:commandButton id="delete"
-                          value="Delete"
-                         action="#{usuarioHome.remove}"
-                      immediate="true"
-                       rendered="#{usuarioHome.managed}"/>
-
-            <s:button id="cancelEdit"
-                   value="Cancel"
-             propagation="end"
-                    view="/Usuario.xhtml"
-                rendered="#{usuarioHome.managed}"/>
-
-            <s:button id="cancelAdd"
-                   value="Cancel"
-             propagation="end"
-                    view="/#{empty usuarioFrom ? 'UsuarioList' : usuarioFrom}.xhtml"
-                rendered="#{!usuarioHome.managed}"/>
-
-        </div>
-    </h:form>
-
-<rich:tabPanel switchType="ajax">
-
-    <rich:tab label="Persona *" labelClass="required">
-    <div class="association" id="personaParent">
-
-        <h:outputText value="There is no persona associated with this usuario."
-                   rendered="#{usuarioHome.instance.persona == null}"/>
-
-        <rich:dataTable var="_persona"
+			<rich:dataTable var="_persona"
                    value="#{usuarioHome.instance.persona}"
-                rendered="#{usuarioHome.instance.persona != null}"
               rowClasses="rvgRowOne,rvgRowTwo"
                       id="personaTable">
             <h:column>
-                <f:facet name="header">Id persona</f:facet>
-                <h:outputText value="#{_persona.idPersona}"/>
+                <f:facet name="header">Tipo de documento</f:facet>
+                <h:outputText value="#{_persona.tipoDoc.descripcion}"/>
             </h:column>
             <h:column>
-                <f:facet name="header">Tipo doc id tipo doc</f:facet>
-                <h:outputText value="#{_persona.tipoDoc.idTipoDoc}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Num doc</f:facet>
+                <f:facet name="header">Número de documento</f:facet>
                 <h:outputText value="#{_persona.numDoc}"/>
             </h:column>
             <h:column>
@@ -132,96 +41,107 @@
                 <f:facet name="header">Email</f:facet>
                 <h:outputText value="#{_persona.email}"/>
             </h:column>
-            <h:column>
-                <f:facet name="header">Cliente id cliente persona</f:facet>
-                <h:outputText value="#{_persona.cliente.idClientePersona}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Usuario id usuario persona</f:facet>
-                <h:outputText value="#{_persona.usuario.idUsuarioPersona}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Colaborador id colaborador persona</f:facet>
-                <h:outputText value="#{_persona.colaborador.idColaboradorPersona}"/>
-            </h:column>
+            <rich:column styleClass="action">
+            	<f:facet name="header">Buscar</f:facet>
+				<s:link id="searchPersona" view="/PersonaList.xhtml">
+					<h:graphicImage value="/img/search.png" />
+	                <f:param name="from" value="UsuarioEdit"/>
+	            </s:link>
+            </rich:column>
         </rich:dataTable>
 
-        <div class="actionButtons">
-            <s:button id="#{usuarioHome.instance.persona != null ? 'changeParentPersona' : 'selectParentPersona'}" value="#{usuarioHome.instance.persona != null ? 'Change' : 'Select'} persona"
-                       view="/PersonaList.xhtml">
-                <f:param name="from" value="UsuarioEdit"/>
-            </s:button>
-        </div>
+			<h:panelGrid>
+	            <s:decorate id="loginField" template="layout/edit.xhtml">
+	                <ui:define name="label">Login</ui:define>
+	                <h:inputText id="login"
+	                       required="true"
+	                           size="60"
+	                      maxlength="60"
+	                          value="#{usuarioHome.instance.login}">
+	                    <a:support event="onblur" reRender="loginField" bypassUpdates="true" ajaxSingle="true"/>
+	                </h:inputText>
+	            </s:decorate>
+	
+	
+	            <s:decorate id="claveField" template="layout/edit.xhtml">
+	                <ui:define name="label">Clave</ui:define>
+	                <h:inputText id="clave"
+	                       required="true"
+	                           size="40"
+	                      maxlength="40"
+	                          value="#{usuarioHome.instance.clave}">
+	                    <a:support event="onblur" reRender="claveField" bypassUpdates="true" ajaxSingle="true"/>
+	                </h:inputText>
+	            </s:decorate>
+	        </h:panelGrid>
 
-    </div>
-    </rich:tab>
+			<h:panelGrid columns="2">
+				<s:decorate id="perfilField" template="layout/edit.xhtml">
+	                <ui:define name="label">Perfil</ui:define>
+	                <h:selectOneMenu id="perfil" required="true"
+	                     value="#{usuarioHome.instance.perfil}">
+	                     <s:selectItems value="#{perfilList.perfilesActivos}"
+		                  var="_perfil" label="#{_perfil.nombre}" 
+		                  noSelectionLabel="--SELECCIONAR--" />
+		                <s:convertEntity />
+		                <a:support event="onchange" reRender="perfilField,save" ajaxSingle="true"/>
+		              </h:selectOneMenu>
+	            </s:decorate>
+			
+	            <s:decorate id="estadoField" template="layout/edit.xhtml">
+	                <ui:define name="label">Estado</ui:define>
+	                <ui:param name="next" value="true" />
+	                <h:selectOneMenu id="estado"
+	                     value="#{usuarioHome.instance.estado}">
+	                    <f:selectItem id="item2" itemLabel="Inactivo" itemValue="0" />
+				        <f:selectItem id="item1" itemLabel="Activo" itemValue="1" />
+				        <a:support event="onchange" reRender="estadoField" ajaxSingle="true"/>
+				    </h:selectOneMenu>
+	            </s:decorate>
+	            
+	        </h:panelGrid>
 
-    <rich:tab label="Perfil *" labelClass="required">
-    <div class="association" id="perfilParent">
+            <div style="clear:both">
+                <span class="required">*</span>
+                Campos requeridos
+            </div>
 
-        <h:outputText value="There is no perfil associated with this usuario."
-                   rendered="#{usuarioHome.instance.perfil == null}"/>
-
-        <rich:dataTable var="_perfil"
-                   value="#{usuarioHome.instance.perfil}"
-                rendered="#{usuarioHome.instance.perfil != null}"
-              rowClasses="rvgRowOne,rvgRowTwo"
-                      id="perfilTable">
-            <h:column>
-                <f:facet name="header">Id perfil</f:facet>
-                <h:outputText value="#{_perfil.idPerfil}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Nombre</f:facet>
-                <h:outputText value="#{_perfil.nombre}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Estado</f:facet>
-                <h:outputText value="#{_perfil.estado}"/>
-            </h:column>
-        </rich:dataTable>
-
-        <div class="actionButtons">
-            <s:button id="#{usuarioHome.instance.perfil != null ? 'changeParentPerfil' : 'selectParentPerfil'}" value="#{usuarioHome.instance.perfil != null ? 'Change' : 'Select'} perfil"
-                       view="/PerfilList.xhtml">
-                <f:param name="from" value="UsuarioEdit"/>
-            </s:button>
-        </div>
-
-    </div>
-    </rich:tab>
-
-    <rich:tab label="Tipo usuario *" labelClass="required">
-    <div class="association" id="tipoUsuarioParent">
-
-        <h:outputText value="There is no tipoUsuario associated with this usuario."
-                   rendered="#{usuarioHome.instance.tipoUsuario == null}"/>
-
-        <rich:dataTable var="_tipoUsuario"
-                   value="#{usuarioHome.instance.tipoUsuario}"
-                rendered="#{usuarioHome.instance.tipoUsuario != null}"
-              rowClasses="rvgRowOne,rvgRowTwo"
-                      id="tipoUsuarioTable">
-            <h:column>
-                <f:facet name="header">Id tipo usuario</f:facet>
-                <h:outputText value="#{_tipoUsuario.idTipoUsuario}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Descripcion</f:facet>
-                <h:outputText value="#{_tipoUsuario.descripcion}"/>
-            </h:column>
-        </rich:dataTable>
+        </rich:panel>
 
         <div class="actionButtons">
-            <s:button id="#{usuarioHome.instance.tipoUsuario != null ? 'changeParentTipoUsuario' : 'selectParentTipoUsuario'}" value="#{usuarioHome.instance.tipoUsuario != null ? 'Change' : 'Select'} tipoUsuario"
-                       view="/TipoUsuarioList.xhtml">
-                <f:param name="from" value="UsuarioEdit"/>
-            </s:button>
-        </div>
 
-    </div>
-    </rich:tab>
-</rich:tabPanel>
+            <h:commandButton id="save"
+                          value="Guardar"
+                         action="#{usuarioHome.persist}"
+                       disabled="#{!usuarioHome.wired}"
+                       rendered="#{!usuarioHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Guardar"
+                         action="#{usuarioHome.update}"
+                       rendered="#{usuarioHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Eliminar"
+                         action="#{usuarioHome.remove}"
+                      immediate="true"
+                       rendered="#{usuarioHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancelar"
+             propagation="end"
+                    view="/Usuario.xhtml"
+                rendered="#{usuarioHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancelar"
+             propagation="end"
+                    view="/#{empty usuarioFrom ? 'UsuarioList' : usuarioFrom}.xhtml"
+                rendered="#{!usuarioHome.managed}"/>
+
+        </div>
+    </h:form>
+    
 </ui:define>
 
 </ui:composition>

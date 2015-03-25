@@ -1,6 +1,6 @@
 package org.domain.avaluosapl.entity;
 
-// Generated 14/03/2015 10:40:33 PM by Hibernate Tools 3.4.0.CR1
+// Generated 24/03/2015 11:16:57 PM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,8 +23,8 @@ import org.hibernate.validator.NotNull;
 public class PersonaJuridica implements java.io.Serializable {
 
 	private Integer idPersonaJuridica;
-	private AEconomica AEconomica;
 	private Cliente cliente;
+	private ActEconomica actEconomica;
 	private String nit;
 	private String razonSocial;
 	private String nombreComercial;
@@ -32,10 +32,10 @@ public class PersonaJuridica implements java.io.Serializable {
 	public PersonaJuridica() {
 	}
 
-	public PersonaJuridica(AEconomica AEconomica, Cliente cliente, String nit,
-			String razonSocial, String nombreComercial) {
-		this.AEconomica = AEconomica;
+	public PersonaJuridica(Cliente cliente, ActEconomica actEconomica,
+			String nit, String razonSocial, String nombreComercial) {
 		this.cliente = cliente;
+		this.actEconomica = actEconomica;
 		this.nit = nit;
 		this.razonSocial = razonSocial;
 		this.nombreComercial = nombreComercial;
@@ -53,17 +53,6 @@ public class PersonaJuridica implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_a_economica_pj", nullable = false)
-	@NotNull
-	public AEconomica getAEconomica() {
-		return this.AEconomica;
-	}
-
-	public void setAEconomica(AEconomica AEconomica) {
-		this.AEconomica = AEconomica;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_responsable", nullable = false)
 	@NotNull
 	public Cliente getCliente() {
@@ -72,6 +61,17 @@ public class PersonaJuridica implements java.io.Serializable {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_act_economica", nullable = false)
+	@NotNull
+	public ActEconomica getActEconomica() {
+		return this.actEconomica;
+	}
+
+	public void setActEconomica(ActEconomica actEconomica) {
+		this.actEconomica = actEconomica;
 	}
 
 	@Column(name = "NIT", unique = true, nullable = false, length = 25)

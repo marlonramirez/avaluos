@@ -11,7 +11,7 @@
 <ui:define name="body">
 
     <rich:panel>
-        <f:facet name="header">Perfil Details</f:facet>
+        <f:facet name="header">Detalles del Perfil</f:facet>
 
 
         <s:decorate id="nombre" template="layout/display.xhtml">
@@ -21,7 +21,7 @@
 
         <s:decorate id="estado" template="layout/display.xhtml">
             <ui:define name="label">Estado</ui:define>
-            <h:outputText value="#{perfilHome.instance.estado}"/>
+            <h:outputText value="#{perfilHome.instance.estado == 1? 'Activo': 'Inactivo'}"/>
         </s:decorate>
 
         <div style="clear:both"/>
@@ -32,11 +32,11 @@
 
         <s:button view="/PerfilEdit.xhtml"
                     id="edit"
-                 value="Edit"/>
+                 value="Editar"/>
 
         <s:button view="/#{empty perfilFrom ? 'PerfilList' : perfilFrom}.xhtml"
                     id="done"
-                 value="Done"/>
+                 value="Aceptar"/>
 
     </div>
 
@@ -89,60 +89,6 @@
     </div>
     </rich:tab>
 
-    <rich:tab>
-        <f:facet name="label">
-            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Usuarios</h:panelGroup>
-        </f:facet>
-    <h:form styleClass="association" id="usuariosChildren">
-
-        <h:outputText value="There are no usuarios associated with this perfil."
-                   rendered="#{empty perfilHome.usuarios}"/>
-
-        <rich:dataTable value="#{perfilHome.usuarios}"
-                       var="_usuario"
-                  rendered="#{not empty perfilHome.usuarios}"
-                rowClasses="rvgRowOne,rvgRowTwo"
-                        id="usuariosTable">
-            <rich:column sortBy="#{_usuario.idUsuarioPersona}">
-                <f:facet name="header">Id usuario persona</f:facet>
-                <h:outputText value="#{_usuario.idUsuarioPersona}"/>
-            </rich:column>
-            <rich:column sortBy="#{_usuario.login}">
-                <f:facet name="header">Login</f:facet>
-                <h:outputText value="#{_usuario.login}"/>
-            </rich:column>
-            <rich:column sortBy="#{_usuario.clave}">
-                <f:facet name="header">Clave</f:facet>
-                <h:outputText value="#{_usuario.clave}"/>
-            </rich:column>
-            <rich:column sortBy="#{_usuario.estado}">
-                <f:facet name="header">Estado</f:facet>
-                <h:outputText value="#{_usuario.estado}"/>
-            </rich:column>
-            <h:column>
-                <f:facet name="header">Action</f:facet>
-                <s:link id="selectusuario"
-                     value="Select"
-                      view="/Usuario.xhtml">
-                    <f:param name="usuarioIdUsuarioPersona"
-                            value="#{_usuario.idUsuarioPersona}"/>
-                    <f:param name="usuarioFrom" value="Perfil"/>
-                </s:link>
-            </h:column>
-        </rich:dataTable>
-
-    </h:form>
-
-    <div class="actionButtons">
-        <s:button
-               value="Add usuario"
-                view="/UsuarioEdit.xhtml">
-            <f:param name="perfilIdPerfil"
-                    value="#{perfilHome.instance.idPerfil}"/>
-            <f:param name="usuarioFrom" value="Perfil"/>
-        </s:button>
-    </div>
-    </rich:tab>
 </rich:tabPanel>
 </ui:define>
 

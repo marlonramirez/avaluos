@@ -10,7 +10,7 @@ public class ColaboradorList extends EntityQuery<Colaborador> {
 
 	private static final String EJBQL = "select colaborador from Colaborador colaborador";
 
-	private static final String[] RESTRICTIONS = { "lower(colaborador.areaConocim) like lower(concat(#{colaboradorList.colaborador.areaConocim},'%'))", };
+	private static final String[] RESTRICTIONS = {};
 
 	private Colaborador colaborador = new Colaborador();
 

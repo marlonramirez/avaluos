@@ -12,7 +12,7 @@
 
     <h:form id="perfilSearch" styleClass="edit">
 
-        <rich:simpleTogglePanel label="Perfil Search Filter" switchType="ajax">
+        <rich:simpleTogglePanel label="Busqueda" switchType="ajax">
 
             <s:decorate template="layout/display.xhtml">
                 <ui:define name="label">Nombre</ui:define>
@@ -20,27 +20,27 @@
             </s:decorate>
 
             <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Match</ui:define>
+                <ui:define name="label">Filtrar por</ui:define>
                 <h:selectOneRadio id="logic" value="#{perfilList.restrictionLogicOperator}" styleClass="radio">
-                    <f:selectItem itemLabel="All" itemValue="and"/>
-                    <f:selectItem itemLabel="Any" itemValue="or"/>
+                    <f:selectItem itemLabel="Todas" itemValue="and"/>
+                    <f:selectItem itemLabel="Algunas" itemValue="or"/>
                 </h:selectOneRadio>
             </s:decorate>
 
         </rich:simpleTogglePanel>
 
         <div class="actionButtons">
-            <h:commandButton id="search" value="Search" action="/PerfilList.xhtml"/>
-            <s:button id="reset" value="Reset" includePageParams="false"/>
+            <h:commandButton id="search" value="Buscar" action="/PerfilList.xhtml"/>
+            <s:button id="reset" value="Reiniciar" includePageParams="false"/>
         </div>
 
     </h:form>
 
     <rich:panel>
-        <f:facet name="header">Perfil Search Results (#{empty perfilList.resultList ? 0 : (perfilList.paginated ? perfilList.resultCount : perfilList.resultList.size)})</f:facet>
+        <f:facet name="header">Perfiles (#{empty perfilList.resultList ? 0 : (perfilList.paginated ? perfilList.resultCount : perfilList.resultList.size)})</f:facet>
     <div class="results" id="perfilList">
 
-    <h:outputText value="The perfil search returned no results."
+    <h:outputText value="La busqueda no ha retornado resultados."
                rendered="#{empty perfilList.resultList}"/>
 
     <rich:dataTable id="perfilList"
@@ -75,12 +75,12 @@
                     <ui:param name="propertyPath" value="perfil.estado"/>
                 </ui:include>
             </f:facet>
-            <h:outputText value="#{_perfil.estado}"/>
+            <h:outputText value="#{_perfil.estado == 1?'Activo':'Inactivo'}"/>
         </h:column>
         <rich:column styleClass="action">
-            <f:facet name="header">Action</f:facet>
+            <f:facet name="header">Acción</f:facet>
             <s:link view="/#{empty from ? 'Perfil' : from}.xhtml"
-                   value="#{empty from ? 'View' : 'Select'}"
+                   value="#{empty from ? 'Ver' : 'Seleccionar'}"
              propagation="#{empty from ? 'none' : 'default'}"
                       id="perfilViewId">
                 <f:param name="perfilIdPerfil"
@@ -88,7 +88,7 @@
             </s:link>
             #{' '}
             <s:link view="/PerfilEdit.xhtml"
-                   value="Edit"
+                   value="Editar"
              propagation="none"
                       id="perfilEdit"
                 rendered="#{empty from}">
@@ -140,7 +140,7 @@
         <s:button view="/PerfilEdit.xhtml"
                     id="create"
            propagation="none"
-                 value="Create perfil">
+                 value="Crear perfil">
             <f:param name="perfilIdPerfil"/>
         </s:button>
     </s:div>

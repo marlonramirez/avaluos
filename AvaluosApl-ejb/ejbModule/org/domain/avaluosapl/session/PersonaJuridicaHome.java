@@ -9,9 +9,9 @@ import org.jboss.seam.framework.EntityHome;
 public class PersonaJuridicaHome extends EntityHome<PersonaJuridica> {
 
 	@In(create = true)
-	AEconomicaHome aEconomicaHome;
-	@In(create = true)
 	ClienteHome clienteHome;
+	@In(create = true)
+	ActEconomicaHome actEconomicaHome;
 
 	public void setPersonaJuridicaIdPersonaJuridica(Integer id) {
 		setId(id);
@@ -35,20 +35,20 @@ public class PersonaJuridicaHome extends EntityHome<PersonaJuridica> {
 
 	public void wire() {
 		getInstance();
-		AEconomica AEconomica = aEconomicaHome.getDefinedInstance();
-		if (AEconomica != null) {
-			getInstance().setAEconomica(AEconomica);
-		}
 		Cliente cliente = clienteHome.getDefinedInstance();
 		if (cliente != null) {
 			getInstance().setCliente(cliente);
 		}
+		ActEconomica actEconomica = actEconomicaHome.getDefinedInstance();
+		if (actEconomica != null) {
+			getInstance().setActEconomica(actEconomica);
+		}
 	}
 
 	public boolean isWired() {
-		if (getInstance().getAEconomica() == null)
-			return false;
 		if (getInstance().getCliente() == null)
+			return false;
+		if (getInstance().getActEconomica() == null)
 			return false;
 		return true;
 	}

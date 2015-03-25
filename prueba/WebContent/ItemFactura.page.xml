@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.com/products/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.2.xsd">
+
+   <param name="itemFacturaFrom"/>
+   <param name="itemFacturaIdItemAvaluoFac" value="#{itemFacturaHome.itemFacturaIdItemAvaluoFac}"/>
+   <param name="facturaFrom"/>
+   <param name="facturaIdFactura" value="#{facturaHome.facturaIdFactura}"/>
+   <param name="formaPagoFrom"/>
+   <param name="formaPagoIdFormaPago" value="#{formaPagoHome.formaPagoIdFormaPago}"/>
+
+   <param name="ciudadFrom"/>
+   <param name="ciudadCiudadId" value="#{ciudadHome.ciudadCiudadId}"/>
+
+
+   <param name="itemAvaluoFrom"/>
+   <param name="itemAvaluoIdItemAvaluo" value="#{itemAvaluoHome.itemAvaluoIdItemAvaluo}"/>
+   <param name="conceptoFrom"/>
+   <param name="conceptoIdConcepto" value="#{conceptoHome.conceptoIdConcepto}"/>
+
+   <param name="avaluoFrom"/>
+   <param name="avaluoIdAvaluo" value="#{avaluoHome.avaluoIdAvaluo}"/>
+   <param name="activoFrom"/>
+   <param name="activoIdActivo" value="#{activoHome.activoIdActivo}"/>
+   <param name="tangibleFrom"/>
+   <param name="tangibleIdActivoTan" value="#{tangibleHome.tangibleIdActivoTan}"/>
+
+
+
+
+
+
+</page>

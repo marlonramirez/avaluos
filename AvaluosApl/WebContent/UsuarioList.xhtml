@@ -56,7 +56,7 @@
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{usuarioList}"/>
-                    <ui:param name="propertyLabel" value="Id usuario persona"/>
+                    <ui:param name="propertyLabel" value="Id"/>
                     <ui:param name="propertyPath" value="usuario.idUsuarioPersona"/>
                 </ui:include>
             </f:facet>
@@ -66,31 +66,21 @@
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{usuarioList}"/>
-                    <ui:param name="propertyLabel" value="Persona id persona"/>
+                    <ui:param name="propertyLabel" value="Persona"/>
                     <ui:param name="propertyPath" value="usuario.persona.idPersona"/>
                 </ui:include>
             </f:facet>
-            <h:outputText value="#{_usuario.persona.idPersona}"/>
+            <h:outputText value="#{_usuario.persona.nombres} #{_usuario.persona.apellidos}"/>
         </h:column>
         <h:column>
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{usuarioList}"/>
-                    <ui:param name="propertyLabel" value="Perfil id perfil"/>
+                    <ui:param name="propertyLabel" value="Perfil"/>
                     <ui:param name="propertyPath" value="usuario.perfil.idPerfil"/>
                 </ui:include>
             </f:facet>
-            <h:outputText value="#{_usuario.perfil.idPerfil}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">
-                <ui:include src="layout/sort.xhtml">
-                    <ui:param name="entityList" value="#{usuarioList}"/>
-                    <ui:param name="propertyLabel" value="Tipo usuario id tipo usuario"/>
-                    <ui:param name="propertyPath" value="usuario.tipoUsuario.idTipoUsuario"/>
-                </ui:include>
-            </f:facet>
-            <h:outputText value="#{_usuario.tipoUsuario.idTipoUsuario}"/>
+            <h:outputText value="#{_usuario.perfil.nombre}"/>
         </h:column>
         <h:column>
             <f:facet name="header">
@@ -120,12 +110,12 @@
                     <ui:param name="propertyPath" value="usuario.estado"/>
                 </ui:include>
             </f:facet>
-            <h:outputText value="#{_usuario.estado}"/>
+            <h:outputText value="#{_usuario.estado==1?'Activo':'Inactivo'}"/>
         </h:column>
         <rich:column styleClass="action">
-            <f:facet name="header">Action</f:facet>
+            <f:facet name="header">Acción</f:facet>
             <s:link view="/#{empty from ? 'Usuario' : from}.xhtml"
-                   value="#{empty from ? 'View' : 'Select'}"
+                   value="#{empty from ? 'Ver' : 'Seleccionar'}"
              propagation="#{empty from ? 'none' : 'default'}"
                       id="usuarioViewId">
                 <f:param name="usuarioIdUsuarioPersona"
@@ -133,7 +123,7 @@
             </s:link>
             #{' '}
             <s:link view="/UsuarioEdit.xhtml"
-                   value="Edit"
+                   value="Editar"
              propagation="none"
                       id="usuarioEdit"
                 rendered="#{empty from}">

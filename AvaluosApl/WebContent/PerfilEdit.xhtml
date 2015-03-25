@@ -32,18 +32,19 @@
 
             <s:decorate id="estadoField" template="layout/edit.xhtml">
                 <ui:define name="label">Estado</ui:define>
-                <h:inputText id="estado"
-                       required="true"
-                          value="#{perfilHome.instance.estado}">
-                    <a:support event="onblur" reRender="estadoField" bypassUpdates="true" ajaxSingle="true"/>
-                </h:inputText>
+                <h:selectOneMenu id="estado"
+                     value="#{perfilHome.instance.estado}">
+                    <f:selectItem id="item2" itemLabel="Inactivo" itemValue="0" />
+			        <f:selectItem id="item1" itemLabel="Activo" itemValue="1" />
+			        <a:support event="onchange" reRender="estadoField" ajaxSingle="true"/>
+			    </h:selectOneMenu>
             </s:decorate>
 
 
 
             <div style="clear:both">
                 <span class="required">*</span>
-                required fields
+                Campos requeridos
             </div>
 
         </rich:panel>
@@ -51,30 +52,30 @@
         <div class="actionButtons">
 
             <h:commandButton id="save"
-                          value="Save"
+                          value="Guardar"
                          action="#{perfilHome.persist}"
                        disabled="#{!perfilHome.wired}"
                        rendered="#{!perfilHome.managed}"/>
 
             <h:commandButton id="update"
-                          value="Save"
+                          value="Guardar"
                          action="#{perfilHome.update}"
                        rendered="#{perfilHome.managed}"/>
 
             <h:commandButton id="delete"
-                          value="Delete"
+                          value="Eliminar"
                          action="#{perfilHome.remove}"
                       immediate="true"
                        rendered="#{perfilHome.managed}"/>
 
             <s:button id="cancelEdit"
-                   value="Cancel"
+                   value="Cancelar"
              propagation="end"
                     view="/Perfil.xhtml"
                 rendered="#{perfilHome.managed}"/>
 
             <s:button id="cancelAdd"
-                   value="Cancel"
+                   value="Cancelar"
              propagation="end"
                     view="/#{empty perfilFrom ? 'PerfilList' : perfilFrom}.xhtml"
                 rendered="#{!perfilHome.managed}"/>
@@ -82,90 +83,6 @@
         </div>
     </h:form>
 
-<rich:tabPanel switchType="ajax">
-
-    <rich:tab label="Permisos">
-        <h:form styleClass="association" id="permisosChildren">
-
-            <h:outputText value="There are no permisos associated with this perfil."
-                       rendered="#{empty perfilHome.permisos}"/>
-
-            <rich:dataTable value="#{perfilHome.permisos}"
-                           var="_permiso"
-                      rendered="#{not empty perfilHome.permisos}"
-                    rowClasses="rvgRowOne,rvgRowTwo"
-                            id="permisosTable">
-                <rich:column sortBy="#{_permiso.idPermiso}">
-                    <f:facet name="header">Id permiso</f:facet>
-                    <h:outputText value="#{_permiso.idPermiso}"/>
-                </rich:column>
-                <rich:column sortBy="#{_permiso.estado}">
-                    <f:facet name="header">Estado</f:facet>
-                    <h:outputText value="#{_permiso.estado}"/>
-                </rich:column>
-            </rich:dataTable>
-
-        </h:form>
-
-        <f:subview rendered="#{perfilHome.managed}" id="permisos">
-        <div class="actionButtons">
-            <s:button id="addpermiso"
-                   value="Add permiso"
-                    view="/PermisoEdit.xhtml"
-             propagation="none">
-                 <f:param name="perfilIdPerfil"
-                         value="#{perfilHome.instance.idPerfil}"/>
-                 <f:param name="permisoFrom" value="Perfil"/>
-            </s:button>
-        </div>
-        </f:subview>
-    </rich:tab>
-
-    <rich:tab label="Usuarios">
-        <h:form styleClass="association" id="usuariosChildren">
-
-            <h:outputText value="There are no usuarios associated with this perfil."
-                       rendered="#{empty perfilHome.usuarios}"/>
-
-            <rich:dataTable value="#{perfilHome.usuarios}"
-                           var="_usuario"
-                      rendered="#{not empty perfilHome.usuarios}"
-                    rowClasses="rvgRowOne,rvgRowTwo"
-                            id="usuariosTable">
-                <rich:column sortBy="#{_usuario.idUsuarioPersona}">
-                    <f:facet name="header">Id usuario persona</f:facet>
-                    <h:outputText value="#{_usuario.idUsuarioPersona}"/>
-                </rich:column>
-                <rich:column sortBy="#{_usuario.login}">
-                    <f:facet name="header">Login</f:facet>
-                    <h:outputText value="#{_usuario.login}"/>
-                </rich:column>
-                <rich:column sortBy="#{_usuario.clave}">
-                    <f:facet name="header">Clave</f:facet>
-                    <h:outputText value="#{_usuario.clave}"/>
-                </rich:column>
-                <rich:column sortBy="#{_usuario.estado}">
-                    <f:facet name="header">Estado</f:facet>
-                    <h:outputText value="#{_usuario.estado}"/>
-                </rich:column>
-            </rich:dataTable>
-
-        </h:form>
-
-        <f:subview rendered="#{perfilHome.managed}" id="usuarios">
-        <div class="actionButtons">
-            <s:button id="addusuario"
-                   value="Add usuario"
-                    view="/UsuarioEdit.xhtml"
-             propagation="none">
-                 <f:param name="perfilIdPerfil"
-                         value="#{perfilHome.instance.idPerfil}"/>
-                 <f:param name="usuarioFrom" value="Perfil"/>
-            </s:button>
-        </div>
-        </f:subview>
-    </rich:tab>
-</rich:tabPanel>
 </ui:define>
 
 </ui:composition>

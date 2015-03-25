@@ -1,6 +1,6 @@
 package org.domain.avaluosapl.entity;
 
-// Generated 14/03/2015 10:40:33 PM by Hibernate Tools 3.4.0.CR1
+// Generated 24/03/2015 11:16:57 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,7 +17,6 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
-import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
 
 /**
@@ -29,31 +28,32 @@ public class Colaborador implements java.io.Serializable {
 
 	private int idColaboradorPersona;
 	private TipoContrato tipoContrato;
+	private AreaConoc areaConoc;
 	private Cargo cargo;
 	private Persona persona;
 	private Calificacion calificacion;
-	private String areaConocim;
 	private Set<Competencia> competencias = new HashSet<Competencia>(0);
 
 	public Colaborador() {
 	}
 
-	public Colaborador(TipoContrato tipoContrato, Cargo cargo, Persona persona,
-			Calificacion calificacion) {
+	public Colaborador(TipoContrato tipoContrato, AreaConoc areaConoc,
+			Cargo cargo, Persona persona, Calificacion calificacion) {
 		this.tipoContrato = tipoContrato;
+		this.areaConoc = areaConoc;
 		this.cargo = cargo;
 		this.persona = persona;
 		this.calificacion = calificacion;
 	}
 
-	public Colaborador(TipoContrato tipoContrato, Cargo cargo, Persona persona,
-			Calificacion calificacion, String areaConocim,
+	public Colaborador(TipoContrato tipoContrato, AreaConoc areaConoc,
+			Cargo cargo, Persona persona, Calificacion calificacion,
 			Set<Competencia> competencias) {
 		this.tipoContrato = tipoContrato;
+		this.areaConoc = areaConoc;
 		this.cargo = cargo;
 		this.persona = persona;
 		this.calificacion = calificacion;
-		this.areaConocim = areaConocim;
 		this.competencias = competencias;
 	}
 
@@ -78,6 +78,17 @@ public class Colaborador implements java.io.Serializable {
 
 	public void setTipoContrato(TipoContrato tipoContrato) {
 		this.tipoContrato = tipoContrato;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_area_conoc", nullable = false)
+	@NotNull
+	public AreaConoc getAreaConoc() {
+		return this.areaConoc;
+	}
+
+	public void setAreaConoc(AreaConoc areaConoc) {
+		this.areaConoc = areaConoc;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -111,16 +122,6 @@ public class Colaborador implements java.io.Serializable {
 
 	public void setCalificacion(Calificacion calificacion) {
 		this.calificacion = calificacion;
-	}
-
-	@Column(name = "area_conocim", length = 120)
-	@Length(max = 120)
-	public String getAreaConocim() {
-		return this.areaConocim;
-	}
-
-	public void setAreaConocim(String areaConocim) {
-		this.areaConocim = areaConocim;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "colaborador")

@@ -1,0 +1,156 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <rich:panel>
+        <f:facet name="header">Usuario Details</f:facet>
+
+
+        <s:decorate id="login" template="layout/display.xhtml">
+            <ui:define name="label">Login</ui:define>
+            <h:outputText value="#{usuarioHome.instance.login}"/>
+        </s:decorate>
+
+        <s:decorate id="clave" template="layout/display.xhtml">
+            <ui:define name="label">Clave</ui:define>
+            <h:outputText value="#{usuarioHome.instance.clave}"/>
+        </s:decorate>
+
+        <s:decorate id="estado" template="layout/display.xhtml">
+            <ui:define name="label">Estado</ui:define>
+            <h:outputText value="#{usuarioHome.instance.estado}"/>
+        </s:decorate>
+
+        <div style="clear:both"/>
+
+    </rich:panel>
+
+    <div class="actionButtons">
+
+        <s:button view="/UsuarioEdit.xhtml"
+                    id="edit"
+                 value="Edit"/>
+
+        <s:button view="/#{empty usuarioFrom ? 'UsuarioList' : usuarioFrom}.xhtml"
+                    id="done"
+                 value="Done"/>
+
+    </div>
+
+    <rich:tabPanel switchType="ajax">
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Persona</h:panelGroup>
+        </f:facet>
+    <div class="association" id="personaParent">
+
+        <h:outputText value="There is no persona associated with this usuario."
+                   rendered="#{usuarioHome.instance.persona == null}"/>
+
+        <rich:dataTable var="_persona"
+                   value="#{usuarioHome.instance.persona}"
+                rendered="#{usuarioHome.instance.persona != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="personaTable">
+            <h:column>
+                <f:facet name="header">Id persona</f:facet>
+                <h:outputText value="#{_persona.idPersona}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Tipo doc id tipo doc</f:facet>
+                <h:outputText value="#{_persona.tipoDoc.idTipoDoc}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Num doc</f:facet>
+                <h:outputText value="#{_persona.numDoc}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Nombres</f:facet>
+                <h:outputText value="#{_persona.nombres}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Apellidos</f:facet>
+                <h:outputText value="#{_persona.apellidos}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Email</f:facet>
+                <h:outputText value="#{_persona.email}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Cliente id cliente persona</f:facet>
+                <h:outputText value="#{_persona.cliente.idClientePersona}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Usuario id usuario persona</f:facet>
+                <h:outputText value="#{_persona.usuario.idUsuarioPersona}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Colaborador id colaborador persona</f:facet>
+                <h:outputText value="#{_persona.colaborador.idColaboradorPersona}"/>
+            </h:column>
+            <h:column styleClass="action">
+                <f:facet name="header">Action</f:facet>
+                <s:link id="viewpersona"
+                     value="View"
+                      view="/Persona.xhtml">
+                    <f:param name="personaIdPersona"
+                           value="#{_persona.idPersona}"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Perfil</h:panelGroup>
+        </f:facet>
+    <div class="association" id="perfilParent">
+
+        <h:outputText value="There is no perfil associated with this usuario."
+                   rendered="#{usuarioHome.instance.perfil == null}"/>
+
+        <rich:dataTable var="_perfil"
+                   value="#{usuarioHome.instance.perfil}"
+                rendered="#{usuarioHome.instance.perfil != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="perfilTable">
+            <h:column>
+                <f:facet name="header">Id perfil</f:facet>
+                <h:outputText value="#{_perfil.idPerfil}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Nombre</f:facet>
+                <h:outputText value="#{_perfil.nombre}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Estado</f:facet>
+                <h:outputText value="#{_perfil.estado}"/>
+            </h:column>
+            <h:column styleClass="action">
+                <f:facet name="header">Action</f:facet>
+                <s:link id="viewperfil"
+                     value="View"
+                      view="/Perfil.xhtml">
+                    <f:param name="perfilIdPerfil"
+                           value="#{_perfil.idPerfil}"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

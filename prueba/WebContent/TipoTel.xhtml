@@ -1,0 +1,89 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <rich:panel>
+        <f:facet name="header">Tipo tel Details</f:facet>
+
+
+        <s:decorate id="descripcion" template="layout/display.xhtml">
+            <ui:define name="label">Descripcion</ui:define>
+            <h:outputText value="#{tipoTelHome.instance.descripcion}"/>
+        </s:decorate>
+
+        <div style="clear:both"/>
+
+    </rich:panel>
+
+    <div class="actionButtons">
+
+        <s:button view="/TipoTelEdit.xhtml"
+                    id="edit"
+                 value="Edit"/>
+
+        <s:button view="/#{empty tipoTelFrom ? 'TipoTelList' : tipoTelFrom}.xhtml"
+                    id="done"
+                 value="Done"/>
+
+    </div>
+
+    <rich:tabPanel switchType="ajax">
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Telefonos</h:panelGroup>
+        </f:facet>
+    <h:form styleClass="association" id="telefonosChildren">
+
+        <h:outputText value="There are no telefonos associated with this tipoTel."
+                   rendered="#{empty tipoTelHome.telefonos}"/>
+
+        <rich:dataTable value="#{tipoTelHome.telefonos}"
+                       var="_telefono"
+                  rendered="#{not empty tipoTelHome.telefonos}"
+                rowClasses="rvgRowOne,rvgRowTwo"
+                        id="telefonosTable">
+            <rich:column sortBy="#{_telefono.idTelefono}">
+                <f:facet name="header">Id telefono</f:facet>
+                <h:outputText value="#{_telefono.idTelefono}"/>
+            </rich:column>
+            <rich:column sortBy="#{_telefono.numero}">
+                <f:facet name="header">Numero</f:facet>
+                <h:outputText value="#{_telefono.numero}"/>
+            </rich:column>
+            <h:column>
+                <f:facet name="header">Action</f:facet>
+                <s:link id="selecttelefono"
+                     value="Select"
+                      view="/Telefono.xhtml">
+                    <f:param name="telefonoIdTelefono"
+                            value="#{_telefono.idTelefono}"/>
+                    <f:param name="telefonoFrom" value="TipoTel"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </h:form>
+
+    <div class="actionButtons">
+        <s:button
+               value="Add telefono"
+                view="/TelefonoEdit.xhtml">
+            <f:param name="tipoTelIdTipoTel"
+                    value="#{tipoTelHome.instance.idTipoTel}"/>
+            <f:param name="telefonoFrom" value="TipoTel"/>
+        </s:button>
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>
