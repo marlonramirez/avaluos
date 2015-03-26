@@ -12,30 +12,30 @@
 
     <h:form id="clienteSearch" styleClass="edit">
 
-        <rich:simpleTogglePanel label="Cliente Search Filter" switchType="ajax">
+        <rich:simpleTogglePanel label="Busqueda" switchType="ajax">
 
             <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Match</ui:define>
+                <ui:define name="label">Filtrar por</ui:define>
                 <h:selectOneRadio id="logic" value="#{clienteList.restrictionLogicOperator}" styleClass="radio">
-                    <f:selectItem itemLabel="All" itemValue="and"/>
-                    <f:selectItem itemLabel="Any" itemValue="or"/>
+                    <f:selectItem itemLabel="Todas" itemValue="and"/>
+                    <f:selectItem itemLabel="Algunas" itemValue="or"/>
                 </h:selectOneRadio>
             </s:decorate>
 
         </rich:simpleTogglePanel>
 
         <div class="actionButtons">
-            <h:commandButton id="search" value="Search" action="/ClienteList.xhtml"/>
-            <s:button id="reset" value="Reset" includePageParams="false"/>
+            <h:commandButton id="search" value="Buscar" action="/ClienteList.xhtml"/>
+            <s:button id="reset" value="Reiniciar" includePageParams="false"/>
         </div>
 
     </h:form>
 
     <rich:panel>
-        <f:facet name="header">Cliente Search Results (#{empty clienteList.resultList ? 0 : (clienteList.paginated ? clienteList.resultCount : clienteList.resultList.size)})</f:facet>
+        <f:facet name="header">Clientes (#{empty clienteList.resultList ? 0 : (clienteList.paginated ? clienteList.resultCount : clienteList.resultList.size)})</f:facet>
     <div class="results" id="clienteList">
 
-    <h:outputText value="The cliente search returned no results."
+    <h:outputText value="La busqueda no ha retornado resultados."
                rendered="#{empty clienteList.resultList}"/>
 
     <rich:dataTable id="clienteList"
@@ -46,7 +46,7 @@
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{clienteList}"/>
-                    <ui:param name="propertyLabel" value="Id cliente persona"/>
+                    <ui:param name="propertyLabel" value="Id"/>
                     <ui:param name="propertyPath" value="cliente.idClientePersona"/>
                 </ui:include>
             </f:facet>
@@ -56,11 +56,11 @@
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{clienteList}"/>
-                    <ui:param name="propertyLabel" value="Persona id persona"/>
+                    <ui:param name="propertyLabel" value="Persona"/>
                     <ui:param name="propertyPath" value="cliente.persona.idPersona"/>
                 </ui:include>
             </f:facet>
-            <h:outputText value="#{_cliente.persona.idPersona}"/>
+            <h:outputText value="#{_cliente.persona.nombres} #{_cliente.persona.apellidos}"/>
         </h:column>
         <h:column>
             <f:facet name="header">
@@ -74,8 +74,44 @@
                 <s:convertDateTime type="date" dateStyle="short"/>
             </h:outputText>
         </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{clienteList}"/>
+                    <ui:param name="propertyLabel" value="Actividad economica"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_cliente.personaJuridicas == '[]'?'':_cliente.personaJuridicas.iterator().next().actEconomica.descripcion}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{clienteList}"/>
+                    <ui:param name="propertyLabel" value="Nit"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_cliente.personaJuridicas == '[]'?'':_cliente.personaJuridicas.iterator().next().nit}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{clienteList}"/>
+                    <ui:param name="propertyLabel" value="Razon social"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_cliente.personaJuridicas == '[]'?'':_cliente.personaJuridicas.iterator().next().razonSocial}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{clienteList}"/>
+                    <ui:param name="propertyLabel" value="Nombre comercial"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_cliente.personaJuridicas == '[]'?'':_cliente.personaJuridicas.iterator().next().nombreComercial}"/>
+        </h:column>
         <rich:column styleClass="action">
-            <f:facet name="header">Action</f:facet>
+            <f:facet name="header">Acción</f:facet>
             <s:link view="/#{empty from ? 'Cliente' : from}.xhtml"
                    value="#{empty from ? 'View' : 'Select'}"
              propagation="#{empty from ? 'none' : 'default'}"
@@ -137,7 +173,7 @@
         <s:button view="/ClienteEdit.xhtml"
                     id="create"
            propagation="none"
-                 value="Create cliente">
+                 value="Crear cliente">
             <f:param name="clienteIdClientePersona"/>
         </s:button>
     </s:div>

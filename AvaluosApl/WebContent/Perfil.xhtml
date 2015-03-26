@@ -48,45 +48,30 @@
         </f:facet>
     <h:form styleClass="association" id="permisosChildren">
 
-        <h:outputText value="There are no permisos associated with this perfil."
+        <h:outputText value="No existen permisos asociados a este perfil."
                    rendered="#{empty perfilHome.permisos}"/>
 
         <rich:dataTable value="#{perfilHome.permisos}"
                        var="_permiso"
                   rendered="#{not empty perfilHome.permisos}"
                 rowClasses="rvgRowOne,rvgRowTwo"
+                
                         id="permisosTable">
-            <rich:column sortBy="#{_permiso.idPermiso}">
-                <f:facet name="header">Id permiso</f:facet>
-                <h:outputText value="#{_permiso.idPermiso}"/>
+            <rich:column sortBy="#{_permiso.casoUso.codigo}">
+                <f:facet name="header">Código</f:facet>
+                <h:outputText value="#{_permiso.casoUso.codigo}"/>
+            </rich:column>
+            <rich:column sortBy="#{_permiso.casoUso.descripcion}">
+                <f:facet name="header">Descripción</f:facet>
+                <h:outputText value="#{_permiso.casoUso.descripcion}"/>
             </rich:column>
             <rich:column sortBy="#{_permiso.estado}">
                 <f:facet name="header">Estado</f:facet>
-                <h:outputText value="#{_permiso.estado}"/>
+                <h:outputText value="#{_permiso.estado==1?'Activo':'Inactivo'}"/>
             </rich:column>
-            <h:column>
-                <f:facet name="header">Action</f:facet>
-                <s:link id="selectpermiso"
-                     value="Select"
-                      view="/Permiso.xhtml">
-                    <f:param name="permisoIdPermiso"
-                            value="#{_permiso.idPermiso}"/>
-                    <f:param name="permisoFrom" value="Perfil"/>
-                </s:link>
-            </h:column>
         </rich:dataTable>
 
     </h:form>
-
-    <div class="actionButtons">
-        <s:button
-               value="Add permiso"
-                view="/PermisoEdit.xhtml">
-            <f:param name="perfilIdPerfil"
-                    value="#{perfilHome.instance.idPerfil}"/>
-            <f:param name="permisoFrom" value="Perfil"/>
-        </s:button>
-    </div>
     </rich:tab>
 
 </rich:tabPanel>

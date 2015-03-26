@@ -1,12 +1,14 @@
 package org.domain.avaluosapl.entity;
 
-// Generated 24/03/2015 11:16:57 PM by Hibernate Tools 3.4.0.CR1
+// Generated 26/03/2015 07:20:54 AM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -20,7 +22,7 @@ import org.hibernate.validator.NotNull;
 @Table(name = "act_economica", catalog = "db_acinversiones")
 public class ActEconomica implements java.io.Serializable {
 
-	private int idActEconomica;
+	private Integer idActEconomica;
 	private String descripcion;
 	private Set<PersonaJuridica> personaJuridicas = new HashSet<PersonaJuridica>(
 			0);
@@ -28,25 +30,24 @@ public class ActEconomica implements java.io.Serializable {
 	public ActEconomica() {
 	}
 
-	public ActEconomica(int idActEconomica, String descripcion) {
-		this.idActEconomica = idActEconomica;
+	public ActEconomica(String descripcion) {
 		this.descripcion = descripcion;
 	}
 
-	public ActEconomica(int idActEconomica, String descripcion,
+	public ActEconomica(String descripcion,
 			Set<PersonaJuridica> personaJuridicas) {
-		this.idActEconomica = idActEconomica;
 		this.descripcion = descripcion;
 		this.personaJuridicas = personaJuridicas;
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id_act_economica", unique = true, nullable = false)
-	public int getIdActEconomica() {
+	public Integer getIdActEconomica() {
 		return this.idActEconomica;
 	}
 
-	public void setIdActEconomica(int idActEconomica) {
+	public void setIdActEconomica(Integer idActEconomica) {
 		this.idActEconomica = idActEconomica;
 	}
 

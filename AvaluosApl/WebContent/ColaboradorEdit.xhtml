@@ -14,7 +14,7 @@
     <h:form id="colaborador" styleClass="edit">
 
         <rich:panel>
-            <f:facet name="header">#{colaboradorHome.managed ? 'Edit' : 'Add'} Colaborador</f:facet>
+            <f:facet name="header">#{colaboradorHome.managed ? 'Editar' : 'Agregar'} Colaborador</f:facet>
 
 			<rich:dataTable var="_persona"
                    value="#{colaboradorHome.instance.persona}"
@@ -111,10 +111,10 @@
 		        </f:facet>
 		        <h:form styleClass="association" id="competenciasChildren">
 					<s:div>
-			    	<a:commandButton value="Agregar competencia" actionListener="#{competenciaHome.newCompetencia()}"
-				    	onclick="#{rich:component('modalCompetenciaEdit')}.show()" reRender="competencia" ajaxSingle="true">
-				    	</a:commandButton>
-			    </s:div>
+				    	<a:commandButton value="Agregar competencia" actionListener="#{competenciaHome.newCompetencia()}"
+					    	onclick="#{rich:component('modalCompetenciaEdit')}.show()" reRender="competencia" ajaxSingle="true">
+					    	</a:commandButton>
+				    </s:div>
 		            <h:outputText value="No existen competencias asociadas a este colaborador."
 		                       rendered="#{empty colaboradorHome.competencias}"/>
 		

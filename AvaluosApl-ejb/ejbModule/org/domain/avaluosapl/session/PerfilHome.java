@@ -50,5 +50,41 @@ public class PerfilHome extends EntityHome<Perfil> {
 		return getInstance() == null ? null : new ArrayList<Usuario>(
 				getInstance().getUsuarios());
 	}
+	
+	public void selectPermiso (Permiso permiso, CasoUso casoUso) {
+		if (permiso != null) {
+			permiso.setEstado((byte)(permiso.getEstado() == 0? 1: 0));			
+		} else {
+			permiso = new Permiso(casoUso, getInstance(), (byte)1);
+			getInstance().getPermisos().add(permiso);
+		}
+	}
+	
+	public Permiso getPermiso(CasoUso cu) {
+		for(Permiso permiso: getInstance().getPermisos()) {
+			if (permiso.getCasoUso() == cu) {
+				return permiso;
+			}
+		}
+		return null;
+	}
+	
+	public void guardar () {
+		persist();
+		for (Permiso permiso: getInstance().getPermisos()) {
+			getEntityManager().persist(permiso);
+		}
+		getEntityManager().flush();
+	}
+	
+	public void actualizar() {
+		update();
+		for (Permiso permiso: getInstance().getPermisos()) {
+			if (permiso.getIdPermiso() == null) {
+				getEntityManager().persist(permiso);
+			}
+		}
+		getEntityManager().flush();
+	}
 
 }

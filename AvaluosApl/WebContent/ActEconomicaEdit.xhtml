@@ -14,22 +14,12 @@
     <h:form id="actEconomica" styleClass="edit">
 
         <rich:panel>
-            <f:facet name="header">#{actEconomicaHome.managed ? 'Edit' : 'Add'} Act economica</f:facet>
+            <f:facet name="header">#{actEconomicaHome.managed ? 'Editar' : 'Agregar'} Actividad economica</f:facet>
 
-
-            <s:decorate id="idActEconomicaField" template="layout/edit.xhtml">
-                <ui:define name="label">Id act economica</ui:define>
-                <h:inputText id="idActEconomica"
-                       required="true"
-                       disabled="#{actEconomicaHome.managed}"
-                          value="#{actEconomicaHome.instance.idActEconomica}">
-                    <a:support event="onblur" reRender="idActEconomicaField" bypassUpdates="true" ajaxSingle="true"/>
-                </h:inputText>
-            </s:decorate>
 
 
             <s:decorate id="descripcionField" template="layout/edit.xhtml">
-                <ui:define name="label">Descripcion</ui:define>
+                <ui:define name="label">Descripción</ui:define>
                 <h:inputTextarea id="descripcion"
                                cols="80"
                                rows="3"
@@ -40,7 +30,7 @@
 
             <div style="clear:both">
                 <span class="required">*</span>
-                required fields
+                Campos requeridos
             </div>
 
         </rich:panel>
@@ -48,30 +38,30 @@
         <div class="actionButtons">
 
             <h:commandButton id="save"
-                          value="Save"
+                          value="Guardar"
                          action="#{actEconomicaHome.persist}"
                        disabled="#{!actEconomicaHome.wired}"
                        rendered="#{!actEconomicaHome.managed}"/>
 
             <h:commandButton id="update"
-                          value="Save"
+                          value="Guardar"
                          action="#{actEconomicaHome.update}"
                        rendered="#{actEconomicaHome.managed}"/>
 
             <h:commandButton id="delete"
-                          value="Delete"
+                          value="Eliminar"
                          action="#{actEconomicaHome.remove}"
                       immediate="true"
                        rendered="#{actEconomicaHome.managed}"/>
 
             <s:button id="cancelEdit"
-                   value="Cancel"
+                   value="Cancelar"
              propagation="end"
                     view="/ActEconomica.xhtml"
                 rendered="#{actEconomicaHome.managed}"/>
 
             <s:button id="cancelAdd"
-                   value="Cancel"
+                   value="Cancelar"
              propagation="end"
                     view="/#{empty actEconomicaFrom ? 'ActEconomicaList' : actEconomicaFrom}.xhtml"
                 rendered="#{!actEconomicaHome.managed}"/>
@@ -79,53 +69,6 @@
         </div>
     </h:form>
 
-<rich:tabPanel switchType="ajax">
-
-    <rich:tab label="Persona juridicas">
-        <h:form styleClass="association" id="personaJuridicasChildren">
-
-            <h:outputText value="There are no personaJuridicas associated with this actEconomica."
-                       rendered="#{empty actEconomicaHome.personaJuridicas}"/>
-
-            <rich:dataTable value="#{actEconomicaHome.personaJuridicas}"
-                           var="_personaJuridica"
-                      rendered="#{not empty actEconomicaHome.personaJuridicas}"
-                    rowClasses="rvgRowOne,rvgRowTwo"
-                            id="personaJuridicasTable">
-                <rich:column sortBy="#{_personaJuridica.idPersonaJuridica}">
-                    <f:facet name="header">Id persona juridica</f:facet>
-                    <h:outputText value="#{_personaJuridica.idPersonaJuridica}"/>
-                </rich:column>
-                <rich:column sortBy="#{_personaJuridica.nit}">
-                    <f:facet name="header">Nit</f:facet>
-                    <h:outputText value="#{_personaJuridica.nit}"/>
-                </rich:column>
-                <rich:column sortBy="#{_personaJuridica.razonSocial}">
-                    <f:facet name="header">Razon social</f:facet>
-                    <h:outputText value="#{_personaJuridica.razonSocial}"/>
-                </rich:column>
-                <rich:column sortBy="#{_personaJuridica.nombreComercial}">
-                    <f:facet name="header">Nombre comercial</f:facet>
-                    <h:outputText value="#{_personaJuridica.nombreComercial}"/>
-                </rich:column>
-            </rich:dataTable>
-
-        </h:form>
-
-        <f:subview rendered="#{actEconomicaHome.managed}" id="personaJuridicas">
-        <div class="actionButtons">
-            <s:button id="addpersonaJuridica"
-                   value="Add personaJuridica"
-                    view="/PersonaJuridicaEdit.xhtml"
-             propagation="none">
-                 <f:param name="actEconomicaIdActEconomica"
-                         value="#{actEconomicaHome.instance.idActEconomica}"/>
-                 <f:param name="personaJuridicaFrom" value="ActEconomica"/>
-            </s:button>
-        </div>
-        </f:subview>
-    </rich:tab>
-</rich:tabPanel>
 </ui:define>
 
 </ui:composition>

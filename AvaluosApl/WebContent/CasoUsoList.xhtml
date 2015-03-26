@@ -12,40 +12,40 @@
 
     <h:form id="casoUsoSearch" styleClass="edit">
 
-        <rich:simpleTogglePanel label="CasoUso Search Filter" switchType="ajax">
+        <rich:simpleTogglePanel label="Busqueda" switchType="ajax">
 
             <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Codigo</ui:define>
+                <ui:define name="label">Código</ui:define>
                 <h:inputText id="codigo" value="#{casoUsoList.casoUso.codigo}"/>
             </s:decorate>
 
             <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Descripcion</ui:define>
+                <ui:define name="label">Descripción</ui:define>
                 <h:inputText id="descripcion" value="#{casoUsoList.casoUso.descripcion}"/>
             </s:decorate>
 
             <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Match</ui:define>
+                <ui:define name="label">Filtrar por</ui:define>
                 <h:selectOneRadio id="logic" value="#{casoUsoList.restrictionLogicOperator}" styleClass="radio">
-                    <f:selectItem itemLabel="All" itemValue="and"/>
-                    <f:selectItem itemLabel="Any" itemValue="or"/>
+                    <f:selectItem itemLabel="Todas" itemValue="and"/>
+                    <f:selectItem itemLabel="Algunas" itemValue="or"/>
                 </h:selectOneRadio>
             </s:decorate>
 
         </rich:simpleTogglePanel>
 
         <div class="actionButtons">
-            <h:commandButton id="search" value="Search" action="/CasoUsoList.xhtml"/>
-            <s:button id="reset" value="Reset" includePageParams="false"/>
+            <h:commandButton id="search" value="Buscar" action="/CasoUsoList.xhtml"/>
+            <s:button id="reset" value="Reiniciar" includePageParams="false"/>
         </div>
 
     </h:form>
 
     <rich:panel>
-        <f:facet name="header">CasoUso Search Results (#{empty casoUsoList.resultList ? 0 : (casoUsoList.paginated ? casoUsoList.resultCount : casoUsoList.resultList.size)})</f:facet>
+        <f:facet name="header">Casos de uso (#{empty casoUsoList.resultList ? 0 : (casoUsoList.paginated ? casoUsoList.resultCount : casoUsoList.resultList.size)})</f:facet>
     <div class="results" id="casoUsoList">
 
-    <h:outputText value="The casoUso search returned no results."
+    <h:outputText value="La busqueda no ha retornado resultados."
                rendered="#{empty casoUsoList.resultList}"/>
 
     <rich:dataTable id="casoUsoList"
@@ -83,9 +83,9 @@
             <h:outputText value="#{_casoUso.descripcion}"/>
         </h:column>
         <rich:column styleClass="action">
-            <f:facet name="header">Action</f:facet>
+            <f:facet name="header">Acción</f:facet>
             <s:link view="/#{empty from ? 'CasoUso' : from}.xhtml"
-                   value="#{empty from ? 'View' : 'Select'}"
+                   value="#{empty from ? 'Ver' : 'Seleccionar'}"
              propagation="#{empty from ? 'none' : 'default'}"
                       id="casoUsoViewId">
                 <f:param name="casoUsoIdCasoUso"
@@ -93,7 +93,7 @@
             </s:link>
             #{' '}
             <s:link view="/CasoUsoEdit.xhtml"
-                   value="Edit"
+                   value="Editar"
              propagation="none"
                       id="casoUsoEdit"
                 rendered="#{empty from}">
@@ -145,7 +145,7 @@
         <s:button view="/CasoUsoEdit.xhtml"
                     id="create"
            propagation="none"
-                 value="Create casoUso">
+                 value="Crear caso de uso">
             <f:param name="casoUsoIdCasoUso"/>
         </s:button>
     </s:div>

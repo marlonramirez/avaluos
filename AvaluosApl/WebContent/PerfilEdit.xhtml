@@ -39,7 +39,43 @@
 			        <a:support event="onchange" reRender="estadoField" ajaxSingle="true"/>
 			    </h:selectOneMenu>
             </s:decorate>
+            
+            <rich:tabPanel switchType="ajax">
 
+			    <rich:tab>
+			        <f:facet name="label">
+			            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Permisos</h:panelGroup>
+			        </f:facet>
+			    <h:form styleClass="association" id="permisosChildren">
+			
+			        <rich:dataTable value="#{casoUsoList.resultList}"
+			                       var="_casouso"
+			                rowClasses="rvgRowOne,rvgRowTwo"
+			                        id="permisosTable">
+			            <rich:column sortBy="#{_permiso.codigo}">
+			                <f:facet name="header">Código</f:facet>
+			                <h:outputText value="#{_casouso.codigo}"/>
+			            </rich:column>
+			            <rich:column sortBy="#{_permiso.descripcion}">
+			                <f:facet name="header">Estado</f:facet>
+			                <h:outputText value="#{_casouso.descripcion}"/>
+			            </rich:column>
+			            <rich:column width="20" styleClass="action">
+			                <f:facet name="header">Acción</f:facet>
+			                <ui:param name="_permiso" value="#{perfilHome.getPermiso(_casouso)}"></ui:param>
+			                <a:commandLink id="selectpermiso"
+			                	 actionListener="#{perfilHome.selectPermiso(_permiso, _casouso)}"
+			                     value="#{(_permiso==null or _permiso.estado == 0)?'Seleccionar':'Deseleccionar'}"
+			                     reRender="permisosTable" ajaxSingle="true">
+			                </a:commandLink>
+			            </rich:column>
+			        </rich:dataTable>
+			
+			    </h:form>
+			    
+			    </rich:tab>
+			
+			</rich:tabPanel>
 
 
             <div style="clear:both">
@@ -53,13 +89,13 @@
 
             <h:commandButton id="save"
                           value="Guardar"
-                         action="#{perfilHome.persist}"
+                         action="#{perfilHome.guardar}"
                        disabled="#{!perfilHome.wired}"
                        rendered="#{!perfilHome.managed}"/>
 
             <h:commandButton id="update"
                           value="Guardar"
-                         action="#{perfilHome.update}"
+                         action="#{perfilHome.actualizar}"
                        rendered="#{perfilHome.managed}"/>
 
             <h:commandButton id="delete"
