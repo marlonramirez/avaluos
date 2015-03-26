@@ -1,4 +1,7 @@
 /.metadata
+/prueba-ear
+/prueba-ejb
+/prueba
 /AvaluosApl-ear
 /AvaluosApl-ejb/.classpath
 /AvaluosApl-ejb/.project
