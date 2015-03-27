@@ -13,65 +13,16 @@
     <rich:dropDownMenu showDelay="250" hideDelay="0" submitMode="none">
         <f:facet name="label">Avaluos</f:facet>
 	<rich:menuItem>
-    	<s:link view="/AvaluoList.xhtml"
-           	value="Avaluos"
-           	id="AvaluoId"
-			includePageParams="false"
-     		propagation="none"/>
-     </rich:menuItem>
-	<rich:menuItem>
-    	<s:link view="/FormaPagoList.xhtml"
-           	value="Formas de pago"
-           	id="FormaPagoId"
-			includePageParams="false"
-     		propagation="none"/>
-     </rich:menuItem>
-	<rich:menuItem>
-    	<s:link view="/ManoObraList.xhtml"
-           	value="Mano de obra"
-           	id="ManoObraId"
-			includePageParams="false"
-     		propagation="none"/>
-     </rich:menuItem>
-	<rich:menuItem>
-    	<s:link view="/TangibleList.xhtml"
-           	value="Activos tangibles"
-           	id="TangibleId"
-			includePageParams="false"
-     		propagation="none"/>
-     </rich:menuItem>
-	<rich:menuItem>
-    	<s:link view="/ItemFacturaList.xhtml"
-           	value="Items Factura"
-           	id="ItemFacturaId"
-			includePageParams="false"
-     		propagation="none"/>
-     </rich:menuItem>
-	<rich:menuItem>
-    	<s:link view="/ConceptoList.xhtml"
-           	value="Conceptos de avaluo"
-           	id="ConceptoId"
-			includePageParams="false"
-     		propagation="none"/>
-     </rich:menuItem>
-	<rich:menuItem>
-    	<s:link view="/ItemAvaluoList.xhtml"
-           	value="Items de avaluo"
-           	id="ItemAvaluoId"
-			includePageParams="false"
-     		propagation="none"/>
-     </rich:menuItem>
-	<rich:menuItem>
     	<s:link view="/ActivoList.xhtml"
            	value="Activos"
            	id="ActivoId"
 			includePageParams="false"
      		propagation="none"/>
      </rich:menuItem>
-	<rich:menuItem>
-    	<s:link view="/CiudadList.xhtml"
-           	value="Ciudades"
-           	id="CiudadId"
+     <rich:menuItem>
+    	<s:link view="/AvaluoList.xhtml"
+           	value="Avaluos"
+           	id="AvaluoId"
 			includePageParams="false"
      		propagation="none"/>
      </rich:menuItem>
@@ -101,59 +52,11 @@
 			includePageParams="false"
      		propagation="none"/>
      </rich:menuItem>
-	<rich:menuItem>
-    	<s:link view="/ActEconomicaList.xhtml"
-           	value="Actividades economicas"
-           	id="ActEconomicaId"
-			includePageParams="false"
-     		propagation="none"/>
-     </rich:menuItem>
-	<rich:menuItem>
-    	<s:link view="/CasoUsoList.xhtml"
-           	value="Casos de uso"
-           	id="CasoUsoId"
-			includePageParams="false"
-     		propagation="none"/>
-     </rich:menuItem>
-     <rich:menuItem>
-    	<s:link view="/AreaConocList.xhtml"
-           	value="Areas de conocimiento"
-           	id="AreaConocId"
-			includePageParams="false"
-     		propagation="none"/>
-     </rich:menuItem>
-	<rich:menuItem>
-    	<s:link view="/TipoDocList.xhtml"
-           	value="Tipos de documento"
-           	id="TipoDocId"
-			includePageParams="false"
-     		propagation="none"/>
-     </rich:menuItem>
+	
 	<rich:menuItem>
     	<s:link view="/ClienteList.xhtml"
            	value="Clientes"
            	id="ClienteId"
-			includePageParams="false"
-     		propagation="none"/>
-     </rich:menuItem>
-	<rich:menuItem>
-    	<s:link view="/PerfilList.xhtml"
-           	value="Perfiles"
-           	id="PerfilId"
-			includePageParams="false"
-     		propagation="none"/>
-     </rich:menuItem>
-	<rich:menuItem>
-    	<s:link view="/TipoContratoList.xhtml"
-           	value="Tipos de contrato"
-           	id="TipoContratoId"
-			includePageParams="false"
-     		propagation="none"/>
-     </rich:menuItem>
-	<rich:menuItem>
-    	<s:link view="/CargoList.xhtml"
-           	value="Cargos"
-           	id="CargoId"
 			includePageParams="false"
      		propagation="none"/>
      </rich:menuItem>
@@ -164,22 +67,97 @@
 			includePageParams="false"
      		propagation="none"/>
      </rich:menuItem>
-	<rich:menuItem>
-    	<s:link view="/CalificacionList.xhtml"
-           	value="Calificaciones"
-           	id="CalificacionId"
-			includePageParams="false"
-     		propagation="none"/>
-     </rich:menuItem>
-	<rich:menuItem>
-    	<s:link view="/TipoTelList.xhtml"
-           	value="Tipos de teléfono"
-           	id="TipoTelId"
+     <rich:menuItem>
+    	<s:link view="/PerfilList.xhtml"
+           	value="Perfiles"
+           	id="PerfilId"
 			includePageParams="false"
      		propagation="none"/>
      </rich:menuItem>
     </rich:dropDownMenu>
     <!-- :Menú perfiles -->
+    <!-- @Parametrización -->
+    <rich:dropDownMenu showDelay="250" hideDelay="0" submitMode="none">
+    <f:facet name="label">Parametrización</f:facet>
+    	<rich:menuItem>
+	    	<s:link view="/ActEconomicaList.xhtml"
+	           	value="Actividades economicas"
+	           	id="ActEconomicaId"
+				includePageParams="false"
+	     		propagation="none"/>
+	     </rich:menuItem>
+		<rich:menuItem>
+	    	<s:link view="/CasoUsoList.xhtml"
+	           	value="Casos de uso"
+	           	id="CasoUsoId"
+				includePageParams="false"
+	     		propagation="none"/>
+	     </rich:menuItem>
+	     <rich:menuItem>
+	    	<s:link view="/AreaConocList.xhtml"
+	           	value="Areas de conocimiento"
+	           	id="AreaConocId"
+				includePageParams="false"
+	     		propagation="none"/>
+	     </rich:menuItem>
+		<rich:menuItem>
+	    	<s:link view="/TipoDocList.xhtml"
+	           	value="Tipos de documento"
+	           	id="TipoDocId"
+				includePageParams="false"
+	     		propagation="none"/>
+	     </rich:menuItem>
+	     <rich:menuItem>
+	    	<s:link view="/TipoContratoList.xhtml"
+	           	value="Tipos de contrato"
+	           	id="TipoContratoId"
+				includePageParams="false"
+	     		propagation="none"/>
+	     </rich:menuItem>
+		<rich:menuItem>
+	    	<s:link view="/CargoList.xhtml"
+	           	value="Cargos"
+	           	id="CargoId"
+				includePageParams="false"
+	     		propagation="none"/>
+	     </rich:menuItem>
+	     <rich:menuItem>
+    	<s:link view="/CalificacionList.xhtml"
+           	value="Calificaciones"
+           	id="CalificacionId"
+			includePageParams="false"
+     		propagation="none"/>
+	     </rich:menuItem>
+		<rich:menuItem>
+	    	<s:link view="/TipoTelList.xhtml"
+	           	value="Tipos de teléfono"
+	           	id="TipoTelId"
+				includePageParams="false"
+	     		propagation="none"/>
+	     </rich:menuItem>
+	     <rich:menuItem>
+    	<s:link view="/FormaPagoList.xhtml"
+           	value="Formas de pago"
+           	id="FormaPagoId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+     <rich:menuItem>
+    	<s:link view="/ConceptoList.xhtml"
+           	value="Conceptos de avaluo"
+           	id="ConceptoId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+     <rich:menuItem>
+    	<s:link view="/CiudadList.xhtml"
+           	value="Ciudades"
+           	id="CiudadId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+    </rich:dropDownMenu>
+    <!-- :Parametrización -->
     <rich:toolBarGroup location="right">
         <h:outputText id="menuWelcomeId" value="Autenticado como: #{credentials.username}" rendered="#{identity.loggedIn}"/>
         <s:link id="menuLoginId" view="/login.xhtml" value="Login" rendered="#{not identity.loggedIn}" propagation="none"/>

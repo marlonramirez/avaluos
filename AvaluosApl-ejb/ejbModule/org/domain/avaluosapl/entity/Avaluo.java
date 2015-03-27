@@ -34,7 +34,7 @@ public class Avaluo implements java.io.Serializable {
 	private Date fechaSolicitud;
 	private String descripcion;
 	private Date fechaEntrega;
-	private double valorRazonable;
+	private Double valorRazonable;
 	private Integer idAsesor;
 	private Integer idGerente;
 	private Set<ItemAvaluo> itemAvaluos = new HashSet<ItemAvaluo>(0);
@@ -43,7 +43,7 @@ public class Avaluo implements java.io.Serializable {
 	}
 
 	public Avaluo(Activo activo, String numOrden, Date fechaSolicitud,
-			String descripcion, double valorRazonable) {
+			String descripcion, Double valorRazonable) {
 		this.activo = activo;
 		this.numOrden = numOrden;
 		this.fechaSolicitud = fechaSolicitud;
@@ -131,11 +131,11 @@ public class Avaluo implements java.io.Serializable {
 	}
 
 	@Column(name = "valor_razonable", nullable = false, precision = 22, scale = 0)
-	public double getValorRazonable() {
+	public Double getValorRazonable() {
 		return this.valorRazonable;
 	}
 
-	public void setValorRazonable(double valorRazonable) {
+	public void setValorRazonable(Double valorRazonable) {
 		this.valorRazonable = valorRazonable;
 	}
 

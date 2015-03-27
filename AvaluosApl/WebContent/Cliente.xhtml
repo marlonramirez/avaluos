@@ -53,7 +53,7 @@
         <s:decorate id="fechaIngreso" template="layout/display.xhtml">
             <ui:define name="label">Fecha ingreso</ui:define>
             <h:outputText value="#{clienteHome.instance.fechaIngreso}">
-                <s:convertDateTime type="date" dateStyle="short"/>
+                <s:convertDateTime type="date" pattern="dd/MM/yyyy"/>
             </h:outputText>
         </s:decorate>
         <div style="clear: both"></div>

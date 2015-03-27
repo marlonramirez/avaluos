@@ -11,6 +11,7 @@ public class ActivoList extends EntityQuery<Activo> {
 	private static final String EJBQL = "select activo from Activo activo";
 
 	private static final String[] RESTRICTIONS = {
+			"activo.estado = #{activoList.activo.estado}",
 			"lower(activo.nombre) like lower(concat(#{activoList.activo.nombre},'%'))",
 			"lower(activo.descripcion) like lower(concat(#{activoList.activo.descripcion},'%'))", };
 

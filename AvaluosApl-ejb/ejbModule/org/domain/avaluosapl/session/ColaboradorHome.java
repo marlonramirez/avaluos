@@ -111,8 +111,8 @@ public class ColaboradorHome extends EntityHome<Colaborador> {
 	}
 	
 	public void guardar() {
-		persist();
 		Colaborador instance = getInstance();
+		persist();
 		for (Competencia comp: instance.getCompetencias()) {
 			getEntityManager().persist(comp);
 		}
@@ -120,8 +120,8 @@ public class ColaboradorHome extends EntityHome<Colaborador> {
 	}
 	
 	public void actualizar() {
-		update();
 		Colaborador instance = getInstance();
+		update();
 		for (Competencia comp: deleteComps) {
 			getEntityManager().remove(comp);
 		}

@@ -11,5 +11,6 @@
    <param name="from"/>
    <param name="nombre" value="#{activoList.activo.nombre}"/>
    <param name="descripcion" value="#{activoList.activo.descripcion}"/>
+   <param name="estado" value="#{activoList.activo.estado}"/>
 
 </page>

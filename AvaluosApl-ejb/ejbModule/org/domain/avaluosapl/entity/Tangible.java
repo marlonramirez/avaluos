@@ -65,7 +65,7 @@ public class Tangible implements java.io.Serializable {
 		this.activo = activo;
 	}
 
-	@Column(name = "valor_num", precision = 22, scale = 0)
+	@Column(name = "valor_num", nullable = false, precision = 22, scale = 0)
 	public Double getValorNum() {
 		return this.valorNum;
 	}

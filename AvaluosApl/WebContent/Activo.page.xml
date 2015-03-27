@@ -7,7 +7,8 @@
    <param name="activoIdActivo" value="#{activoHome.activoIdActivo}"/>
    <param name="tangibleFrom"/>
    <param name="tangibleIdActivoTan" value="#{tangibleHome.tangibleIdActivoTan}"/>
-
+   <param name="clienteFrom"/>
+   <param name="clienteIdClientePersona" value="#{clienteHome.clienteIdClientePersona}"/>
 
 
 </page>

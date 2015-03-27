@@ -26,7 +26,7 @@ public class Activo implements java.io.Serializable {
 	private Integer idActivo;
 	private String nombre;
 	private String descripcion;
-	private byte estado;
+	private Byte estado;
 	private int idCliente;
 	private Set<Avaluo> avaluos = new HashSet<Avaluo>(0);
 	private Tangible tangible;
@@ -34,7 +34,7 @@ public class Activo implements java.io.Serializable {
 	public Activo() {
 	}
 
-	public Activo(String nombre, String descripcion, byte estado, int idCliente) {
+	public Activo(String nombre, String descripcion, Byte estado, int idCliente) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.estado = estado;
@@ -85,11 +85,11 @@ public class Activo implements java.io.Serializable {
 	}
 
 	@Column(name = "estado", nullable = false)
-	public byte getEstado() {
+	public Byte getEstado() {
 		return this.estado;
 	}
 
-	public void setEstado(byte estado) {
+	public void setEstado(Byte estado) {
 		this.estado = estado;
 	}
 

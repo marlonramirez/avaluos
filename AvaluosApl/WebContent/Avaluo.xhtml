@@ -11,28 +11,66 @@
 <ui:define name="body">
 
     <rich:panel>
-        <f:facet name="header">Avaluo Details</f:facet>
+        <f:facet name="header">Detalles de avaluo</f:facet>
+
+
+		<rich:dataTable var="_activo"
+                   value="#{avaluoHome.instance.activo}"
+                rendered="#{avaluoHome.instance.activo != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="activoTable">
+            <h:column>
+                <f:facet name="header">Id</f:facet>
+                <h:outputText value="#{_activo.idActivo}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Nombre</f:facet>
+                <h:outputText value="#{_activo.nombre}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Descripción</f:facet>
+                <h:outputText value="#{_activo.descripcion}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Estado</f:facet>
+                <h:outputText value="#{_activo.estado==1? 'Activo': 'Inactivo'}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Cliente</f:facet>
+                <ui:param name="_cliente" value="#{clienteList.getById(_activo.idCliente)}"></ui:param>
+                <h:outputText value="#{_cliente==null?'':_cliente.persona.nombres.concat(' ').concat(_cliente.persona.apellidos)}"/>
+            </h:column>
+            <h:column styleClass="action">
+                <f:facet name="header">Action</f:facet>
+                <s:link id="viewactivo"
+                     value="Ver"
+                      view="/Activo.xhtml">
+                    <f:param name="activoIdActivo"
+                           value="#{_activo.idActivo}"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
 
 
         <s:decorate id="numOrden" template="layout/display.xhtml">
-            <ui:define name="label">Num orden</ui:define>
+            <ui:define name="label">Número de orden</ui:define>
             <h:outputText value="#{avaluoHome.instance.numOrden}"/>
         </s:decorate>
 
         <s:decorate id="fechaSolicitud" template="layout/display.xhtml">
-            <ui:define name="label">Fecha solicitud</ui:define>
+            <ui:define name="label">Fecha de solicitud</ui:define>
             <h:outputText value="#{avaluoHome.instance.fechaSolicitud}">
                 <s:convertDateTime type="date" dateStyle="short"/>
             </h:outputText>
         </s:decorate>
 
         <s:decorate id="descripcion" template="layout/display.xhtml">
-            <ui:define name="label">Descripcion</ui:define>
+            <ui:define name="label">Descripción</ui:define>
             <h:outputText value="#{avaluoHome.instance.descripcion}"/>
         </s:decorate>
 
         <s:decorate id="fechaEntrega" template="layout/display.xhtml">
-            <ui:define name="label">Fecha entrega</ui:define>
+            <ui:define name="label">Fecha de entrega</ui:define>
             <h:outputText value="#{avaluoHome.instance.fechaEntrega}">
                 <s:convertDateTime type="date" dateStyle="short"/>
             </h:outputText>
@@ -40,16 +78,18 @@
 
         <s:decorate id="valorRazonable" template="layout/display.xhtml">
             <ui:define name="label">Valor razonable</ui:define>
-            <h:outputText value="#{avaluoHome.instance.valorRazonable}"/>
+            <h:outputText value="#{avaluoHome.instance.valorRazonable}">
+            	<f:convertNumber />
+            </h:outputText>
         </s:decorate>
 
         <s:decorate id="idAsesor" template="layout/display.xhtml">
-            <ui:define name="label">Id asesor</ui:define>
+            <ui:define name="label">Asesor</ui:define>
             <h:outputText value="#{avaluoHome.instance.idAsesor}"/>
         </s:decorate>
 
         <s:decorate id="idGerente" template="layout/display.xhtml">
-            <ui:define name="label">Id gerente</ui:define>
+            <ui:define name="label">Gerente</ui:define>
             <h:outputText value="#{avaluoHome.instance.idGerente}"/>
         </s:decorate>
 
@@ -61,75 +101,24 @@
 
         <s:button view="/AvaluoEdit.xhtml"
                     id="edit"
-                 value="Edit"/>
+                 value="Editar"/>
 
         <s:button view="/#{empty avaluoFrom ? 'AvaluoList' : avaluoFrom}.xhtml"
                     id="done"
-                 value="Done"/>
+                 value="Aceptar"/>
 
     </div>
 
     <rich:tabPanel switchType="ajax">
 
-    <rich:tab>
-        <f:facet name="label">
-            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Activo</h:panelGroup>
-        </f:facet>
-    <div class="association" id="activoParent">
-
-        <h:outputText value="There is no activo associated with this avaluo."
-                   rendered="#{avaluoHome.instance.activo == null}"/>
-
-        <rich:dataTable var="_activo"
-                   value="#{avaluoHome.instance.activo}"
-                rendered="#{avaluoHome.instance.activo != null}"
-              rowClasses="rvgRowOne,rvgRowTwo"
-                      id="activoTable">
-            <h:column>
-                <f:facet name="header">Id activo</f:facet>
-                <h:outputText value="#{_activo.idActivo}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Nombre</f:facet>
-                <h:outputText value="#{_activo.nombre}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Descripcion</f:facet>
-                <h:outputText value="#{_activo.descripcion}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Estado</f:facet>
-                <h:outputText value="#{_activo.estado}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Id cliente</f:facet>
-                <h:outputText value="#{_activo.idCliente}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Tangible id activo tan</f:facet>
-                <h:outputText value="#{_activo.tangible.idActivoTan}"/>
-            </h:column>
-            <h:column styleClass="action">
-                <f:facet name="header">Action</f:facet>
-                <s:link id="viewactivo"
-                     value="View"
-                      view="/Activo.xhtml">
-                    <f:param name="activoIdActivo"
-                           value="#{_activo.idActivo}"/>
-                </s:link>
-            </h:column>
-        </rich:dataTable>
-
-    </div>
-    </rich:tab>
 
     <rich:tab>
         <f:facet name="label">
-            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Item avaluos</h:panelGroup>
+            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Items</h:panelGroup>
         </f:facet>
     <h:form styleClass="association" id="itemAvaluosChildren">
 
-        <h:outputText value="There are no itemAvaluos associated with this avaluo."
+        <h:outputText value="No existen items asociados a este avaluo."
                    rendered="#{empty avaluoHome.itemAvaluos}"/>
 
         <rich:dataTable value="#{avaluoHome.itemAvaluos}"
@@ -138,7 +127,7 @@
                 rowClasses="rvgRowOne,rvgRowTwo"
                         id="itemAvaluosTable">
             <rich:column sortBy="#{_itemAvaluo.idItemAvaluo}">
-                <f:facet name="header">Id item avaluo</f:facet>
+                <f:facet name="header">Id</f:facet>
                 <h:outputText value="#{_itemAvaluo.idItemAvaluo}"/>
             </rich:column>
             <rich:column sortBy="#{_itemAvaluo.costo}">
@@ -149,29 +138,10 @@
                 <f:facet name="header">Utilidad</f:facet>
                 <h:outputText value="#{_itemAvaluo.utilidad}"/>
             </rich:column>
-            <h:column>
-                <f:facet name="header">Action</f:facet>
-                <s:link id="selectitemAvaluo"
-                     value="Select"
-                      view="/ItemAvaluo.xhtml">
-                    <f:param name="itemAvaluoIdItemAvaluo"
-                            value="#{_itemAvaluo.idItemAvaluo}"/>
-                    <f:param name="itemAvaluoFrom" value="Avaluo"/>
-                </s:link>
-            </h:column>
         </rich:dataTable>
 
     </h:form>
 
-    <div class="actionButtons">
-        <s:button
-               value="Add itemAvaluo"
-                view="/ItemAvaluoEdit.xhtml">
-            <f:param name="avaluoIdAvaluo"
-                    value="#{avaluoHome.instance.idAvaluo}"/>
-            <f:param name="itemAvaluoFrom" value="Avaluo"/>
-        </s:button>
-    </div>
     </rich:tab>
 </rich:tabPanel>
 </ui:define>

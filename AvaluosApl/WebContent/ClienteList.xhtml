@@ -71,7 +71,7 @@
                 </ui:include>
             </f:facet>
             <h:outputText value="#{_cliente.fechaIngreso}">
-                <s:convertDateTime type="date" dateStyle="short"/>
+                <s:convertDateTime type="date" pattern="dd/MM/yyyy"/>
             </h:outputText>
         </h:column>
         <h:column>

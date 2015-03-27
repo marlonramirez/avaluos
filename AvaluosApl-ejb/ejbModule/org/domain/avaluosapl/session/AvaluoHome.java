@@ -24,6 +24,7 @@ public class AvaluoHome extends EntityHome<Avaluo> {
 	@Override
 	protected Avaluo createInstance() {
 		Avaluo avaluo = new Avaluo();
+		avaluo.setActivo(new Activo());
 		return avaluo;
 	}
 
@@ -42,8 +43,10 @@ public class AvaluoHome extends EntityHome<Avaluo> {
 	}
 
 	public boolean isWired() {
-		if (getInstance().getActivo() == null)
+		if (getInstance().getActivo().getIdActivo() == null)
 			return false;
+		if (isManaged())
+			return !getInstance().getItemAvaluos().isEmpty();
 		return true;
 	}
 

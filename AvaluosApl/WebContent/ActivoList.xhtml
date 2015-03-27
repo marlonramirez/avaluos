@@ -86,32 +86,24 @@
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{activoList}"/>
+                    <ui:param name="propertyLabel" value="Cliente"/>
+                    <ui:param name="propertyPath" value="activo.idCliente"/>
+                </ui:include>
+            </f:facet>
+            <ui:param name="_cliente" value="#{clienteList.getById(_activo.idCliente)}"></ui:param>
+            <h:outputText value="#{_cliente.persona.nombres} #{_cliente.persona.apellidos}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activoList}"/>
                     <ui:param name="propertyLabel" value="Estado"/>
                     <ui:param name="propertyPath" value="activo.estado"/>
                 </ui:include>
             </f:facet>
             <h:outputText value="#{_activo.estado==1?'Activo':'Inactivo'}"/>
         </h:column>
-        <h:column>
-            <f:facet name="header">
-                <ui:include src="layout/sort.xhtml">
-                    <ui:param name="entityList" value="#{activoList}"/>
-                    <ui:param name="propertyLabel" value="Cliente"/>
-                    <ui:param name="propertyPath" value="activo.idCliente"/>
-                </ui:include>
-            </f:facet>
-            <h:outputText value="#{_activo.idCliente}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">
-                <ui:include src="layout/sort.xhtml">
-                    <ui:param name="entityList" value="#{activoList}"/>
-                    <ui:param name="propertyLabel" value="Tangible id activo tan"/>
-                    <ui:param name="propertyPath" value="activo.tangible.idActivoTan"/>
-                </ui:include>
-            </f:facet>
-            <h:outputText value="#{_activo.tangible.idActivoTan}"/>
-        </h:column>
+        
         <rich:column styleClass="action">
             <f:facet name="header">Acción</f:facet>
             <s:link view="/#{empty from ? 'Activo' : from}.xhtml"

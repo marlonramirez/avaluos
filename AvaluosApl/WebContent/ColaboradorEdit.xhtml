@@ -127,7 +127,20 @@
 		                    <f:facet name="header">Descripción</f:facet>
 		                    <h:outputText value="#{_competencia.descripcion}"/>
 		                </rich:column>
+		                
+		                <rich:column styleClass="center">
+			                <f:facet name="header">Editar</f:facet>
+							<a:commandLink value="Editar" actionListener="#{competenciaHome.loadCompetencia(_competencia)}"
+							onclick="#{rich:component('modalCompetenciaEdit')}.show()" reRender="competencia" ajaxSingle="true"></a:commandLink>
+			            </rich:column>
+			            <rich:column  styleClass="center">
+			                <f:facet name="header">Eliminar</f:facet>
+			                <a:commandLink value="Eliminar" actionListener="#{colaboradorHome.removeCompetencia(_competencia)}" 
+			                reRender="competenciaTab,save" ajaxSingle="true"></a:commandLink>
+			            </rich:column>
+		                
 		            </rich:dataTable>
+		            
 		
 		        </h:form>
 		    </rich:tab>
