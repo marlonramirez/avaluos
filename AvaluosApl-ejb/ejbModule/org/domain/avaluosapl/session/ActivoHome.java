@@ -1,6 +1,7 @@
 package org.domain.avaluosapl.session;
 
 import org.domain.avaluosapl.entity.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.jboss.seam.annotations.In;
@@ -12,6 +13,11 @@ public class ActivoHome extends EntityHome<Activo> {
 
 	@In(create = true)
 	TangibleHome tangibleHome;
+	@In(create = true)
+	ClienteHome clienteHome;
+	
+	private Cliente cliente;
+	private int tipo;
 
 	public void setActivoIdActivo(Integer id) {
 		setId(id);
@@ -24,6 +30,8 @@ public class ActivoHome extends EntityHome<Activo> {
 	@Override
 	protected Activo createInstance() {
 		Activo activo = new Activo();
+		cliente = new Cliente();
+		cliente.setPersona(new Persona());
 		return activo;
 	}
 
@@ -35,6 +43,11 @@ public class ActivoHome extends EntityHome<Activo> {
 
 	public void wire() {
 		getInstance();
+		Cliente cliente = clienteHome.getDefinedInstance();
+		if (cliente != null) {
+			setCliente(cliente);
+			getInstance().setIdCliente(cliente.getIdClientePersona());
+		}
 		Tangible tangible = tangibleHome.getDefinedInstance();
 		if (tangible != null) {
 			getInstance().setTangible(tangible);
@@ -52,6 +65,22 @@ public class ActivoHome extends EntityHome<Activo> {
 	public List<Avaluo> getAvaluos() {
 		return getInstance() == null ? null : new ArrayList<Avaluo>(
 				getInstance().getAvaluos());
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public int getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(int tipo) {
+		this.tipo = tipo;
 	}
 
 }

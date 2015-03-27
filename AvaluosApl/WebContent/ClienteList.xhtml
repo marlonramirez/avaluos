@@ -113,7 +113,7 @@
         <rich:column styleClass="action">
             <f:facet name="header">Acción</f:facet>
             <s:link view="/#{empty from ? 'Cliente' : from}.xhtml"
-                   value="#{empty from ? 'View' : 'Select'}"
+                   value="#{empty from ? 'Ver' : 'Seleccionar'}"
              propagation="#{empty from ? 'none' : 'default'}"
                       id="clienteViewId">
                 <f:param name="clienteIdClientePersona"
@@ -121,7 +121,7 @@
             </s:link>
             #{' '}
             <s:link view="/ClienteEdit.xhtml"
-                   value="Edit"
+                   value="Editar"
              propagation="none"
                       id="clienteEdit"
                 rendered="#{empty from}">

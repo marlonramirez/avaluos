@@ -14,7 +14,7 @@
     <h:form id="ciudad" styleClass="edit">
 
         <rich:panel>
-            <f:facet name="header">#{ciudadHome.managed ? 'Edit' : 'Add'} Ciudad</f:facet>
+            <f:facet name="header">#{ciudadHome.managed ? 'Editar' : 'Agregar'} Ciudad</f:facet>
 
 
 
@@ -32,7 +32,7 @@
 
             <div style="clear:both">
                 <span class="required">*</span>
-                required fields
+                Campos requeridos
             </div>
 
         </rich:panel>
@@ -40,30 +40,30 @@
         <div class="actionButtons">
 
             <h:commandButton id="save"
-                          value="Save"
+                          value="Guardar"
                          action="#{ciudadHome.persist}"
                        disabled="#{!ciudadHome.wired}"
                        rendered="#{!ciudadHome.managed}"/>
 
             <h:commandButton id="update"
-                          value="Save"
+                          value="Guardar"
                          action="#{ciudadHome.update}"
                        rendered="#{ciudadHome.managed}"/>
 
             <h:commandButton id="delete"
-                          value="Delete"
+                          value="Eliminar"
                          action="#{ciudadHome.remove}"
                       immediate="true"
                        rendered="#{ciudadHome.managed}"/>
 
             <s:button id="cancelEdit"
-                   value="Cancel"
+                   value="Cancelar"
              propagation="end"
                     view="/Ciudad.xhtml"
                 rendered="#{ciudadHome.managed}"/>
 
             <s:button id="cancelAdd"
-                   value="Cancel"
+                   value="Cancelar"
              propagation="end"
                     view="/#{empty ciudadFrom ? 'CiudadList' : ciudadFrom}.xhtml"
                 rendered="#{!ciudadHome.managed}"/>
@@ -71,73 +71,6 @@
         </div>
     </h:form>
 
-<rich:tabPanel switchType="ajax">
-
-    <rich:tab label="Facturas">
-        <h:form styleClass="association" id="facturasChildren">
-
-            <h:outputText value="There are no facturas associated with this ciudad."
-                       rendered="#{empty ciudadHome.facturas}"/>
-
-            <rich:dataTable value="#{ciudadHome.facturas}"
-                           var="_factura"
-                      rendered="#{not empty ciudadHome.facturas}"
-                    rowClasses="rvgRowOne,rvgRowTwo"
-                            id="facturasTable">
-                <rich:column sortBy="#{_factura.idFactura}">
-                    <f:facet name="header">Id factura</f:facet>
-                    <h:outputText value="#{_factura.idFactura}"/>
-                </rich:column>
-                <rich:column sortBy="#{_factura.numFactura}">
-                    <f:facet name="header">Num factura</f:facet>
-                    <h:outputText value="#{_factura.numFactura}"/>
-                </rich:column>
-                <rich:column sortBy="#{_factura.idCliente}">
-                    <f:facet name="header">Id cliente</f:facet>
-                    <h:outputText value="#{_factura.idCliente}"/>
-                </rich:column>
-                <rich:column sortBy="#{_factura.fechaExp}">
-                    <f:facet name="header">Fecha exp</f:facet>
-                    <h:outputText value="#{_factura.fechaExp}">
-                        <s:convertDateTime type="date" dateStyle="short"/>
-                    </h:outputText>
-                </rich:column>
-                <rich:column sortBy="#{_factura.fechaVenc}">
-                    <f:facet name="header">Fecha venc</f:facet>
-                    <h:outputText value="#{_factura.fechaVenc}">
-                        <s:convertDateTime type="date" dateStyle="short"/>
-                    </h:outputText>
-                </rich:column>
-                <rich:column sortBy="#{_factura.subtotal}">
-                    <f:facet name="header">Subtotal</f:facet>
-                    <h:outputText value="#{_factura.subtotal}"/>
-                </rich:column>
-                <rich:column sortBy="#{_factura.iva}">
-                    <f:facet name="header">Iva</f:facet>
-                    <h:outputText value="#{_factura.iva}"/>
-                </rich:column>
-                <rich:column sortBy="#{_factura.total}">
-                    <f:facet name="header">Total</f:facet>
-                    <h:outputText value="#{_factura.total}"/>
-                </rich:column>
-            </rich:dataTable>
-
-        </h:form>
-
-        <f:subview rendered="#{ciudadHome.managed}" id="facturas">
-        <div class="actionButtons">
-            <s:button id="addfactura"
-                   value="Add factura"
-                    view="/FacturaEdit.xhtml"
-             propagation="none">
-                 <f:param name="ciudadCiudadId"
-                         value="#{ciudadHome.instance.ciudadId}"/>
-                 <f:param name="facturaFrom" value="Ciudad"/>
-            </s:button>
-        </div>
-        </f:subview>
-    </rich:tab>
-</rich:tabPanel>
 </ui:define>
 
 </ui:composition>

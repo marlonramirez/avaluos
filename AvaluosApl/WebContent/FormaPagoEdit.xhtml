@@ -14,12 +14,12 @@
     <h:form id="formaPago" styleClass="edit">
 
         <rich:panel>
-            <f:facet name="header">#{formaPagoHome.managed ? 'Edit' : 'Add'} Forma pago</f:facet>
+            <f:facet name="header">#{formaPagoHome.managed ? 'Editar' : 'Agregar'} Forma de pago</f:facet>
 
 
 
             <s:decorate id="descripcionField" template="layout/edit.xhtml">
-                <ui:define name="label">Descripcion</ui:define>
+                <ui:define name="label">Descripción</ui:define>
                 <h:inputText id="descripcion"
                        required="true"
                            size="100"
@@ -32,7 +32,7 @@
 
             <div style="clear:both">
                 <span class="required">*</span>
-                required fields
+                Campos requeridos
             </div>
 
         </rich:panel>
@@ -40,30 +40,30 @@
         <div class="actionButtons">
 
             <h:commandButton id="save"
-                          value="Save"
+                          value="Guardar"
                          action="#{formaPagoHome.persist}"
                        disabled="#{!formaPagoHome.wired}"
                        rendered="#{!formaPagoHome.managed}"/>
 
             <h:commandButton id="update"
-                          value="Save"
+                          value="Guardar"
                          action="#{formaPagoHome.update}"
                        rendered="#{formaPagoHome.managed}"/>
 
             <h:commandButton id="delete"
-                          value="Delete"
+                          value="Eliminar"
                          action="#{formaPagoHome.remove}"
                       immediate="true"
                        rendered="#{formaPagoHome.managed}"/>
 
             <s:button id="cancelEdit"
-                   value="Cancel"
+                   value="Cancelar"
              propagation="end"
                     view="/FormaPago.xhtml"
                 rendered="#{formaPagoHome.managed}"/>
 
             <s:button id="cancelAdd"
-                   value="Cancel"
+                   value="Cancelar"
              propagation="end"
                     view="/#{empty formaPagoFrom ? 'FormaPagoList' : formaPagoFrom}.xhtml"
                 rendered="#{!formaPagoHome.managed}"/>
@@ -71,73 +71,6 @@
         </div>
     </h:form>
 
-<rich:tabPanel switchType="ajax">
-
-    <rich:tab label="Facturas">
-        <h:form styleClass="association" id="facturasChildren">
-
-            <h:outputText value="There are no facturas associated with this formaPago."
-                       rendered="#{empty formaPagoHome.facturas}"/>
-
-            <rich:dataTable value="#{formaPagoHome.facturas}"
-                           var="_factura"
-                      rendered="#{not empty formaPagoHome.facturas}"
-                    rowClasses="rvgRowOne,rvgRowTwo"
-                            id="facturasTable">
-                <rich:column sortBy="#{_factura.idFactura}">
-                    <f:facet name="header">Id factura</f:facet>
-                    <h:outputText value="#{_factura.idFactura}"/>
-                </rich:column>
-                <rich:column sortBy="#{_factura.numFactura}">
-                    <f:facet name="header">Num factura</f:facet>
-                    <h:outputText value="#{_factura.numFactura}"/>
-                </rich:column>
-                <rich:column sortBy="#{_factura.idCliente}">
-                    <f:facet name="header">Id cliente</f:facet>
-                    <h:outputText value="#{_factura.idCliente}"/>
-                </rich:column>
-                <rich:column sortBy="#{_factura.fechaExp}">
-                    <f:facet name="header">Fecha exp</f:facet>
-                    <h:outputText value="#{_factura.fechaExp}">
-                        <s:convertDateTime type="date" dateStyle="short"/>
-                    </h:outputText>
-                </rich:column>
-                <rich:column sortBy="#{_factura.fechaVenc}">
-                    <f:facet name="header">Fecha venc</f:facet>
-                    <h:outputText value="#{_factura.fechaVenc}">
-                        <s:convertDateTime type="date" dateStyle="short"/>
-                    </h:outputText>
-                </rich:column>
-                <rich:column sortBy="#{_factura.subtotal}">
-                    <f:facet name="header">Subtotal</f:facet>
-                    <h:outputText value="#{_factura.subtotal}"/>
-                </rich:column>
-                <rich:column sortBy="#{_factura.iva}">
-                    <f:facet name="header">Iva</f:facet>
-                    <h:outputText value="#{_factura.iva}"/>
-                </rich:column>
-                <rich:column sortBy="#{_factura.total}">
-                    <f:facet name="header">Total</f:facet>
-                    <h:outputText value="#{_factura.total}"/>
-                </rich:column>
-            </rich:dataTable>
-
-        </h:form>
-
-        <f:subview rendered="#{formaPagoHome.managed}" id="facturas">
-        <div class="actionButtons">
-            <s:button id="addfactura"
-                   value="Add factura"
-                    view="/FacturaEdit.xhtml"
-             propagation="none">
-                 <f:param name="formaPagoIdFormaPago"
-                         value="#{formaPagoHome.instance.idFormaPago}"/>
-                 <f:param name="facturaFrom" value="FormaPago"/>
-            </s:button>
-        </div>
-        </f:subview>
-    </rich:tab>
-</rich:tabPanel>
 </ui:define>
 
 </ui:composition>

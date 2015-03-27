@@ -11,7 +11,7 @@
 <ui:define name="body">
 
     <rich:panel>
-        <f:facet name="header">Concepto Details</f:facet>
+        <f:facet name="header">Detalles de concepto</f:facet>
 
 
         <s:decorate id="nombre" template="layout/display.xhtml">
@@ -27,67 +27,14 @@
 
         <s:button view="/ConceptoEdit.xhtml"
                     id="edit"
-                 value="Edit"/>
+                 value="Editar"/>
 
         <s:button view="/#{empty conceptoFrom ? 'ConceptoList' : conceptoFrom}.xhtml"
                     id="done"
-                 value="Done"/>
+                 value="Aceptar"/>
 
     </div>
 
-    <rich:tabPanel switchType="ajax">
-
-    <rich:tab>
-        <f:facet name="label">
-            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Item avaluos</h:panelGroup>
-        </f:facet>
-    <h:form styleClass="association" id="itemAvaluosChildren">
-
-        <h:outputText value="There are no itemAvaluos associated with this concepto."
-                   rendered="#{empty conceptoHome.itemAvaluos}"/>
-
-        <rich:dataTable value="#{conceptoHome.itemAvaluos}"
-                       var="_itemAvaluo"
-                  rendered="#{not empty conceptoHome.itemAvaluos}"
-                rowClasses="rvgRowOne,rvgRowTwo"
-                        id="itemAvaluosTable">
-            <rich:column sortBy="#{_itemAvaluo.idItemAvaluo}">
-                <f:facet name="header">Id item avaluo</f:facet>
-                <h:outputText value="#{_itemAvaluo.idItemAvaluo}"/>
-            </rich:column>
-            <rich:column sortBy="#{_itemAvaluo.costo}">
-                <f:facet name="header">Costo</f:facet>
-                <h:outputText value="#{_itemAvaluo.costo}"/>
-            </rich:column>
-            <rich:column sortBy="#{_itemAvaluo.utilidad}">
-                <f:facet name="header">Utilidad</f:facet>
-                <h:outputText value="#{_itemAvaluo.utilidad}"/>
-            </rich:column>
-            <h:column>
-                <f:facet name="header">Action</f:facet>
-                <s:link id="selectitemAvaluo"
-                     value="Select"
-                      view="/ItemAvaluo.xhtml">
-                    <f:param name="itemAvaluoIdItemAvaluo"
-                            value="#{_itemAvaluo.idItemAvaluo}"/>
-                    <f:param name="itemAvaluoFrom" value="Concepto"/>
-                </s:link>
-            </h:column>
-        </rich:dataTable>
-
-    </h:form>
-
-    <div class="actionButtons">
-        <s:button
-               value="Add itemAvaluo"
-                view="/ItemAvaluoEdit.xhtml">
-            <f:param name="conceptoIdConcepto"
-                    value="#{conceptoHome.instance.idConcepto}"/>
-            <f:param name="itemAvaluoFrom" value="Concepto"/>
-        </s:button>
-    </div>
-    </rich:tab>
-</rich:tabPanel>
 </ui:define>
 
 </ui:composition>

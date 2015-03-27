@@ -12,7 +12,7 @@
 
     <h:form id="activoSearch" styleClass="edit">
 
-        <rich:simpleTogglePanel label="Activo Search Filter" switchType="ajax">
+        <rich:simpleTogglePanel label="Busqueda" switchType="ajax">
 
             <s:decorate template="layout/display.xhtml">
                 <ui:define name="label">Nombre</ui:define>
@@ -20,32 +20,32 @@
             </s:decorate>
 
             <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Descripcion</ui:define>
+                <ui:define name="label">Descripción</ui:define>
                 <h:inputText id="descripcion" value="#{activoList.activo.descripcion}"/>
             </s:decorate>
 
             <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Match</ui:define>
+                <ui:define name="label">Filtrar por</ui:define>
                 <h:selectOneRadio id="logic" value="#{activoList.restrictionLogicOperator}" styleClass="radio">
-                    <f:selectItem itemLabel="All" itemValue="and"/>
-                    <f:selectItem itemLabel="Any" itemValue="or"/>
+                    <f:selectItem itemLabel="Todas" itemValue="and"/>
+                    <f:selectItem itemLabel="Algunas" itemValue="or"/>
                 </h:selectOneRadio>
             </s:decorate>
 
         </rich:simpleTogglePanel>
 
         <div class="actionButtons">
-            <h:commandButton id="search" value="Search" action="/ActivoList.xhtml"/>
-            <s:button id="reset" value="Reset" includePageParams="false"/>
+            <h:commandButton id="search" value="Buscar" action="/ActivoList.xhtml"/>
+            <s:button id="reset" value="Reiniciar" includePageParams="false"/>
         </div>
 
     </h:form>
 
     <rich:panel>
-        <f:facet name="header">Activo Search Results (#{empty activoList.resultList ? 0 : (activoList.paginated ? activoList.resultCount : activoList.resultList.size)})</f:facet>
+        <f:facet name="header">Activos (#{empty activoList.resultList ? 0 : (activoList.paginated ? activoList.resultCount : activoList.resultList.size)})</f:facet>
     <div class="results" id="activoList">
 
-    <h:outputText value="The activo search returned no results."
+    <h:outputText value="La busqueda no ha retornado resultados."
                rendered="#{empty activoList.resultList}"/>
 
     <rich:dataTable id="activoList"
@@ -56,7 +56,7 @@
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{activoList}"/>
-                    <ui:param name="propertyLabel" value="Id activo"/>
+                    <ui:param name="propertyLabel" value="Id"/>
                     <ui:param name="propertyPath" value="activo.idActivo"/>
                 </ui:include>
             </f:facet>
@@ -76,7 +76,7 @@
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{activoList}"/>
-                    <ui:param name="propertyLabel" value="Descripcion"/>
+                    <ui:param name="propertyLabel" value="Descripción"/>
                     <ui:param name="propertyPath" value="activo.descripcion"/>
                 </ui:include>
             </f:facet>
@@ -90,13 +90,13 @@
                     <ui:param name="propertyPath" value="activo.estado"/>
                 </ui:include>
             </f:facet>
-            <h:outputText value="#{_activo.estado}"/>
+            <h:outputText value="#{_activo.estado==1?'Activo':'Inactivo'}"/>
         </h:column>
         <h:column>
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{activoList}"/>
-                    <ui:param name="propertyLabel" value="Id cliente"/>
+                    <ui:param name="propertyLabel" value="Cliente"/>
                     <ui:param name="propertyPath" value="activo.idCliente"/>
                 </ui:include>
             </f:facet>
@@ -113,9 +113,9 @@
             <h:outputText value="#{_activo.tangible.idActivoTan}"/>
         </h:column>
         <rich:column styleClass="action">
-            <f:facet name="header">Action</f:facet>
+            <f:facet name="header">Acción</f:facet>
             <s:link view="/#{empty from ? 'Activo' : from}.xhtml"
-                   value="#{empty from ? 'View' : 'Select'}"
+                   value="#{empty from ? 'Ver' : 'Seleccionar'}"
              propagation="#{empty from ? 'none' : 'default'}"
                       id="activoViewId">
                 <f:param name="activoIdActivo"
@@ -123,7 +123,7 @@
             </s:link>
             #{' '}
             <s:link view="/ActivoEdit.xhtml"
-                   value="Edit"
+                   value="Editar"
              propagation="none"
                       id="activoEdit"
                 rendered="#{empty from}">
@@ -175,7 +175,7 @@
         <s:button view="/ActivoEdit.xhtml"
                     id="create"
            propagation="none"
-                 value="Create activo">
+                 value="Crear activo">
             <f:param name="activoIdActivo"/>
         </s:button>
     </s:div>

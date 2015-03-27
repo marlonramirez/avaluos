@@ -11,11 +11,11 @@
 <ui:define name="body">
 
     <rich:panel>
-        <f:facet name="header">Forma pago Details</f:facet>
+        <f:facet name="header">Detalles de forma pago</f:facet>
 
 
         <s:decorate id="descripcion" template="layout/display.xhtml">
-            <ui:define name="label">Descripcion</ui:define>
+            <ui:define name="label">Descripción</ui:define>
             <h:outputText value="#{formaPagoHome.instance.descripcion}"/>
         </s:decorate>
 
@@ -27,91 +27,14 @@
 
         <s:button view="/FormaPagoEdit.xhtml"
                     id="edit"
-                 value="Edit"/>
+                 value="Editar"/>
 
         <s:button view="/#{empty formaPagoFrom ? 'FormaPagoList' : formaPagoFrom}.xhtml"
                     id="done"
-                 value="Done"/>
+                 value="Aceptar"/>
 
     </div>
 
-    <rich:tabPanel switchType="ajax">
-
-    <rich:tab>
-        <f:facet name="label">
-            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Facturas</h:panelGroup>
-        </f:facet>
-    <h:form styleClass="association" id="facturasChildren">
-
-        <h:outputText value="There are no facturas associated with this formaPago."
-                   rendered="#{empty formaPagoHome.facturas}"/>
-
-        <rich:dataTable value="#{formaPagoHome.facturas}"
-                       var="_factura"
-                  rendered="#{not empty formaPagoHome.facturas}"
-                rowClasses="rvgRowOne,rvgRowTwo"
-                        id="facturasTable">
-            <rich:column sortBy="#{_factura.idFactura}">
-                <f:facet name="header">Id factura</f:facet>
-                <h:outputText value="#{_factura.idFactura}"/>
-            </rich:column>
-            <rich:column sortBy="#{_factura.numFactura}">
-                <f:facet name="header">Num factura</f:facet>
-                <h:outputText value="#{_factura.numFactura}"/>
-            </rich:column>
-            <rich:column sortBy="#{_factura.idCliente}">
-                <f:facet name="header">Id cliente</f:facet>
-                <h:outputText value="#{_factura.idCliente}"/>
-            </rich:column>
-            <rich:column sortBy="#{_factura.fechaExp}">
-                <f:facet name="header">Fecha exp</f:facet>
-                <h:outputText value="#{_factura.fechaExp}">
-                    <s:convertDateTime type="date" dateStyle="short"/>
-                </h:outputText>
-            </rich:column>
-            <rich:column sortBy="#{_factura.fechaVenc}">
-                <f:facet name="header">Fecha venc</f:facet>
-                <h:outputText value="#{_factura.fechaVenc}">
-                    <s:convertDateTime type="date" dateStyle="short"/>
-                </h:outputText>
-            </rich:column>
-            <rich:column sortBy="#{_factura.subtotal}">
-                <f:facet name="header">Subtotal</f:facet>
-                <h:outputText value="#{_factura.subtotal}"/>
-            </rich:column>
-            <rich:column sortBy="#{_factura.iva}">
-                <f:facet name="header">Iva</f:facet>
-                <h:outputText value="#{_factura.iva}"/>
-            </rich:column>
-            <rich:column sortBy="#{_factura.total}">
-                <f:facet name="header">Total</f:facet>
-                <h:outputText value="#{_factura.total}"/>
-            </rich:column>
-            <h:column>
-                <f:facet name="header">Action</f:facet>
-                <s:link id="selectfactura"
-                     value="Select"
-                      view="/Factura.xhtml">
-                    <f:param name="facturaIdFactura"
-                            value="#{_factura.idFactura}"/>
-                    <f:param name="facturaFrom" value="FormaPago"/>
-                </s:link>
-            </h:column>
-        </rich:dataTable>
-
-    </h:form>
-
-    <div class="actionButtons">
-        <s:button
-               value="Add factura"
-                view="/FacturaEdit.xhtml">
-            <f:param name="formaPagoIdFormaPago"
-                    value="#{formaPagoHome.instance.idFormaPago}"/>
-            <f:param name="facturaFrom" value="FormaPago"/>
-        </s:button>
-    </div>
-    </rich:tab>
-</rich:tabPanel>
 </ui:define>
 
 </ui:composition>

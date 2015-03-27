@@ -12,7 +12,7 @@
 
     <h:form id="ciudadSearch" styleClass="edit">
 
-        <rich:simpleTogglePanel label="Ciudad Search Filter" switchType="ajax">
+        <rich:simpleTogglePanel label="Busqueda" switchType="ajax">
 
             <s:decorate template="layout/display.xhtml">
                 <ui:define name="label">Nombre</ui:define>
@@ -20,27 +20,27 @@
             </s:decorate>
 
             <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Match</ui:define>
+                <ui:define name="label">Filtrar por</ui:define>
                 <h:selectOneRadio id="logic" value="#{ciudadList.restrictionLogicOperator}" styleClass="radio">
-                    <f:selectItem itemLabel="All" itemValue="and"/>
-                    <f:selectItem itemLabel="Any" itemValue="or"/>
+                    <f:selectItem itemLabel="Todas" itemValue="and"/>
+                    <f:selectItem itemLabel="Algunas" itemValue="or"/>
                 </h:selectOneRadio>
             </s:decorate>
 
         </rich:simpleTogglePanel>
 
         <div class="actionButtons">
-            <h:commandButton id="search" value="Search" action="/CiudadList.xhtml"/>
-            <s:button id="reset" value="Reset" includePageParams="false"/>
+            <h:commandButton id="search" value="Buscar" action="/CiudadList.xhtml"/>
+            <s:button id="reset" value="Reiniciar" includePageParams="false"/>
         </div>
 
     </h:form>
 
     <rich:panel>
-        <f:facet name="header">Ciudad Search Results (#{empty ciudadList.resultList ? 0 : (ciudadList.paginated ? ciudadList.resultCount : ciudadList.resultList.size)})</f:facet>
+        <f:facet name="header">Ciudades (#{empty ciudadList.resultList ? 0 : (ciudadList.paginated ? ciudadList.resultCount : ciudadList.resultList.size)})</f:facet>
     <div class="results" id="ciudadList">
 
-    <h:outputText value="The ciudad search returned no results."
+    <h:outputText value="La busqueda no ha retornado resultados."
                rendered="#{empty ciudadList.resultList}"/>
 
     <rich:dataTable id="ciudadList"
@@ -51,7 +51,7 @@
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{ciudadList}"/>
-                    <ui:param name="propertyLabel" value="Ciudad id"/>
+                    <ui:param name="propertyLabel" value="Id"/>
                     <ui:param name="propertyPath" value="ciudad.ciudadId"/>
                 </ui:include>
             </f:facet>
@@ -68,9 +68,9 @@
             <h:outputText value="#{_ciudad.nombre}"/>
         </h:column>
         <rich:column styleClass="action">
-            <f:facet name="header">Action</f:facet>
+            <f:facet name="header">Acción</f:facet>
             <s:link view="/#{empty from ? 'Ciudad' : from}.xhtml"
-                   value="#{empty from ? 'View' : 'Select'}"
+                   value="#{empty from ? 'Ver' : 'Seleccionar'}"
              propagation="#{empty from ? 'none' : 'default'}"
                       id="ciudadViewId">
                 <f:param name="ciudadCiudadId"
@@ -78,7 +78,7 @@
             </s:link>
             #{' '}
             <s:link view="/CiudadEdit.xhtml"
-                   value="Edit"
+                   value="Editar"
              propagation="none"
                       id="ciudadEdit"
                 rendered="#{empty from}">
@@ -130,7 +130,7 @@
         <s:button view="/CiudadEdit.xhtml"
                     id="create"
            propagation="none"
-                 value="Create ciudad">
+                 value="Crear ciudad">
             <f:param name="ciudadCiudadId"/>
         </s:button>
     </s:div>
