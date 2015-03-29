@@ -1,6 +1,7 @@
 package org.domain.avaluosapl.session;
 
 import org.domain.avaluosapl.entity.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.jboss.seam.annotations.In;
@@ -16,6 +17,10 @@ public class ItemAvaluoHome extends EntityHome<ItemAvaluo> {
 	AvaluoHome avaluoHome;
 	@In(create = true)
 	ItemFacturaHome itemFacturaHome;
+	@In(create = true)
+	ManoObraHome manoObraHome;
+	
+	private ArrayList<ManoObra> deleteMos = new ArrayList<ManoObra>();
 
 	public void setItemAvaluoIdItemAvaluo(Integer id) {
 		setId(id);
@@ -68,6 +73,60 @@ public class ItemAvaluoHome extends EntityHome<ItemAvaluo> {
 	public List<ManoObra> getManoObras() {
 		return getInstance() == null ? null : new ArrayList<ManoObra>(
 				getInstance().getManoObras());
+	}
+	
+	public void newItemAvaluo() {
+		setInstance(createInstance());
+	}
+	
+	public void loadItemAvaluo(ItemAvaluo item) {
+		setInstance(item);
+	}
+	
+	public void addManoObra() {
+		ItemAvaluo item = getInstance();
+		ManoObra mo = manoObraHome.getInstance();
+		if (mo.getDescripcion().isEmpty()) {
+			return;
+		}
+		if (!manoObraHome.isEdit()) {
+			mo.setItemAvaluo(item);
+			item.getManoObras().add(mo);
+		}
+		manoObraHome.newManoObra();
+	}
+	
+	public void removeManoObra(ManoObra mo) {
+		if (mo.getIdManoObra() != null) {
+			deleteMos.add(mo);
+		}
+		getInstance().getManoObras().remove(mo);
+	}
+	
+	public void removeAllManoObras () {
+		ItemAvaluo instance = getInstance();
+		for (ManoObra mo: instance.getManoObras()) {
+			if (mo.getIdManoObra() != null) {
+				getEntityManager().remove(mo);
+			}
+		}
+		for (ManoObra mo: deleteMos) {
+			getEntityManager().remove(mo);
+		}
+	}
+	
+	public void actualizar() {
+		ItemAvaluo instance = getInstance();
+		update();
+		for (ManoObra mo: deleteMos) {
+			getEntityManager().remove(mo);
+		}
+		for (ManoObra mo: instance.getManoObras()) {
+			if (mo.getIdManoObra() == null) {
+				getEntityManager().persist(mo);
+			}
+		}
+		getEntityManager().flush();
 	}
 
 }

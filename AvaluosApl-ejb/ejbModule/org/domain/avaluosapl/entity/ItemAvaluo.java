@@ -27,16 +27,16 @@ public class ItemAvaluo implements java.io.Serializable {
 	private Integer idItemAvaluo;
 	private Concepto concepto;
 	private Avaluo avaluo;
-	private double costo;
-	private double utilidad;
+	private Double costo;
+	private Double utilidad;
 	private ItemFactura itemFactura;
 	private Set<ManoObra> manoObras = new HashSet<ManoObra>(0);
 
 	public ItemAvaluo() {
 	}
 
-	public ItemAvaluo(Concepto concepto, Avaluo avaluo, double costo,
-			double utilidad) {
+	public ItemAvaluo(Concepto concepto, Avaluo avaluo, Double costo,
+			Double utilidad) {
 		this.concepto = concepto;
 		this.avaluo = avaluo;
 		this.costo = costo;
@@ -87,20 +87,20 @@ public class ItemAvaluo implements java.io.Serializable {
 	}
 
 	@Column(name = "costo", nullable = false, precision = 22, scale = 0)
-	public double getCosto() {
+	public Double getCosto() {
 		return this.costo;
 	}
 
-	public void setCosto(double costo) {
+	public void setCosto(Double costo) {
 		this.costo = costo;
 	}
 
 	@Column(name = "utilidad", nullable = false, precision = 22, scale = 0)
-	public double getUtilidad() {
+	public Double getUtilidad() {
 		return this.utilidad;
 	}
 
-	public void setUtilidad(double utilidad) {
+	public void setUtilidad(Double utilidad) {
 		this.utilidad = utilidad;
 	}
 

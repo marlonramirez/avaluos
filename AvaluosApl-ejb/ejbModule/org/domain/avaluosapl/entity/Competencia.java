@@ -1,6 +1,6 @@
 package org.domain.avaluosapl.entity;
 
-// Generated 25/03/2015 01:35:07 PM by Hibernate Tools 3.4.0.CR1
+// Generated 28/03/2015 08:34:58 PM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

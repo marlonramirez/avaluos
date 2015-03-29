@@ -10,6 +10,8 @@ public class ManoObraHome extends EntityHome<ManoObra> {
 
 	@In(create = true)
 	ItemAvaluoHome itemAvaluoHome;
+	
+	private boolean edit = false;
 
 	public void setManoObraIdManoObra(Integer id) {
 		setId(id);
@@ -47,6 +49,24 @@ public class ManoObraHome extends EntityHome<ManoObra> {
 
 	public ManoObra getDefinedInstance() {
 		return isIdDefined() ? getInstance() : null;
+	}
+
+	public boolean isEdit() {
+		return edit;
+	}
+
+	public void setEdit(boolean edit) {
+		this.edit = edit;
+	}
+	
+	public void newManoObra() {
+		setInstance(createInstance());
+		edit = false;
+	}
+	
+	public void loadManoObra(ManoObra mo) {
+		setInstance(mo);
+		edit = true;
 	}
 
 }

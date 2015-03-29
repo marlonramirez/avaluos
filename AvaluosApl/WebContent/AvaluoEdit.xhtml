@@ -112,7 +112,7 @@
 					               var="_asesor" label="#{_asesor.persona.nombres} #{_asesor.persona.apellidos}" 
 					               itemValue="#{_asesor.idColaboradorPersona}"
 					               noSelectionLabel="--SELECCIONAR--" />
-					             <a:support event="onchange" reRender="areaConocField,save" ajaxSingle="true"/>
+					             <a:support event="onchange" reRender="idAsesorField,save" ajaxSingle="true"/>
 					           </h:selectOneMenu>
 				        </s:decorate>
 				        
@@ -125,19 +125,19 @@
 					               var="_asesor" label="#{_asesor.persona.nombres} #{_asesor.persona.apellidos}" 
 					               itemValue="#{_asesor.idColaboradorPersona}"
 					               noSelectionLabel="--SELECCIONAR--" />
-					             <a:support event="onchange" reRender="areaConocField,save" ajaxSingle="true"/>
+					             <a:support event="onchange" reRender="idGerenteField,save" ajaxSingle="true"/>
 					           </h:selectOneMenu>
 				        </s:decorate>
 				   </h:panelGrid>
 			       
-			       <rich:tabPanel switchType="ajax">
+			       <rich:tabPanel switchType="ajax" id="itemsTab">
 		
 		    <rich:tab label="Items">
 		        <h:form styleClass="association" id="itemAvaluosChildren">
 		
 					<s:div>
-				    	<a:commandButton value="Agregar item" actionListener="#{telefonoHome.newTelefono()}"
-				    	onclick="#{rich:component('modalTelefonoEdit')}.show()" reRender="telefono" ajaxSingle="true">
+				    	<a:commandButton value="Agregar item" actionListener="#{itemAvaluoHome.newItemAvaluo()}"
+				    	onclick="#{rich:component('modalItemAvaluoEdit')}.show()" reRender="itemAvaluo" ajaxSingle="true">
 				    	</a:commandButton>
 				    </s:div>	
 		
@@ -149,9 +149,10 @@
 		                      rendered="#{not empty avaluoHome.itemAvaluos}"
 		                    rowClasses="rvgRowOne,rvgRowTwo"
 		                            id="itemAvaluosTable">
-		                <rich:column sortBy="#{_itemAvaluo.idItemAvaluo}">
-		                    <f:facet name="header">Id</f:facet>
-		                    <h:outputText value="#{_itemAvaluo.idItemAvaluo}"/>
+		                            
+		               <rich:column sortBy="#{_itemAvaluo.concepto.nombre}">
+		                    <f:facet name="header">Concepto</f:facet>
+		                    <h:outputText value="#{_itemAvaluo.concepto.nombre}"/>
 		                </rich:column>
 		                <rich:column sortBy="#{_itemAvaluo.costo}">
 		                    <f:facet name="header">Costo</f:facet>
@@ -161,6 +162,18 @@
 		                    <f:facet name="header">Utilidad</f:facet>
 		                    <h:outputText value="#{_itemAvaluo.utilidad}"/>
 		                </rich:column>
+		                
+		                <rich:column styleClass="center">
+			                <f:facet name="header">Editar</f:facet>
+							<a:commandLink value="Editar" actionListener="#{itemAvaluoHome.loadItemAvaluo(_itemAvaluo)}"
+							onclick="#{rich:component('modalItemAvaluoEdit')}.show()" 
+								reRender="itemAvaluo" ajaxSingle="true"></a:commandLink>
+			            </rich:column>
+			            <rich:column  styleClass="center">
+			                <f:facet name="header">Eliminar</f:facet>
+			                <a:commandLink value="Eliminar" actionListener="#{itemAvaluoHome.removeManoObra(_manoObra)}" 
+			                reRender="manoObraPanel" ajaxSingle="true"></a:commandLink>
+			            </rich:column>
 		            </rich:dataTable>
 		
 		        </h:form>
@@ -210,6 +223,11 @@
                 rendered="#{!avaluoHome.managed}"/>
 
         </div>
+        
+        <f:subview>
+			<a:include viewId="/modals/ItemAvaluoEdit.xhtml" />
+		</f:subview>
+        
     </h:form>
 
 

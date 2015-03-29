@@ -1,0 +1,113 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<rich:modalPanel id="modalItemAvaluoEdit" width="610" height="300">
+	
+		<f:facet name="header">
+		      <h:outputText value="#{itemAvaluoHome.managed ? 'Editar' : 'Agregar'} Item avaluo" />
+		      <f:facet name="controls">
+			      <a:commandLink id="hideModalItemAvaluoEdit" value="x">
+			        <rich:componentControl for="modalItemAvaluoEdit"
+			          attachTo="hideModalItemAvaluoEdit" operation="hide" event="onclick" />
+			      </a:commandLink>
+		    </f:facet>
+	    </f:facet>
+
+    <h:form id="itemAvaluo" styleClass="edit">
+
+            <s:decorate id="costoField" template="../layout/edit.xhtml">
+                <ui:define name="label">Costo</ui:define>
+                <h:inputText id="costo"
+                       required="true"
+                          value="#{itemAvaluoHome.instance.costo}">
+                    <a:support event="onblur" reRender="costoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="utilidadField" template="../layout/edit.xhtml">
+                <ui:define name="label">Utilidad</ui:define>
+                <h:inputText id="utilidad"
+                       required="true"
+                          value="#{itemAvaluoHome.instance.utilidad}">
+                    <a:support event="onblur" reRender="utilidadField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="conceptoField" template="../layout/edit.xhtml">
+                <ui:define name="label">Concepto</ui:define>
+		            <h:selectOneMenu id="concepto" required="true"
+		                 value="#{itemAvaluoHome.instance.concepto}">
+		                 <s:selectItems value="#{conceptoList.resultList}"
+		               var="_concepto" label="#{_concepto.nombre}" 
+		               noSelectionLabel="--SELECCIONAR--" />
+		               <s:convertEntity />
+		             <a:support event="onchange" reRender="conceptoField" ajaxSingle="true"/>
+		           </h:selectOneMenu>
+	        </s:decorate>
+	        
+	        <s:decorate id="addManoObraField" template="../layout/edit.xhtml">
+                <ui:define name="label">Mano de obra</ui:define>
+		            <h:inputText id="addManoObra" size="35" value="#{manoObraHome.instance.descripcion}">
+	                    <a:support event="onblur" reRender="addManoObraField" ajaxSingle="true"/>
+	                </h:inputText>
+	                <a:commandButton value="#{manoObraHome.edit?'Modificar':'Agregar'}" actionListener="#{itemAvaluoHome.addManoObra()}" 
+	                reRender="manoObraPanel,addManoObraField" ajaxSingle="true" />
+	        </s:decorate>
+
+			<rich:tabPanel switchType="ajax" id="manoObraPanel">
+	
+	    <rich:tab label="Mano de obra">
+	        <h:form styleClass="association" id="manoObrasChildren">
+	
+	            <h:outputText value="No existe mano de obra asociada a este item."
+	                       rendered="#{empty itemAvaluoHome.manoObras}"/>
+	
+	            <rich:dataTable value="#{itemAvaluoHome.manoObras}"
+	                           var="_manoObra"
+	                      rendered="#{not empty itemAvaluoHome.manoObras}"
+	                    rowClasses="rvgRowOne,rvgRowTwo"
+	                            id="manoObrasTable">
+	                <rich:column sortBy="#{_manoObra.descripcion}">
+	                    <f:facet name="header">Descripción</f:facet>
+	                    <h:outputText value="#{_manoObra.descripcion}"/>
+	                </rich:column>
+	                
+	                <rich:column styleClass="center">
+		                <f:facet name="header">Editar</f:facet>
+						<a:commandLink value="Editar" actionListener="#{manoObraHome.loadManoObra(_manoObra)}"
+							reRender="addManoObraField" ajaxSingle="true"></a:commandLink>
+		            </rich:column>
+		            <rich:column  styleClass="center">
+		                <f:facet name="header">Eliminar</f:facet>
+		                <a:commandLink value="Eliminar" actionListener="#{itemAvaluoHome.removeManoObra(_manoObra)}" 
+		                reRender="manoObraPanel" ajaxSingle="true"></a:commandLink>
+		            </rich:column>
+	            </rich:dataTable>
+	            
+	        </h:form>
+	    </rich:tab>
+	</rich:tabPanel>
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                Campos requeridos
+            </div>
+
+       <div class="actionButtons">
+			<a:commandButton actionListener="#{avaluoHome.addItem()}" oncomplete="if( #{validation.succeeded} ) #{rich:component('modalItemAvaluoEdit')}.hide()"
+	        value="Aceptar" ajaxSingle="true" reRender="itemsTab,itemAvaluo" process="itemAvaluo">
+	        </a:commandButton>
+		</div>
+    </h:form>
+
+</rich:modalPanel>
+
+</ui:composition>

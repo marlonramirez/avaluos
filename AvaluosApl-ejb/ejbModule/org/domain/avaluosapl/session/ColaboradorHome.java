@@ -126,7 +126,7 @@ public class ColaboradorHome extends EntityHome<Colaborador> {
 			getEntityManager().remove(comp);
 		}
 		for (Competencia comp: instance.getCompetencias()) {
-			if (comp.getDescripcion() == null) {
+			if (comp.getIdCompetencia() == null) {
 				getEntityManager().persist(comp);
 			}
 		}
