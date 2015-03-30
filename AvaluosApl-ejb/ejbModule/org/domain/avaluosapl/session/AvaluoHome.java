@@ -82,11 +82,17 @@ public class AvaluoHome extends EntityHome<Avaluo> {
 		Avaluo instance = getInstance();
 		update();
 		for (ItemAvaluo item: deleteItems) {
+			itemAvaluoHome.setInstance(item);
+			itemAvaluoHome.removeAllManoObras();
 			getEntityManager().remove(item);
 		}
 		for (ItemAvaluo item: instance.getItemAvaluos()) {
+			itemAvaluoHome.setInstance(item);
 			if (item.getIdItemAvaluo() == null) {
 				getEntityManager().persist(item);
+				itemAvaluoHome.guardar();
+			} else {
+				itemAvaluoHome.actualizar();
 			}
 		}
 		getEntityManager().flush();

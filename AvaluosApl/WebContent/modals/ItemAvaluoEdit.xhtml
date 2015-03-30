@@ -8,7 +8,7 @@
 	xmlns:a="http://richfaces.org/a4j"
 	xmlns:rich="http://richfaces.org/rich">
 
-	<rich:modalPanel id="modalItemAvaluoEdit" width="610" height="300">
+	<rich:modalPanel id="modalItemAvaluoEdit" width="610" height="430" resizeable="false">
 	
 		<f:facet name="header">
 		      <h:outputText value="#{itemAvaluoHome.managed ? 'Editar' : 'Agregar'} Item avaluo" />
@@ -19,9 +19,10 @@
 			      </a:commandLink>
 		    </f:facet>
 	    </f:facet>
+	
+    <h:form id="itemAvaluo" styleClass="edit" style="overflow:auto;overflow-x:hidden;width:600px;height:390px">
 
-    <h:form id="itemAvaluo" styleClass="edit">
-
+		<h:panelGrid>
             <s:decorate id="costoField" template="../layout/edit.xhtml">
                 <ui:define name="label">Costo</ui:define>
                 <h:inputText id="costo"
@@ -52,15 +53,19 @@
 		             <a:support event="onchange" reRender="conceptoField" ajaxSingle="true"/>
 		           </h:selectOneMenu>
 	        </s:decorate>
+	    </h:panelGrid>
 	        
+	    <h:panelGrid columns="2" id="manoObraGroup">
 	        <s:decorate id="addManoObraField" template="../layout/edit.xhtml">
                 <ui:define name="label">Mano de obra</ui:define>
 		            <h:inputText id="addManoObra" size="35" value="#{manoObraHome.instance.descripcion}">
 	                    <a:support event="onblur" reRender="addManoObraField" ajaxSingle="true"/>
 	                </h:inputText>
-	                <a:commandButton value="#{manoObraHome.edit?'Modificar':'Agregar'}" actionListener="#{itemAvaluoHome.addManoObra()}" 
-	                reRender="manoObraPanel,addManoObraField" ajaxSingle="true" />
 	        </s:decorate>
+	        
+	        <a:commandButton value="#{manoObraHome.edit?'Modificar':'Agregar'}" actionListener="#{itemAvaluoHome.addManoObra()}" 
+	                reRender="manoObraPanel,addManoObra" ajaxSingle="true" />
+	   </h:panelGrid>
 
 			<rich:tabPanel switchType="ajax" id="manoObraPanel">
 	
@@ -71,7 +76,7 @@
 	                       rendered="#{empty itemAvaluoHome.manoObras}"/>
 	
 	            <rich:dataTable value="#{itemAvaluoHome.manoObras}"
-	                           var="_manoObra"
+	                           var="_manoObra" rows="5"
 	                      rendered="#{not empty itemAvaluoHome.manoObras}"
 	                    rowClasses="rvgRowOne,rvgRowTwo"
 	                            id="manoObrasTable">
@@ -83,7 +88,7 @@
 	                <rich:column styleClass="center">
 		                <f:facet name="header">Editar</f:facet>
 						<a:commandLink value="Editar" actionListener="#{manoObraHome.loadManoObra(_manoObra)}"
-							reRender="addManoObraField" ajaxSingle="true"></a:commandLink>
+							reRender="manoObraGroup" ajaxSingle="true"></a:commandLink>
 		            </rich:column>
 		            <rich:column  styleClass="center">
 		                <f:facet name="header">Eliminar</f:facet>
@@ -91,6 +96,9 @@
 		                reRender="manoObraPanel" ajaxSingle="true"></a:commandLink>
 		            </rich:column>
 	            </rich:dataTable>
+	            
+	            <rich:datascroller id="manoObraDsc" for="manoObrasTable" 
+	            rendered="#{not empty itemAvaluoHome.manoObras}" maxPages="5" />
 	            
 	        </h:form>
 	    </rich:tab>
@@ -103,7 +111,7 @@
 
        <div class="actionButtons">
 			<a:commandButton actionListener="#{avaluoHome.addItem()}" oncomplete="if( #{validation.succeeded} ) #{rich:component('modalItemAvaluoEdit')}.hide()"
-	        value="Aceptar" ajaxSingle="true" reRender="itemsTab,itemAvaluo" process="itemAvaluo">
+	        value="Aceptar" ajaxSingle="true" reRender="itemsTab,itemAvaluo,update" process="itemAvaluo">
 	        </a:commandButton>
 		</div>
     </h:form>

@@ -112,7 +112,7 @@
 					               var="_asesor" label="#{_asesor.persona.nombres} #{_asesor.persona.apellidos}" 
 					               itemValue="#{_asesor.idColaboradorPersona}"
 					               noSelectionLabel="--SELECCIONAR--" />
-					             <a:support event="onchange" reRender="idAsesorField,save" ajaxSingle="true"/>
+					             <a:support event="onchange" reRender="idAsesorField,update" ajaxSingle="true"/>
 					           </h:selectOneMenu>
 				        </s:decorate>
 				        
@@ -125,7 +125,7 @@
 					               var="_asesor" label="#{_asesor.persona.nombres} #{_asesor.persona.apellidos}" 
 					               itemValue="#{_asesor.idColaboradorPersona}"
 					               noSelectionLabel="--SELECCIONAR--" />
-					             <a:support event="onchange" reRender="idGerenteField,save" ajaxSingle="true"/>
+					             <a:support event="onchange" reRender="idGerenteField,update" ajaxSingle="true"/>
 					           </h:selectOneMenu>
 				        </s:decorate>
 				   </h:panelGrid>
@@ -171,8 +171,8 @@
 			            </rich:column>
 			            <rich:column  styleClass="center">
 			                <f:facet name="header">Eliminar</f:facet>
-			                <a:commandLink value="Eliminar" actionListener="#{itemAvaluoHome.removeManoObra(_manoObra)}" 
-			                reRender="manoObraPanel" ajaxSingle="true"></a:commandLink>
+			                <a:commandLink value="Eliminar" actionListener="#{avaluoHome.removeItem(_itemAvaluo)}" 
+			                reRender="itemsTab,update" ajaxSingle="true"></a:commandLink>
 			            </rich:column>
 		            </rich:dataTable>
 		
@@ -181,6 +181,9 @@
 		       
 				    </rich:tab>
 				</rich:tabPanel>
+				<f:subview>
+					<a:include viewId="/modals/ItemAvaluoEdit.xhtml" />
+				</f:subview>
 			</s:div>
 
             <div style="clear:both">
@@ -201,7 +204,7 @@
             <h:commandButton id="update"
                           value="Guardar"
                           disabled="#{!avaluoHome.wired}"
-						  action="#{avaluoHome.update}"
+						  action="#{avaluoHome.actualizar}"
                        rendered="#{avaluoHome.managed}"/>
 
             <h:commandButton id="delete"
@@ -223,10 +226,6 @@
                 rendered="#{!avaluoHome.managed}"/>
 
         </div>
-        
-        <f:subview>
-			<a:include viewId="/modals/ItemAvaluoEdit.xhtml" />
-		</f:subview>
         
     </h:form>
 

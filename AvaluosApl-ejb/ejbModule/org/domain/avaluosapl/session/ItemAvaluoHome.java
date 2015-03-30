@@ -86,7 +86,8 @@ public class ItemAvaluoHome extends EntityHome<ItemAvaluo> {
 	public void addManoObra() {
 		ItemAvaluo item = getInstance();
 		ManoObra mo = manoObraHome.getInstance();
-		if (mo.getDescripcion().isEmpty()) {
+		String descripcion = mo.getDescripcion();
+		if (descripcion == null || descripcion.isEmpty()) {
 			return;
 		}
 		if (!manoObraHome.isEdit()) {
@@ -113,6 +114,15 @@ public class ItemAvaluoHome extends EntityHome<ItemAvaluo> {
 		for (ManoObra mo: deleteMos) {
 			getEntityManager().remove(mo);
 		}
+	}
+	
+	public void guardar() {
+		ItemAvaluo instance = getInstance();
+		persist();
+		for (ManoObra mo: instance.getManoObras()) {
+			getEntityManager().persist(mo);
+		}
+		getEntityManager().flush();
 	}
 	
 	public void actualizar() {
