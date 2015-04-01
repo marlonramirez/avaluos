@@ -66,11 +66,11 @@
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{avaluoList}"/>
-                    <ui:param name="propertyLabel" value="Activo id activo"/>
+                    <ui:param name="propertyLabel" value="Activo"/>
                     <ui:param name="propertyPath" value="avaluo.activo.idActivo"/>
                 </ui:include>
             </f:facet>
-            <h:outputText value="#{_avaluo.activo.idActivo}"/>
+            <h:outputText value="#{_avaluo.activo.nombre}"/>
         </h:column>
         <h:column>
             <f:facet name="header">
@@ -98,6 +98,18 @@
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{avaluoList}"/>
+                    <ui:param name="propertyLabel" value="Fecha de vencimiento"/>
+                    <ui:param name="propertyPath" value="avaluo.fechaVenc"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_avaluo.fechaVenc}">
+                <s:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{avaluoList}"/>
                     <ui:param name="propertyLabel" value="Descripción"/>
                     <ui:param name="propertyPath" value="avaluo.descripcion"/>
                 </ui:include>
@@ -113,7 +125,7 @@
                 </ui:include>
             </f:facet>
             <h:outputText value="#{_avaluo.fechaEntrega}">
-                <s:convertDateTime type="date" dateStyle="short"/>
+                <s:convertDateTime type="date" pattern="dd/MM/yyyy"/>
             </h:outputText>
         </h:column>
         <h:column>
@@ -134,7 +146,8 @@
                     <ui:param name="propertyPath" value="avaluo.idAsesor"/>
                 </ui:include>
             </f:facet>
-            <h:outputText value="#{_avaluo.idAsesor}"/>
+            <ui:param name="_asesor" value="#{personaList.getById(_avaluo.idAsesor)}"></ui:param>
+            <h:outputText value="#{_asesor==null?'': _asesor.nombres.concat(' ').concat(_asesor.apellidos)}"/>
         </h:column>
         <h:column>
             <f:facet name="header">
@@ -144,7 +157,8 @@
                     <ui:param name="propertyPath" value="avaluo.idGerente"/>
                 </ui:include>
             </f:facet>
-            <h:outputText value="#{_avaluo.idGerente}"/>
+            <ui:param name="_gerente" value="#{personaList.getById(_avaluo.idGerente)}"></ui:param>
+            <h:outputText value="#{_gerente==null?'':_gerente.nombres.concat(' ').concat(_gerente.apellidos)}"/>
         </h:column>
         <rich:column styleClass="action">
             <f:facet name="header">Acción</f:facet>

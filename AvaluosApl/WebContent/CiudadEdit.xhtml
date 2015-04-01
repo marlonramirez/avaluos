@@ -17,6 +17,17 @@
             <f:facet name="header">#{ciudadHome.managed ? 'Editar' : 'Agregar'} Ciudad</f:facet>
 
 
+			<s:decorate id="abbrField" template="layout/edit.xhtml">
+                <ui:define name="label">Abreviatura</ui:define>
+                <h:inputText id="abbr"
+                       required="true"
+                           size="5"
+                      maxlength="5"
+                          value="#{ciudadHome.instance.abbr}">
+                    <a:support event="onblur" reRender="abbrField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
 
             <s:decorate id="nombreField" template="layout/edit.xhtml">
                 <ui:define name="label">Nombre</ui:define>

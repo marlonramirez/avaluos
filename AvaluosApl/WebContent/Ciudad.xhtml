@@ -13,6 +13,10 @@
     <rich:panel>
         <f:facet name="header">Detalles de ciudad</f:facet>
 
+		<s:decorate id="abbr" template="layout/display.xhtml">
+            <ui:define name="label">Abreviatura</ui:define>
+            <h:outputText value="#{ciudadHome.instance.abbr}"/>
+        </s:decorate>
 
         <s:decorate id="nombre" template="layout/display.xhtml">
             <ui:define name="label">Nombre</ui:define>

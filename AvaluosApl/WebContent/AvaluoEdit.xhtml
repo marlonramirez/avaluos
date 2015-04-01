@@ -47,10 +47,9 @@
 	            </s:link>
             </rich:column>
         </rich:dataTable>
-
-
-			<h:panelGrid columns="23">
-	            <s:decorate id="numOrdenField" template="layout/edit.xhtml">
+        
+        	<h:panelGrid>
+        		<s:decorate id="numOrdenField" template="layout/edit.xhtml">
 	                <ui:define name="label">Número de orden</ui:define>
 	                <h:inputText id="numOrden"
 	                       required="true"
@@ -59,6 +58,20 @@
 	                          value="#{avaluoHome.instance.numOrden}">
 	                    <a:support event="onblur" reRender="numOrdenField" bypassUpdates="true" ajaxSingle="true"/>
 	                </h:inputText>
+	            </s:decorate>
+        	</h:panelGrid>
+
+			<h:panelGrid columns="3">
+	            <s:decorate id="ciudadField" template="layout/edit.xhtml">
+	                <ui:define name="label">Ciudad</ui:define>
+	                <h:selectOneMenu id="ciudad" required="true"
+		                 value="#{avaluoHome.instance.ciudad}">
+		                 <s:selectItems value="#{ciudadList.resultList}"
+		               var="_ciudad" label="#{_ciudad.nombre}"
+		               noSelectionLabel="--SELECCIONAR--" />
+		             <s:convertEntity />
+		             <a:support event="onchange" reRender="idAsesorField,update" ajaxSingle="true"/>
+		           </h:selectOneMenu>
 	            </s:decorate>
 	            
 	            <s:decorate id="fechaSolicitudField" template="layout/edit.xhtml">

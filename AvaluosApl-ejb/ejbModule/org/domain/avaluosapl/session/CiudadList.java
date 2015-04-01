@@ -10,7 +10,9 @@ public class CiudadList extends EntityQuery<Ciudad> {
 
 	private static final String EJBQL = "select ciudad from Ciudad ciudad";
 
-	private static final String[] RESTRICTIONS = { "lower(ciudad.nombre) like lower(concat(#{ciudadList.ciudad.nombre},'%'))", };
+	private static final String[] RESTRICTIONS = {
+			"lower(ciudad.abbr) like lower(concat(#{ciudadList.ciudad.abbr},'%'))",
+			"lower(ciudad.nombre) like lower(concat(#{ciudadList.ciudad.nombre},'%'))", };
 
 	private Ciudad ciudad = new Ciudad();
 

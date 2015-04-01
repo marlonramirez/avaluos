@@ -1,6 +1,6 @@
 package org.domain.avaluosapl.entity;
 
-// Generated 24/03/2015 11:16:57 PM by Hibernate Tools 3.4.0.CR1
+// Generated 31/03/2015 09:26:39 AM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;

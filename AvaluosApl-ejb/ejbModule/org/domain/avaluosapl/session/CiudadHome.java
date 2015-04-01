@@ -41,9 +41,9 @@ public class CiudadHome extends EntityHome<Ciudad> {
 		return isIdDefined() ? getInstance() : null;
 	}
 
-	public List<Factura> getFacturas() {
-		return getInstance() == null ? null : new ArrayList<Factura>(
-				getInstance().getFacturas());
+	public List<Avaluo> getAvaluos() {
+		return getInstance() == null ? null : new ArrayList<Avaluo>(
+				getInstance().getAvaluos());
 	}
 
 }

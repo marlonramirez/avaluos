@@ -8,9 +8,6 @@
    <param name="formaPagoFrom"/>
    <param name="formaPagoIdFormaPago" value="#{formaPagoHome.formaPagoIdFormaPago}"/>
 
-   <param name="ciudadFrom"/>
-   <param name="ciudadCiudadId" value="#{ciudadHome.ciudadCiudadId}"/>
-
 
 
 </page>

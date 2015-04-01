@@ -12,35 +12,35 @@
 
     <h:form id="facturaSearch" styleClass="edit">
 
-        <rich:simpleTogglePanel label="Factura Search Filter" switchType="ajax">
+        <rich:simpleTogglePanel label="Busqueda" switchType="ajax">
 
             <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Num factura</ui:define>
+                <ui:define name="label">Nº Factura</ui:define>
                 <h:inputText id="numFactura" value="#{facturaList.factura.numFactura}"/>
             </s:decorate>
 
             <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Match</ui:define>
+                <ui:define name="label">Filtrar por</ui:define>
                 <h:selectOneRadio id="logic" value="#{facturaList.restrictionLogicOperator}" styleClass="radio">
-                    <f:selectItem itemLabel="All" itemValue="and"/>
-                    <f:selectItem itemLabel="Any" itemValue="or"/>
+                    <f:selectItem itemLabel="Todas" itemValue="and"/>
+                    <f:selectItem itemLabel="Algunas" itemValue="or"/>
                 </h:selectOneRadio>
             </s:decorate>
 
         </rich:simpleTogglePanel>
 
         <div class="actionButtons">
-            <h:commandButton id="search" value="Search" action="/FacturaList.xhtml"/>
-            <s:button id="reset" value="Reset" includePageParams="false"/>
+            <h:commandButton id="search" value="Buscar" action="/FacturaList.xhtml"/>
+            <s:button id="reset" value="Reiniciar" includePageParams="false"/>
         </div>
 
     </h:form>
 
     <rich:panel>
-        <f:facet name="header">Factura Search Results (#{empty facturaList.resultList ? 0 : (facturaList.paginated ? facturaList.resultCount : facturaList.resultList.size)})</f:facet>
+        <f:facet name="header">Facturas (#{empty facturaList.resultList ? 0 : (facturaList.paginated ? facturaList.resultCount : facturaList.resultList.size)})</f:facet>
     <div class="results" id="facturaList">
 
-    <h:outputText value="The factura search returned no results."
+    <h:outputText value="La busqueda no ha retornado resultados."
                rendered="#{empty facturaList.resultList}"/>
 
     <rich:dataTable id="facturaList"
@@ -51,7 +51,7 @@
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{facturaList}"/>
-                    <ui:param name="propertyLabel" value="Id factura"/>
+                    <ui:param name="propertyLabel" value="Ida"/>
                     <ui:param name="propertyPath" value="factura.idFactura"/>
                 </ui:include>
             </f:facet>
@@ -71,16 +71,6 @@
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{facturaList}"/>
-                    <ui:param name="propertyLabel" value="Ciudad ciudad id"/>
-                    <ui:param name="propertyPath" value="factura.ciudad.ciudadId"/>
-                </ui:include>
-            </f:facet>
-            <h:outputText value="#{_factura.ciudad.ciudadId}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">
-                <ui:include src="layout/sort.xhtml">
-                    <ui:param name="entityList" value="#{facturaList}"/>
                     <ui:param name="propertyLabel" value="Num factura"/>
                     <ui:param name="propertyPath" value="factura.numFactura"/>
                 </ui:include>
@@ -91,33 +81,11 @@
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">
                     <ui:param name="entityList" value="#{facturaList}"/>
-                    <ui:param name="propertyLabel" value="Id cliente"/>
-                    <ui:param name="propertyPath" value="factura.idCliente"/>
-                </ui:include>
-            </f:facet>
-            <h:outputText value="#{_factura.idCliente}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">
-                <ui:include src="layout/sort.xhtml">
-                    <ui:param name="entityList" value="#{facturaList}"/>
                     <ui:param name="propertyLabel" value="Fecha exp"/>
                     <ui:param name="propertyPath" value="factura.fechaExp"/>
                 </ui:include>
             </f:facet>
             <h:outputText value="#{_factura.fechaExp}">
-                <s:convertDateTime type="date" dateStyle="short"/>
-            </h:outputText>
-        </h:column>
-        <h:column>
-            <f:facet name="header">
-                <ui:include src="layout/sort.xhtml">
-                    <ui:param name="entityList" value="#{facturaList}"/>
-                    <ui:param name="propertyLabel" value="Fecha venc"/>
-                    <ui:param name="propertyPath" value="factura.fechaVenc"/>
-                </ui:include>
-            </f:facet>
-            <h:outputText value="#{_factura.fechaVenc}">
                 <s:convertDateTime type="date" dateStyle="short"/>
             </h:outputText>
         </h:column>
@@ -152,9 +120,9 @@
             <h:outputText value="#{_factura.total}"/>
         </h:column>
         <rich:column styleClass="action">
-            <f:facet name="header">Action</f:facet>
+            <f:facet name="header">Acción</f:facet>
             <s:link view="/#{empty from ? 'Factura' : from}.xhtml"
-                   value="#{empty from ? 'View' : 'Select'}"
+                   value="#{empty from ? 'Ver' : 'Seleccionar'}"
              propagation="#{empty from ? 'none' : 'default'}"
                       id="facturaViewId">
                 <f:param name="facturaIdFactura"
@@ -162,7 +130,7 @@
             </s:link>
             #{' '}
             <s:link view="/FacturaEdit.xhtml"
-                   value="Edit"
+                   value="Editar"
              propagation="none"
                       id="facturaEdit"
                 rendered="#{empty from}">
@@ -214,7 +182,7 @@
         <s:button view="/FacturaEdit.xhtml"
                     id="create"
            propagation="none"
-                 value="Create factura">
+                 value="Crear factura">
             <f:param name="facturaIdFactura"/>
         </s:button>
     </s:div>

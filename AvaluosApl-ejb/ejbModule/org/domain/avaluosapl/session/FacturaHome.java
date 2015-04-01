@@ -13,7 +13,9 @@ public class FacturaHome extends EntityHome<Factura> {
 	@In(create = true)
 	FormaPagoHome formaPagoHome;
 	@In(create = true)
-	CiudadHome ciudadHome;
+	AvaluoList avaluoList;
+	
+	private String numOrden;
 
 	public void setFacturaIdFactura(Integer id) {
 		setId(id);
@@ -36,21 +38,18 @@ public class FacturaHome extends EntityHome<Factura> {
 	}
 
 	public void wire() {
-		getInstance();
+		Factura instance = getInstance();
 		FormaPago formaPago = formaPagoHome.getDefinedInstance();
 		if (formaPago != null) {
 			getInstance().setFormaPago(formaPago);
 		}
-		Ciudad ciudad = ciudadHome.getDefinedInstance();
-		if (ciudad != null) {
-			getInstance().setCiudad(ciudad);
+		if (numOrden == null && !instance.getItemFacturas().isEmpty()) {
+			numOrden = instance.getItemFacturas().iterator().next().getItemAvaluo().getAvaluo().getNumOrden();
 		}
 	}
 
 	public boolean isWired() {
 		if (getInstance().getFormaPago() == null)
-			return false;
-		if (getInstance().getCiudad() == null)
 			return false;
 		return true;
 	}
@@ -62,6 +61,55 @@ public class FacturaHome extends EntityHome<Factura> {
 	public List<ItemFactura> getItemFacturas() {
 		return getInstance() == null ? null : new ArrayList<ItemFactura>(
 				getInstance().getItemFacturas());
+	}
+
+	public String getNumOrden() {
+		return numOrden;
+	}
+
+	public void setNumOrden(String numOrden) {
+		this.numOrden = numOrden;
+		Avaluo avaluo = avaluoList.getByNumOrden(numOrden);
+		if (avaluo == null) {
+			return;
+		}
+		Factura factura = getInstance();
+		factura.getItemFacturas().clear();
+		double subtotal = 0;
+		for (ItemAvaluo itemA: avaluo.getItemAvaluos()) {
+			double valorU = itemA.getCosto()+itemA.getUtilidad();
+			ItemFactura itemF = new ItemFactura();
+			itemF.setFactura(factura);
+			itemF.setItemAvaluo(itemA);
+			itemF.setValorUnitario(valorU);
+			itemF.setCantidad(1);
+			factura.getItemFacturas().add(itemF);
+			subtotal += valorU;
+		}
+		double iva = subtotal*16/100;
+		factura.setSubtotal(subtotal);
+		factura.setIva(iva);
+		factura.setTotal(subtotal+iva);
+	}
+	
+	public void guardar() {
+		Factura instance = getInstance();
+		persist();
+		for (ItemFactura item: instance.getItemFacturas()) {
+			getEntityManager().persist(item);
+		}
+		getEntityManager().flush();
+	}
+	
+	public void actualizar() {
+		Factura instance = getInstance();
+		update();
+		for (ItemFactura item: instance.getItemFacturas()) {
+			if (item.getIdItemAvaluoFac() == null) {
+				getEntityManager().persist(item);
+			}
+		}
+		getEntityManager().flush();		
 	}
 
 }

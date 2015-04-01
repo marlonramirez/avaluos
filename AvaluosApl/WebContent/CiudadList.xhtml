@@ -57,6 +57,18 @@
             </f:facet>
             <h:outputText value="#{_ciudad.ciudadId}"/>
         </h:column>
+        
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{ciudadList}"/>
+                    <ui:param name="propertyLabel" value="Abreviatura"/>
+                    <ui:param name="propertyPath" value="ciudad.abbr"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_ciudad.abbr}"/>
+        </h:column>
+        
         <h:column>
             <f:facet name="header">
                 <ui:include src="layout/sort.xhtml">

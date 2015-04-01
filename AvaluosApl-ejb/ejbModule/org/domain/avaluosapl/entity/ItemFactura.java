@@ -1,6 +1,6 @@
 package org.domain.avaluosapl.entity;
 
-// Generated 24/03/2015 11:16:57 PM by Hibernate Tools 3.4.0.CR1
+// Generated 1/04/2015 07:29:20 AM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,19 +23,19 @@ import org.hibernate.validator.NotNull;
 @Table(name = "item_factura", catalog = "db_acinversiones")
 public class ItemFactura implements java.io.Serializable {
 
-	private int idItemAvaluoFac;
-	private Factura factura;
+	private Integer idItemAvaluoFac;
 	private ItemAvaluo itemAvaluo;
+	private Factura factura;
 	private int cantidad;
 	private double valorUnitario;
 
 	public ItemFactura() {
 	}
 
-	public ItemFactura(Factura factura, ItemAvaluo itemAvaluo, int cantidad,
+	public ItemFactura(ItemAvaluo itemAvaluo, Factura factura, int cantidad,
 			double valorUnitario) {
-		this.factura = factura;
 		this.itemAvaluo = itemAvaluo;
+		this.factura = factura;
 		this.cantidad = cantidad;
 		this.valorUnitario = valorUnitario;
 	}
@@ -44,23 +44,12 @@ public class ItemFactura implements java.io.Serializable {
 	@Id
 	@GeneratedValue(generator = "generator")
 	@Column(name = "id_item_avaluo_fac", unique = true, nullable = false)
-	public int getIdItemAvaluoFac() {
+	public Integer getIdItemAvaluoFac() {
 		return this.idItemAvaluoFac;
 	}
 
-	public void setIdItemAvaluoFac(int idItemAvaluoFac) {
+	public void setIdItemAvaluoFac(Integer idItemAvaluoFac) {
 		this.idItemAvaluoFac = idItemAvaluoFac;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_factura_if", nullable = false)
-	@NotNull
-	public Factura getFactura() {
-		return this.factura;
-	}
-
-	public void setFactura(Factura factura) {
-		this.factura = factura;
 	}
 
 	@OneToOne(fetch = FetchType.LAZY)
@@ -72,6 +61,17 @@ public class ItemFactura implements java.io.Serializable {
 
 	public void setItemAvaluo(ItemAvaluo itemAvaluo) {
 		this.itemAvaluo = itemAvaluo;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_factura_if", nullable = false)
+	@NotNull
+	public Factura getFactura() {
+		return this.factura;
+	}
+
+	public void setFactura(Factura factura) {
+		this.factura = factura;
 	}
 
 	@Column(name = "cantidad", nullable = false)

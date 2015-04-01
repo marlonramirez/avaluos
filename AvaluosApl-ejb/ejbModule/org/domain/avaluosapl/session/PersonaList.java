@@ -29,4 +29,12 @@ public class PersonaList extends EntityQuery<Persona> {
 	public Persona getPersona() {
 		return persona;
 	}
+	
+	public Persona getById(Integer id) {
+		if (id == null || id == 0) {
+			return null;
+		}
+		String ejbql = EJBQL+" WHERE persona.idPersona =  ?";
+		return (Persona) getEntityManager().createQuery(ejbql).setParameter(1, id).getSingleResult();
+	}
 }

@@ -1,6 +1,6 @@
 package org.domain.avaluosapl.entity;
 
-// Generated 24/03/2015 11:16:57 PM by Hibernate Tools 3.4.0.CR1
+// Generated 31/03/2015 01:23:05 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -30,11 +30,8 @@ public class Factura implements java.io.Serializable {
 
 	private Integer idFactura;
 	private FormaPago formaPago;
-	private Ciudad ciudad;
 	private String numFactura;
-	private int idCliente;
 	private Date fechaExp;
-	private Date fechaVenc;
 	private double subtotal;
 	private double iva;
 	private double total;
@@ -43,26 +40,21 @@ public class Factura implements java.io.Serializable {
 	public Factura() {
 	}
 
-	public Factura(FormaPago formaPago, Ciudad ciudad, String numFactura,
-			int idCliente, double subtotal, double iva, double total) {
+	public Factura(FormaPago formaPago, String numFactura, double subtotal,
+			double iva, double total) {
 		this.formaPago = formaPago;
-		this.ciudad = ciudad;
 		this.numFactura = numFactura;
-		this.idCliente = idCliente;
 		this.subtotal = subtotal;
 		this.iva = iva;
 		this.total = total;
 	}
 
-	public Factura(FormaPago formaPago, Ciudad ciudad, String numFactura,
-			int idCliente, Date fechaExp, Date fechaVenc, double subtotal,
-			double iva, double total, Set<ItemFactura> itemFacturas) {
+	public Factura(FormaPago formaPago, String numFactura, Date fechaExp,
+			double subtotal, double iva, double total,
+			Set<ItemFactura> itemFacturas) {
 		this.formaPago = formaPago;
-		this.ciudad = ciudad;
 		this.numFactura = numFactura;
-		this.idCliente = idCliente;
 		this.fechaExp = fechaExp;
-		this.fechaVenc = fechaVenc;
 		this.subtotal = subtotal;
 		this.iva = iva;
 		this.total = total;
@@ -91,17 +83,6 @@ public class Factura implements java.io.Serializable {
 		this.formaPago = formaPago;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ciudad_id", nullable = false)
-	@NotNull
-	public Ciudad getCiudad() {
-		return this.ciudad;
-	}
-
-	public void setCiudad(Ciudad ciudad) {
-		this.ciudad = ciudad;
-	}
-
 	@Column(name = "num_factura", unique = true, nullable = false, length = 15)
 	@NotNull
 	@Length(max = 15)
@@ -113,15 +94,6 @@ public class Factura implements java.io.Serializable {
 		this.numFactura = numFactura;
 	}
 
-	@Column(name = "id_cliente", nullable = false)
-	public int getIdCliente() {
-		return this.idCliente;
-	}
-
-	public void setIdCliente(int idCliente) {
-		this.idCliente = idCliente;
-	}
-
 	@Temporal(TemporalType.DATE)
 	@Column(name = "fecha_exp", length = 0)
 	public Date getFechaExp() {
@@ -130,16 +102,6 @@ public class Factura implements java.io.Serializable {
 
 	public void setFechaExp(Date fechaExp) {
 		this.fechaExp = fechaExp;
-	}
-
-	@Temporal(TemporalType.DATE)
-	@Column(name = "fecha_venc", length = 0)
-	public Date getFechaVenc() {
-		return this.fechaVenc;
-	}
-
-	public void setFechaVenc(Date fechaVenc) {
-		this.fechaVenc = fechaVenc;
 	}
 
 	@Column(name = "subtotal", nullable = false, precision = 22, scale = 0)

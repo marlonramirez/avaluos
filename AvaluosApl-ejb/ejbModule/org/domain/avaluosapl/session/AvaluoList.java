@@ -4,6 +4,7 @@ import org.domain.avaluosapl.entity.*;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.framework.EntityQuery;
 import java.util.Arrays;
+import java.util.List;
 
 @Name("avaluoList")
 public class AvaluoList extends EntityQuery<Avaluo> {
@@ -24,5 +25,14 @@ public class AvaluoList extends EntityQuery<Avaluo> {
 
 	public Avaluo getAvaluo() {
 		return avaluo;
+	}
+	
+	public Avaluo getByNumOrden(String numOrden) {
+		String ejbql = EJBQL+" WHERE avaluo.numOrden = ?";
+		List<Avaluo> activos = getEntityManager().createQuery(ejbql).setParameter(1, numOrden).getResultList();
+		if (activos.isEmpty()) {
+			return null;
+		}
+		return activos.get(0);
 	}
 }

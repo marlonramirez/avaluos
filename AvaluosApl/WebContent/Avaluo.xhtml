@@ -56,6 +56,11 @@
             <ui:define name="label">Número de orden</ui:define>
             <h:outputText value="#{avaluoHome.instance.numOrden}"/>
         </s:decorate>
+        
+        <s:decorate id="ciudad" template="layout/display.xhtml">
+            <ui:define name="label">Ciudad</ui:define>
+            <h:outputText value="#{avaluoHome.instance.ciudad.nombre}"/>
+        </s:decorate>
 
         <s:decorate id="fechaSolicitud" template="layout/display.xhtml">
             <ui:define name="label">Fecha de solicitud</ui:define>
@@ -85,12 +90,14 @@
 
         <s:decorate id="idAsesor" template="layout/display.xhtml">
             <ui:define name="label">Asesor</ui:define>
-            <h:outputText value="#{avaluoHome.instance.idAsesor}"/>
+            <ui:param name="_asesor" value="#{personaList.getById(avaluoHome.instance.idAsesor)}"></ui:param>
+            <h:outputText value="#{_asesor==null?'':_asesor.nombres.concat(' ').concat(_asesor.apellidos)}"/>
         </s:decorate>
 
         <s:decorate id="idGerente" template="layout/display.xhtml">
             <ui:define name="label">Gerente</ui:define>
-            <h:outputText value="#{avaluoHome.instance.idGerente}"/>
+            <ui:param name="_gerente" value="#{personaList.getById(avaluoHome.instance.idGerente)}"></ui:param>
+            <h:outputText value="#{_gerente==null?'':_gerente.nombres.concat(' ').concat(_gerente.apellidos)}"/>
         </s:decorate>
 
         <div style="clear:both"/>
