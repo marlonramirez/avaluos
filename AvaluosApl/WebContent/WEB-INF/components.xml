@@ -19,6 +19,10 @@
                  http://jboss.com/products/seam/components http://jboss.com/products/seam/components-2.2.xsd">
 
    <core:init debug="true" jndi-pattern="@jndiPattern@"/>
+   
+   <web:multipart-filter create-temp-files="true" 
+        max-request-size="1000000" 
+        url-pattern="*.seam"/>
 
    <core:manager concurrent-request-timeout="500"
                  conversation-timeout="120000"

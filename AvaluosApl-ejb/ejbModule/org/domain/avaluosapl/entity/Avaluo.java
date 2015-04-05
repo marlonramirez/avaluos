@@ -1,6 +1,6 @@
 package org.domain.avaluosapl.entity;
 
-// Generated 31/03/2015 09:26:39 AM by Hibernate Tools 3.4.0.CR1
+// Generated 2/04/2015 02:36:29 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Calendar;
 import java.util.Date;
@@ -30,8 +30,8 @@ import org.hibernate.validator.NotNull;
 public class Avaluo implements java.io.Serializable {
 
 	private Integer idAvaluo;
-	private Activo activo;
 	private Ciudad ciudad;
+	private Activo activo;
 	private String numOrden;
 	private Date fechaSolicitud;
 	private String descripcion;
@@ -40,27 +40,28 @@ public class Avaluo implements java.io.Serializable {
 	private Double valorRazonable;
 	private Integer idAsesor;
 	private Integer idGerente;
+	private String archivo;
 	private Set<ItemAvaluo> itemAvaluos = new HashSet<ItemAvaluo>(0);
 
 	public Avaluo() {
 	}
 
-	public Avaluo(Activo activo, Ciudad ciudad, String numOrden,
+	public Avaluo(Ciudad ciudad, Activo activo, String numOrden,
 			Date fechaSolicitud, String descripcion, Double valorRazonable) {
-		this.activo = activo;
 		this.ciudad = ciudad;
+		this.activo = activo;
 		this.numOrden = numOrden;
 		this.fechaSolicitud = fechaSolicitud;
 		this.descripcion = descripcion;
 		this.valorRazonable = valorRazonable;
 	}
 
-	public Avaluo(Activo activo, Ciudad ciudad, String numOrden,
+	public Avaluo(Ciudad ciudad, Activo activo, String numOrden,
 			Date fechaSolicitud, String descripcion, Date fechaVenc,
 			Date fechaEntrega, Double valorRazonable, Integer idAsesor,
-			Integer idGerente, Set<ItemAvaluo> itemAvaluos) {
-		this.activo = activo;
+			Integer idGerente, String archivo, Set<ItemAvaluo> itemAvaluos) {
 		this.ciudad = ciudad;
+		this.activo = activo;
 		this.numOrden = numOrden;
 		this.fechaSolicitud = fechaSolicitud;
 		this.descripcion = descripcion;
@@ -69,6 +70,7 @@ public class Avaluo implements java.io.Serializable {
 		this.valorRazonable = valorRazonable;
 		this.idAsesor = idAsesor;
 		this.idGerente = idGerente;
+		this.archivo = archivo;
 		this.itemAvaluos = itemAvaluos;
 	}
 
@@ -84,17 +86,6 @@ public class Avaluo implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_activo_av", nullable = false)
-	@NotNull
-	public Activo getActivo() {
-		return this.activo;
-	}
-
-	public void setActivo(Activo activo) {
-		this.activo = activo;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ciudad_id", nullable = false)
 	@NotNull
 	public Ciudad getCiudad() {
@@ -103,6 +94,17 @@ public class Avaluo implements java.io.Serializable {
 
 	public void setCiudad(Ciudad ciudad) {
 		this.ciudad = ciudad;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_activo_av", nullable = false)
+	@NotNull
+	public Activo getActivo() {
+		return this.activo;
+	}
+
+	public void setActivo(Activo activo) {
+		this.activo = activo;
 	}
 
 	@Column(name = "num_orden", unique = true, nullable = false, length = 25)
@@ -187,6 +189,16 @@ public class Avaluo implements java.io.Serializable {
 
 	public void setIdGerente(Integer idGerente) {
 		this.idGerente = idGerente;
+	}
+
+	@Column(name = "archivo", length = 250)
+	@Length(max = 250)
+	public String getArchivo() {
+		return this.archivo;
+	}
+
+	public void setArchivo(String archivo) {
+		this.archivo = archivo;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "avaluo")

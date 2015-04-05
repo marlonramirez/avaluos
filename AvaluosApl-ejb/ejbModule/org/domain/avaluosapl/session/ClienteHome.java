@@ -106,6 +106,7 @@ public class ClienteHome extends EntityHome<Cliente> {
 		pj.setCliente(getInstance());
 		getEntityManager().persist(pj);
 		getEntityManager().flush();
+		getInstance().getPersonaJuridicas().add(pj);
 	}
 
 }

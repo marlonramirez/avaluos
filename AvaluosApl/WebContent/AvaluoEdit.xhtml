@@ -31,7 +31,7 @@
             </h:column>
             <h:column>
                 <f:facet name="header">Estado</f:facet>
-                <h:outputText value="#{_activo.estado}"/>
+                <h:outputText value="#{_activo.estado==1?'Activo':'Inactivo'}" />
             </h:column>
             <h:column>
                 <f:facet name="header">Cliente</f:facet>
@@ -103,6 +103,7 @@
                            required="true"
                               value="#{avaluoHome.instance.descripcion}"/>
             </s:decorate>
+            
 			</h:panelGrid>
 			
 			<s:div rendered="#{avaluoHome.managed}">
@@ -188,12 +189,24 @@
 			                reRender="itemsTab,update" ajaxSingle="true"></a:commandLink>
 			            </rich:column>
 		            </rich:dataTable>
+		            
+		            <s:decorate id="cargarAvaluoField" template="layout/edit.xhtml">
+				        <ui:define name="label">Cargar archivo</ui:define>
+							<rich:fileUpload id="cargarAvaluo"
+					           transferErrorLabel="Error Transferencia" progressLabel="Cargando"
+					           stopEntryControlLabel="Detener" addControlLabel="Seleccionar"
+					           cancelEntryControlLabel="Cancelar" stopControlLabel="Detener"
+					           uploadControlLabel="Cargar" uploadData="#{avaluoHome.avaluoPDF}"
+					           immediateUpload="true" allowFlash="auto" autoclear="true" acceptedTypes="PDF,pdf">
+					        </rich:fileUpload>
+				   </s:decorate>
 		
 		        </h:form>
 		
 		       
 				    </rich:tab>
 				</rich:tabPanel>
+				
 				<f:subview>
 					<a:include viewId="/modals/ItemAvaluoEdit.xhtml" />
 				</f:subview>

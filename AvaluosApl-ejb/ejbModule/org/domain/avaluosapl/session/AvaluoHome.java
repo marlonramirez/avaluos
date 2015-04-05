@@ -2,11 +2,16 @@ package org.domain.avaluosapl.session;
 
 import org.domain.avaluosapl.entity.*;
 
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.framework.EntityHome;
+import org.richfaces.event.UploadEvent;
+import org.richfaces.model.UploadItem;
 
 @Name("avaluoHome")
 public class AvaluoHome extends EntityHome<Avaluo> {
@@ -17,6 +22,7 @@ public class AvaluoHome extends EntityHome<Avaluo> {
 	ItemAvaluoHome itemAvaluoHome;
 	
 	private ArrayList<ItemAvaluo> deleteItems = new ArrayList<ItemAvaluo>();
+	private byte[] avaluoPDF;
 
 	public void setAvaluoIdAvaluo(Integer id) {
 		setId(id);
@@ -80,6 +86,10 @@ public class AvaluoHome extends EntityHome<Avaluo> {
 	
 	public void actualizar() {
 		Avaluo instance = getInstance();
+		if (avaluoPDF != null) {
+			guardarFile("formato.pdf");
+			instance.setArchivo("formato.pdf");
+		}
 		update();
 		for (ItemAvaluo item: deleteItems) {
 			itemAvaluoHome.setInstance(item);
@@ -96,6 +106,28 @@ public class AvaluoHome extends EntityHome<Avaluo> {
 			}
 		}
 		getEntityManager().flush();
+	}
+	
+	private boolean guardarFile(String name) {
+		try {
+    		name = "C:/JBOSS/avaluos/"+name;
+	    	FileOutputStream fileOutput = new FileOutputStream (name);
+	        BufferedOutputStream bufferedOutput = new BufferedOutputStream(fileOutput);
+	        bufferedOutput.write(this.avaluoPDF);
+	        bufferedOutput.close();
+	        return true;
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		return false;
+    	}    	
+	}
+
+	public byte[] getAvaluoPDF() {
+		return avaluoPDF;
+	}
+
+	public void setAvaluoPDF(byte[] avaluoPDF) {
+		this.avaluoPDF = avaluoPDF;
 	}
 
 }

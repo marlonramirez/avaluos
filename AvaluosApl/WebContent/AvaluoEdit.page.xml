@@ -26,7 +26,7 @@
       </rule>
    </navigation>
 
-   <navigation from-action="#{avaluoHome.update}">
+   <navigation from-action="#{avaluoHome.actualizar}">
       <rule if-outcome="updated">
          <end-conversation/>
          <redirect view-id="/Avaluo.xhtml"/>

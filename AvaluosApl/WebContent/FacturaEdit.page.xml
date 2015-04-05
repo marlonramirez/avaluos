@@ -16,14 +16,14 @@
 
 
 
-   <navigation from-action="#{facturaHome.persist}">
+   <navigation from-action="#{facturaHome.guardar}">
       <rule if-outcome="persisted">
          <end-conversation/>
          <redirect view-id="/Factura.xhtml"/>
       </rule>
    </navigation>
 
-   <navigation from-action="#{facturaHome.update}">
+   <navigation from-action="#{facturaHome.actualizar}">
       <rule if-outcome="updated">
          <end-conversation/>
          <redirect view-id="/Factura.xhtml"/>

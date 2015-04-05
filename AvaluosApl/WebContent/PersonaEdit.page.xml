@@ -40,14 +40,14 @@
 
 
 
-   <navigation from-action="#{personaHome.persist}">
+   <navigation from-action="#{personaHome.guardar}">
       <rule if-outcome="persisted">
          <end-conversation/>
          <redirect view-id="/Persona.xhtml"/>
       </rule>
    </navigation>
 
-   <navigation from-action="#{personaHome.update}">
+   <navigation from-action="#{personaHome.actualizar}">
       <rule if-outcome="updated">
          <end-conversation/>
          <redirect view-id="/Persona.xhtml"/>
