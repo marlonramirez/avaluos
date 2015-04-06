@@ -1,12 +1,18 @@
 package org.domain.avaluosapl.session;
 
-import org.domain.avaluosapl.entity.*;
-
-import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.domain.avaluosapl.entity.Activo;
+import org.domain.avaluosapl.entity.Avaluo;
+import org.domain.avaluosapl.entity.ItemAvaluo;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.framework.EntityHome;
@@ -20,9 +26,13 @@ public class AvaluoHome extends EntityHome<Avaluo> {
 	ActivoHome activoHome;
 	@In(create = true)
 	ItemAvaluoHome itemAvaluoHome;
+	@In(create = true)
+	PersonaList personaList;
 	
 	private ArrayList<ItemAvaluo> deleteItems = new ArrayList<ItemAvaluo>();
-	private byte[] avaluoPDF;
+	private File avaluoPDF;
+	private String namePDF;
+	private final String PATH = "C:/JBOSS/avaluos/";
 
 	public void setAvaluoIdAvaluo(Integer id) {
 		setId(id);
@@ -87,8 +97,10 @@ public class AvaluoHome extends EntityHome<Avaluo> {
 	public void actualizar() {
 		Avaluo instance = getInstance();
 		if (avaluoPDF != null) {
-			guardarFile("formato.pdf");
-			instance.setArchivo("formato.pdf");
+			new File(PATH+instance.getArchivo()).delete();
+			String formato = formatFile();
+			copyFile(formato);
+			instance.setArchivo(formato);
 		}
 		update();
 		for (ItemAvaluo item: deleteItems) {
@@ -108,26 +120,43 @@ public class AvaluoHome extends EntityHome<Avaluo> {
 		getEntityManager().flush();
 	}
 	
-	private boolean guardarFile(String name) {
+	private String formatFile() {
+		Avaluo instance = getInstance();
+		SimpleDateFormat format = new SimpleDateFormat("ddMMyyyy");
+		return personaList.getById(instance.getActivo().getIdCliente()).getNumDoc()+"_"+format.format(instance.getFechaEntrega())+"_"+this.namePDF;
+	}
+	
+	private boolean copyFile(String name) {
 		try {
-    		name = "C:/JBOSS/avaluos/"+name;
-	    	FileOutputStream fileOutput = new FileOutputStream (name);
-	        BufferedOutputStream bufferedOutput = new BufferedOutputStream(fileOutput);
-	        bufferedOutput.write(this.avaluoPDF);
-	        bufferedOutput.close();
+			name = PATH+name;
+    		FileInputStream in = new FileInputStream(this.avaluoPDF);
+	    	FileOutputStream out = new FileOutputStream(name);
+	    	int c;
+			while( (c = in.read() ) != -1)
+				out.write(c);
+			in.close();
+			out.close();
 	        return true;
     	} catch (Exception e) {
     		e.printStackTrace();
     		return false;
     	}    	
 	}
-
-	public byte[] getAvaluoPDF() {
-		return avaluoPDF;
-	}
-
-	public void setAvaluoPDF(byte[] avaluoPDF) {
-		this.avaluoPDF = avaluoPDF;
+	
+	public void cargar(UploadEvent event) throws Exception {
+    	UploadItem item = event.getUploadItem();
+        this.avaluoPDF = item.getFile();
+        this.namePDF = item.getFileName();
+   }
+	
+	public InputStream getArchivo() {
+		try {
+			String name = PATH+getInstance().getArchivo();
+			return new FileInputStream(name);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

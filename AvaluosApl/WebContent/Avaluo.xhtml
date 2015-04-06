@@ -99,6 +99,14 @@
             <ui:param name="_gerente" value="#{personaList.getById(avaluoHome.instance.idGerente)}"></ui:param>
             <h:outputText value="#{_gerente==null?'':_gerente.nombres.concat(' ').concat(_gerente.apellidos)}"/>
         </s:decorate>
+        
+        <s:decorate id="archivo" template="layout/display.xhtml">
+        	<ui:define name="label">Archivo</ui:define>
+        	<s:download src="/export.xhtml">
+			    <h:outputText value="#{avaluoHome.instance.archivo}"/>
+			    <f:param name="avaluoIdAvaluo" value="#{avaluoHome.instance.idAvaluo}"/>
+			</s:download>
+        </s:decorate>
 
         <div style="clear:both"/>
 

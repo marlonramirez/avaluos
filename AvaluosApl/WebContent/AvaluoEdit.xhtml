@@ -147,7 +147,6 @@
 			       <rich:tabPanel switchType="ajax" id="itemsTab">
 		
 		    <rich:tab label="Items">
-		        <h:form styleClass="association" id="itemAvaluosChildren">
 		
 					<s:div>
 				    	<a:commandButton value="Agregar item" actionListener="#{itemAvaluoHome.newItemAvaluo()}"
@@ -189,27 +188,24 @@
 			                reRender="itemsTab,update" ajaxSingle="true"></a:commandLink>
 			            </rich:column>
 		            </rich:dataTable>
-		            
-		            <s:decorate id="cargarAvaluoField" template="layout/edit.xhtml">
-				        <ui:define name="label">Cargar archivo</ui:define>
-							<rich:fileUpload id="cargarAvaluo"
-					           transferErrorLabel="Error Transferencia" progressLabel="Cargando"
-					           stopEntryControlLabel="Detener" addControlLabel="Seleccionar"
-					           cancelEntryControlLabel="Cancelar" stopControlLabel="Detener"
-					           uploadControlLabel="Cargar" uploadData="#{avaluoHome.avaluoPDF}"
-					           immediateUpload="true" allowFlash="auto" autoclear="true" acceptedTypes="PDF,pdf">
-					        </rich:fileUpload>
-				   </s:decorate>
-		
-		        </h:form>
 		
 		       
 				    </rich:tab>
 				</rich:tabPanel>
 				
-				<f:subview>
-					<a:include viewId="/modals/ItemAvaluoEdit.xhtml" />
-				</f:subview>
+				<s:decorate id="cargarAvaluoField" template="layout/edit.xhtml">
+			        <ui:define name="label">Cargar archivo</ui:define>
+						<rich:fileUpload id="cargarAvaluo" 
+				           transferErrorLabel="Error Transferencia" progressLabel="Cargando"
+				           stopEntryControlLabel="Detener" addControlLabel="Seleccionar"
+				           cancelEntryControlLabel="Cancelar" stopControlLabel="Detener"
+				           uploadControlLabel="Cargar"
+				           fileUploadListener="#{avaluoHome.cargar}"
+				           immediateUpload="true" allowFlash="true" autoclear="true" acceptedTypes="PDF,pdf">
+				            <a:support event="onuploadcomplete" reRender="cargarAvaluoField" ajaxSingle="true" />
+				        </rich:fileUpload>
+			   </s:decorate>
+				
 			</s:div>
 
             <div style="clear:both">
@@ -254,7 +250,10 @@
         </div>
         
     </h:form>
-
+    
+	<f:subview>
+		<a:include viewId="/modals/ItemAvaluoEdit.xhtml" />
+	</f:subview>
 
 </ui:define>
 
