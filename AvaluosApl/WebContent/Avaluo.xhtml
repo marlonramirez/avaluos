@@ -102,7 +102,7 @@
         
         <s:decorate id="archivo" template="layout/display.xhtml">
         	<ui:define name="label">Archivo</ui:define>
-        	<s:download src="/export.xhtml">
+        	<s:download src="/resources/download.xhtml">
 			    <h:outputText value="#{avaluoHome.instance.archivo}"/>
 			    <f:param name="avaluoIdAvaluo" value="#{avaluoHome.instance.idAvaluo}"/>
 			</s:download>
