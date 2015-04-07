@@ -109,7 +109,9 @@
                     id="done"
                  value="Aceptar"/>
                  
-        <s:button value="Imprimir" view="/resources/factura.pdf.xhtml" />
+        <s:button value="Imprimir" view="/resources/factura.pdf.xhtml" action="#{facturaHome.imprimir()}">
+        	<f:param name="facturaIdFactura" value="#{facturaHome.instance.idFactura}" />
+        </s:button>
     </div>
 
 </ui:define>

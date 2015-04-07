@@ -10,6 +10,14 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   <servlet>
+    <servlet-name>Document Store Servlet</servlet-name>
+    <servlet-class>org.jboss.seam.document.DocumentStoreServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>Document Store Servlet</servlet-name>
+    <url-pattern>*.pdf</url-pattern>
+</servlet-mapping>
+  <servlet>
     <servlet-name>Faces Servlet</servlet-name>
     <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
     <load-on-startup>1</load-on-startup>

@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.document.ByteArrayDocumentData;
+import org.jboss.seam.document.DocumentData;
+import org.jboss.seam.document.DocumentStore;
+import org.jboss.seam.faces.Renderer;
 import org.jboss.seam.framework.EntityHome;
 
 @Name("facturaHome")
@@ -14,6 +18,8 @@ public class FacturaHome extends EntityHome<Factura> {
 	FormaPagoHome formaPagoHome;
 	@In(create = true)
 	AvaluoList avaluoList;
+	@In(create = true)
+	Renderer renderer;
 	
 	private String numOrden;
 
@@ -110,6 +116,10 @@ public class FacturaHome extends EntityHome<Factura> {
 			}
 		}
 		getEntityManager().flush();		
+	}
+	
+	public void imprimir() {
+		
 	}
 
 }

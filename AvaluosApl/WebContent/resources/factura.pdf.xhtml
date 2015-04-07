@@ -1,27 +1,123 @@
-<p:document xmlns:p="http://jboss.org/schema/seam/pdf">
+<p:document xmlns:p="http://jboss.com/products/seam/pdf"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	title="Factura Nº #{facturaHome.instance.numFactura}">
+	<f:facet name="header">
+		<p:font size="10">			
+			<p:footer borderWidthTop="1" borderColorTop="black"
+				borderWidthBottom="0" alignment="center">
+				[<p:pageNumber />]
+				</p:footer>
+		</p:font>
+	</f:facet>
+	<s:div rendered="#{facturaHome.instance.impresa == 1}">
+		<p:image value="/img/copia.jpg" rotation="50" underlying="true" indentationLeft="-50" />
+	</s:div>
+	<ui:param name="_avaluo" value="#{facturaHome.instance.itemFacturas.iterator().next().itemAvaluo.avaluo}" />
+	<ui:param name="_cliente" value="#{personaList.getById(_avaluo.activo.idCliente)}" />
+	<p:font size="8">
+	<p:table columns="2" widthPercentage="100">
+		<p:cell borderWidth="0">
+			<p:font style="bold">
+				<p:table columns="2" widthPercentage="100" widths="15 85">
+					<p:cell colspan="2" borderWidth="0">AC INVERSIONES S.A.S</p:cell>
+					<p:cell borderWidth="0">NIT</p:cell>
+					<p:cell borderWidth="0">900496220</p:cell>
+				</p:table>
+			</p:font>
+			<p:table columns="2" widthPercentage="100" widths="30 80">
+				<p:cell><p:font style="bold" size="8">CLIENTE</p:font></p:cell>
+				<p:cell>#{_cliente.nombres} #{_cliente.apellidos}</p:cell>
+				<p:cell><p:font style="bold" size="8">NIT</p:font></p:cell>
+				<p:cell>#{_cliente.numDoc}</p:cell>
+			</p:table>
+			<p:table columns="3" widthPercentage="100">
+				<p:cell><p:font style="bold" size="8">DIRECCION</p:font></p:cell>
+				<p:cell><p:font style="bold" size="8">CIUDAD</p:font></p:cell>
+				<p:cell><p:font style="bold" size="8">TELEFONO</p:font></p:cell>
+				<p:cell>#{_cliente.direccions.iterator().next().direccion}</p:cell>
+				<p:cell>#{_avaluo.ciudad.nombre}</p:cell>
+				<p:cell>#{_cliente.telefonos.iterator().next().numero}</p:cell>
+			</p:table>
+			<p:table columns="2" widthPercentage="100">
+				<p:cell><p:font style="bold" size="8">FECHA FACTURA</p:font></p:cell>
+				<p:cell><p:font style="bold" size="8">FECHA VENCIMIENTO</p:font></p:cell>
+				<p:cell>#{facturaHome.instance.fechaExp}</p:cell>
+				<p:cell>#{_avaluo.fechaVenc}</p:cell>
+			</p:table>
+		</p:cell>
+		<p:cell borderWidth="0">
+			<p:table columns="2" widthPercentage="100">
+				<p:cell verticalAlignment="top" colspan="2" borderWidth="0" minimumHeight="44">
+					<p:font style="bold">Factura de venta Nº #{facturaHome.instance.numFactura}</p:font>
+				</p:cell>
 
-<p:html>
-
-    <h1>This is more complex HTML</h1>
-
-    <ul>
-
-        <li>one</li>
-
-        <li>two</li>
-
-        <li>three</li>
-
-    </ul>
-
-</p:html>
-
-
-
-<p:html>
-
-    <s:formattedText value="*This* is |Seam Text| as HTML.  It's very^cool^." />
-
-</p:html>                                                                          
+				<p:cell horizontalAlignment="center" colspan="2" minimumHeight="63">				Resolución Dian No. 50000362963 de Abril 15 de 2013.
+				Facturación por computador desde No. 99 hasta 1000.
+				Act. Econ. 6820
+				</p:cell>
+				<p:cell><p:font style="bold" size="8">VENDEDOR</p:font></p:cell>
+				<p:cell><p:font style="bold" size="8">FORMA DE PAGO</p:font></p:cell>
+				<p:cell>AC INVERSIONES S.A.S</p:cell>
+				<p:cell>#{facturaHome.instance.formaPago.descripcion}</p:cell>
+			</p:table>
+		</p:cell>
+	</p:table>
+	
+	<p:table columns="6" headerRows="0" widthPercentage="100" spacingBefore="20" spacingAfter="10">
+		<p:cell><p:font style="bold" size="8">Descripción</p:font></p:cell>
+		<p:cell><p:font style="bold" size="8">Cantidad</p:font></p:cell>
+		<p:cell><p:font style="bold" size="8">U Medida</p:font></p:cell>
+		<p:cell><p:font style="bold" size="8">Valor unitario</p:font></p:cell>
+		<p:cell><p:font style="bold" size="8">IVA</p:font></p:cell>
+		<p:cell><p:font style="bold" size="8">Total</p:font></p:cell>
+		<ui:repeat var="_item" value="#{facturaHome.itemFacturas}">
+			<p:cell>#{_item.itemAvaluo.concepto.nombre}</p:cell>
+			<p:cell>#{_item.cantidad}</p:cell>
+			<p:cell>Und.</p:cell>
+			<p:cell><p:text value="#{_item.valorUnitario}">
+				<f:convertNumber type="currency" currencySymbol="$" />
+			</p:text></p:cell>
+			<p:cell>16%</p:cell>
+			<p:cell><p:text value="#{_item.valorUnitario*_item.cantidad}">
+				<f:convertNumber type="currency" currencySymbol="$" />
+			</p:text></p:cell>
+		</ui:repeat>
+		<p:cell colspan="3" borderWidth="0"></p:cell>
+		<p:cell colspan="2"><p:font style="bold" size="8">SUBTOTAL</p:font></p:cell>
+		<p:cell><p:text value="#{facturaHome.instance.subtotal}">
+			<f:convertNumber type="currency" currencySymbol="$" />
+		</p:text></p:cell>
+	</p:table>
+	
+	<p:table columns="2" widthPercentage="100">
+	<p:cell borderWidth="0">
+		<p:table widthPercentage="100">
+			<p:cell borderWidth="0"><p:font size="8" style="bold">Valor en letras</p:font></p:cell>
+			<p:cell borderWidth="0">#{numberToLetterConverter.convertNumberToLetter(facturaHome.instance.subtotal)}</p:cell>
+		</p:table>
+	</p:cell>
+	<p:cell borderWidth="0">
+		<p:table columns="2" widthPercentage="100">
+			<p:cell><p:font style="bold" size="8">IVA</p:font></p:cell>
+			<p:cell><p:text value="#{facturaHome.instance.iva}">
+				<f:convertNumber type="currency" currencySymbol="$" />
+			</p:text></p:cell>
+			<p:cell><p:font style="bold" size="8">RETEFUENTE</p:font></p:cell>
+			<p:cell>$0.00</p:cell>
+			<p:cell><p:font style="bold" size="8">RETEIVA</p:font></p:cell>
+			<p:cell>$0.00</p:cell>
+			<p:cell><p:font style="bold" size="8">RETEICA</p:font></p:cell>
+			<p:cell>$0.00</p:cell>
+			<p:cell><p:font style="bold" size="8">TOTAL FACTURA</p:font></p:cell>
+			<p:cell><p:text value="#{facturaHome.instance.total}">
+				<f:convertNumber type="currency" currencySymbol="$" />
+			</p:text></p:cell>
+		</p:table>
+	</p:cell>
+	</p:table>
+	
+	</p:font>
 
 </p:document>
