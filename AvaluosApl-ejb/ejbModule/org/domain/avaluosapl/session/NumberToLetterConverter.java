@@ -1,5 +1,6 @@
 package org.domain.avaluosapl.session;
 
+import java.io.Serializable;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
@@ -12,7 +13,7 @@ import org.jboss.seam.annotations.Name;
  * @author Camilo Nova
  */
 @Name("numberToLetterConverter")
-public abstract class NumberToLetterConverter {
+public class NumberToLetterConverter implements Serializable {
 
     private static final String[] UNIDADES = { "", "UN ", "DOS ", "TRES ",
             "CUATRO ", "CINCO ", "SEIS ", "SIETE ", "OCHO ", "NUEVE ", "DIEZ ",
@@ -36,7 +37,7 @@ public abstract class NumberToLetterConverter {
      *             Si valor del numero no es valido (fuera de rango o )
      * @return Numero en letras
      */
-    public static String convertNumberToLetter(String number)
+    public String convertNumberToLetter(String number)
             throws NumberFormatException {
         return convertNumberToLetter(Double.parseDouble(number));
     }
@@ -51,7 +52,7 @@ public abstract class NumberToLetterConverter {
      * @throws NumberFormatException
      *             Si el numero esta fuera del rango
      */
-    public static String convertNumberToLetter(double doubleNumber)
+    public String convertNumberToLetter(double doubleNumber)
             throws NumberFormatException {
 
         StringBuilder converted = new StringBuilder();

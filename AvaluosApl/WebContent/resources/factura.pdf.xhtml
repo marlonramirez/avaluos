@@ -65,7 +65,7 @@
 		</p:cell>
 	</p:table>
 	
-	<p:table columns="6" headerRows="0" widthPercentage="100" spacingBefore="20" spacingAfter="10">
+	<p:table columns="6" headerRows="0" widthPercentage="100" spacingBefore="20">
 		<p:cell><p:font style="bold" size="8">Descripción</p:font></p:cell>
 		<p:cell><p:font style="bold" size="8">Cantidad</p:font></p:cell>
 		<p:cell><p:font style="bold" size="8">U Medida</p:font></p:cell>
@@ -91,14 +91,19 @@
 		</p:text></p:cell>
 	</p:table>
 	
-	<p:table columns="2" widthPercentage="100">
+	<p:table columns="2" widthPercentage="100" widths="60 40">
 	<p:cell borderWidth="0">
-		<p:table widthPercentage="100">
-			<p:cell borderWidth="0"><p:font size="8" style="bold">Valor en letras</p:font></p:cell>
-			<p:cell borderWidth="0">#{numberToLetterConverter.convertNumberToLetter(facturaHome.instance.subtotal)}</p:cell>
+		<p:table columns="4" widthPercentage="100" widths="25 29 18 29">
+			<p:cell colspan="4" borderWidth="0"><p:font size="8" style="bold">Valor en letras</p:font></p:cell>
+			<p:cell colspan="4" borderWidth="0" paddingBottom="10">#{numberToLetterConverter.convertNumberToLetter(facturaHome.instance.subtotal)}</p:cell>
+			<p:cell colspan="4" paddingBottom="10">Cuenta habilitada para efectuar pago: Bancolombia Cuenta de Ahorros No. 060-801250-87, a nombre de AC INVERSIONES S.A.S NIT 900.496.220-7</p:cell>
+			<p:cell borderWidth="0"><p:font style="bold" size="8">Firma responsable</p:font></p:cell>
+			<p:cell borderWidth="0">___________________</p:cell>
+			<p:cell borderWidth="0"><p:font style="bold" size="8">Recibido por</p:font></p:cell>
+			<p:cell borderWidth="0">__________________</p:cell>
 		</p:table>
 	</p:cell>
-	<p:cell borderWidth="0">
+	<p:cell borderWidth="0" verticalAlignment="bottom">
 		<p:table columns="2" widthPercentage="100">
 			<p:cell><p:font style="bold" size="8">IVA</p:font></p:cell>
 			<p:cell><p:text value="#{facturaHome.instance.iva}">
