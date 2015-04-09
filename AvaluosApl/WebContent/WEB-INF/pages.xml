@@ -13,6 +13,8 @@
             </rule>
         </navigation>
     </page>
+    
+    <page view-id="/*" login-required="true"/>
 
     <exception class="org.jboss.seam.framework.EntityNotFoundException">
         <redirect view-id="/error.xhtml">

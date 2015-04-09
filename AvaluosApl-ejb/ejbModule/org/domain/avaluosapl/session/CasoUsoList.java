@@ -25,4 +25,5 @@ public class CasoUsoList extends EntityQuery<CasoUso> {
 	public CasoUso getCasoUso() {
 		return casoUso;
 	}
+	
 }

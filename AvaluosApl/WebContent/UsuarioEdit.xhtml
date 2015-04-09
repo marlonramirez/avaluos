@@ -112,13 +112,13 @@
 
             <h:commandButton id="save"
                           value="Guardar"
-                         action="#{usuarioHome.persist}"
+                         action="#{usuarioHome.guardar}"
                        disabled="#{!usuarioHome.wired}"
                        rendered="#{!usuarioHome.managed}"/>
 
             <h:commandButton id="update"
                           value="Guardar"
-                         action="#{usuarioHome.update}"
+                         action="#{usuarioHome.actualizar}"
                        rendered="#{usuarioHome.managed}"/>
 
             <h:commandButton id="delete"

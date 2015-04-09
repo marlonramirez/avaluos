@@ -126,7 +126,7 @@
                    value="Editar"
              propagation="none"
                       id="usuarioEdit"
-                rendered="#{empty from}">
+                rendered="#{empty from and sessionApp.hasPermiso('CU03')}">
                 <f:param name="usuarioIdUsuarioPersona"
                         value="#{_usuario.idUsuarioPersona}"/>
             </s:link>
@@ -171,7 +171,7 @@
 
     </div>
 
-    <s:div styleClass="actionButtons" rendered="#{empty from}">
+    <s:div styleClass="actionButtons" rendered="#{empty from and sessionApp.hasPermiso('CU02')}">
         <s:button view="/UsuarioEdit.xhtml"
                     id="create"
            propagation="none"

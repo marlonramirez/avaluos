@@ -2,7 +2,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:s="http://jboss.com/products/seam/taglib"
-	title="Factura Nº #{facturaHome.instance.numFactura}">
+	title="Factura_#{facturaHome.instance.numFactura}">
 	<f:facet name="header">
 		<p:font size="10">			
 			<p:footer borderWidthTop="1" borderColorTop="black"
@@ -80,13 +80,13 @@
 				<f:convertNumber type="currency" currencySymbol="$" />
 			</p:text></p:cell>
 			<p:cell>16%</p:cell>
-			<p:cell><p:text value="#{_item.valorUnitario*_item.cantidad}">
+			<p:cell horizontalAlignment="right"><p:text value="#{_item.valorUnitario*_item.cantidad}">
 				<f:convertNumber type="currency" currencySymbol="$" />
 			</p:text></p:cell>
 		</ui:repeat>
 		<p:cell colspan="3" borderWidth="0"></p:cell>
 		<p:cell colspan="2"><p:font style="bold" size="8">SUBTOTAL</p:font></p:cell>
-		<p:cell><p:text value="#{facturaHome.instance.subtotal}">
+		<p:cell horizontalAlignment="right"><p:text value="#{facturaHome.instance.subtotal}">
 			<f:convertNumber type="currency" currencySymbol="$" />
 		</p:text></p:cell>
 	</p:table>
@@ -106,17 +106,17 @@
 	<p:cell borderWidth="0" verticalAlignment="bottom">
 		<p:table columns="2" widthPercentage="100">
 			<p:cell><p:font style="bold" size="8">IVA</p:font></p:cell>
-			<p:cell><p:text value="#{facturaHome.instance.iva}">
+			<p:cell horizontalAlignment="right"><p:text value="#{facturaHome.instance.iva}">
 				<f:convertNumber type="currency" currencySymbol="$" />
 			</p:text></p:cell>
 			<p:cell><p:font style="bold" size="8">RETEFUENTE</p:font></p:cell>
-			<p:cell>$0.00</p:cell>
+			<p:cell horizontalAlignment="right">$0.00</p:cell>
 			<p:cell><p:font style="bold" size="8">RETEIVA</p:font></p:cell>
-			<p:cell>$0.00</p:cell>
+			<p:cell horizontalAlignment="right">$0.00</p:cell>
 			<p:cell><p:font style="bold" size="8">RETEICA</p:font></p:cell>
-			<p:cell>$0.00</p:cell>
+			<p:cell horizontalAlignment="right">$0.00</p:cell>
 			<p:cell><p:font style="bold" size="8">TOTAL FACTURA</p:font></p:cell>
-			<p:cell><p:text value="#{facturaHome.instance.total}">
+			<p:cell horizontalAlignment="right"><p:text value="#{facturaHome.instance.total}">
 				<f:convertNumber type="currency" currencySymbol="$" />
 			</p:text></p:cell>
 		</p:table>

@@ -1,11 +1,6 @@
-<!-- <s:resource xmlns="http://www.w3.org/1999/xhtml"
+<s:resource xmlns="http://www.w3.org/1999/xhtml"
             xmlns:s="http://jboss.com/products/seam/taglib"
             data="#{avaluoHome.archivo}"
             contentType="application/pdf"
             rendered="#{avaluoIdAvaluo != null}"
-            fileName="#{avaluoHome.instance.archivo}"/> -->
-<s:resource xmlns="http://www.w3.org/1999/xhtml"
-            xmlns:s="http://jboss.com/products/seam/taglib"
-            data="#{facturaHome.generarPdf()}"
-            contentType="application/pdf"
-            fileName="#{facturaHome.instance.numFactura}.pdf"/>
+            fileName="#{avaluoHome.instance.archivo}"/>

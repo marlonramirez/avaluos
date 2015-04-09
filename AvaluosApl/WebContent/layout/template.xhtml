@@ -17,9 +17,11 @@
       <ui:insert name="head"/>
    </head>
    <body>
+   <s:div rendered="#{sessionApp.usuario != null}">
       <ui:include src="menu.xhtml">
          <ui:param name="projectName" value="AvaluosApl"/>
       </ui:include>
+   </s:div>
       <div class="body">
          <h:messages id="messages" globalOnly="true" styleClass="message"
             errorClass="errormsg" infoClass="infomsg" warnClass="warnmsg"

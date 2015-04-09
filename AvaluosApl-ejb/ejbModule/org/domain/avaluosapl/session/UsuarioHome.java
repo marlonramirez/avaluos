@@ -1,5 +1,8 @@
 package org.domain.avaluosapl.session;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+
 import org.domain.avaluosapl.entity.*;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -56,6 +59,32 @@ public class UsuarioHome extends EntityHome<Usuario> {
 
 	public Usuario getDefinedInstance() {
 		return isIdDefined() ? getInstance() : null;
+	}
+	
+	public void guardar() {
+		try {
+			Usuario instance = getInstance();
+			String sPassword = Authenticator.getSecurePassword(instance.getClave(), Authenticator.getSalt());
+			instance.setClave(sPassword);
+			persist();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (NoSuchProviderException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void actualizar() {
+		try {
+			Usuario instance = getInstance();
+			String sPassword = Authenticator.getSecurePassword(instance.getClave(), Authenticator.getSalt());
+			instance.setClave(sPassword);
+			update();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (NoSuchProviderException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

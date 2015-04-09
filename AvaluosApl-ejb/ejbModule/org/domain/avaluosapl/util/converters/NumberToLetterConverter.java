@@ -1,4 +1,4 @@
-package org.domain.avaluosapl.session;
+package org.domain.avaluosapl.util.converters;
 
 import java.io.Serializable;
 import java.math.RoundingMode;

@@ -13,27 +13,23 @@
     <h:form id="loginForm">
 
         <rich:panel>
-            <f:facet name="header">Login</f:facet>
+            <f:facet name="header">Autenticación</f:facet>
 
-            <p>Please login here</p>
+            <p>Por favor ingrese sus datos</p>
 
             <div class="dialog">
                 <h:panelGrid columns="2" rowClasses="prop" columnClasses="name,value">
-                    <h:outputLabel for="username">Username</h:outputLabel>
+                    <h:outputLabel for="username">Usuario</h:outputLabel>
                     <h:inputText id="username"
                               value="#{credentials.username}"/>
-                    <h:outputLabel for="password">Password</h:outputLabel>
+                    <h:outputLabel for="password">Contraseña</h:outputLabel>
                     <h:inputSecret id="password"
                                 value="#{credentials.password}"/>
-                    <h:outputLabel for="rememberMe">Remember me</h:outputLabel>
+                    <h:outputLabel for="rememberMe">Recordarme</h:outputLabel>
                     <h:selectBooleanCheckbox id="rememberMe"
                                           value="#{rememberMe.enabled}"/>
                 </h:panelGrid>
             </div>
-
-            <p>
-              <i>Note - </i> You may login with the username 'admin' and a blank password.
-            </p>
 
         </rich:panel>
 

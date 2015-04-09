@@ -45,7 +45,7 @@
 			includePageParams="false"
      		propagation="none"/>
      </rich:menuItem>
-	<rich:menuItem>
+	<rich:menuItem rendered="#{sessionApp.hasPermiso('CU15')}">
     	<s:link view="/UsuarioList.xhtml"
            	value="Usuarios"
            	id="UsuarioId"

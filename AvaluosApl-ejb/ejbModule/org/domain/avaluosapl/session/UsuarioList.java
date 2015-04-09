@@ -4,6 +4,7 @@ import org.domain.avaluosapl.entity.*;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.framework.EntityQuery;
 import java.util.Arrays;
+import java.util.List;
 
 @Name("usuarioList")
 public class UsuarioList extends EntityQuery<Usuario> {
@@ -24,5 +25,16 @@ public class UsuarioList extends EntityQuery<Usuario> {
 
 	public Usuario getUsuario() {
 		return usuario;
+	}
+	
+	public Usuario access (String usuario, String clave) {
+		String ejbql = EJBQL+" WHERE login = ? AND clave = ? AND estado = 1";
+		List<Usuario> usuarios = getEntityManager().createQuery(ejbql)
+								.setParameter(1, usuario)
+								.setParameter(2, clave).getResultList();
+		if (usuarios.isEmpty()) {
+			return null;
+		}
+		return usuarios.get(0);
 	}
 }
