@@ -38,7 +38,7 @@ public class UsuarioHome extends EntityHome<Usuario> {
 	}
 
 	public void wire() {
-		getInstance();
+		getInstance().setClave("");
 		Persona persona = personaHome.getDefinedInstance();
 		if (persona != null) {
 			getInstance().setPersona(persona);

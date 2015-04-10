@@ -36,7 +36,7 @@
     </rich:dropDownMenu>
     <!-- :Menú avaluos -->
     <!-- @Menú Perfiles -->
-    <rich:dropDownMenu showDelay="250" hideDelay="0" submitMode="none">
+    <rich:dropDownMenu showDelay="250" hideDelay="0" submitMode="none" rendered="#{sessionApp.hasPermiso('CU15,CU16,CU17,CU18')}">
         <f:facet name="label">Perfiles</f:facet>
      <rich:menuItem>
     	<s:link view="/PersonaList.xhtml"

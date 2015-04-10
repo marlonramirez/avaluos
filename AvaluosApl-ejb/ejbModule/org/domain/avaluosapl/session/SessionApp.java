@@ -23,13 +23,11 @@ public class SessionApp {
 		this.usuario = usuario;
 	}
 	
-	public boolean hasPermiso (String codCasoUso) {
+	public boolean hasPermiso (String codigos) {
+		String[] cods = codigos.split(",");
 		PermisoList permisoList = (PermisoList) FacesUtils.getManagedBean("permisoList");
-		Permiso permiso = permisoList.getByUsuario(this.usuario, codCasoUso);
-		if (permiso == null) {
-			return false;
-		}
-		return permiso.getEstado() == 1;
+		long cantidad = permisoList.getByMenu(this.usuario, cods);
+		return cantidad > 0;
 	}
 	
 }

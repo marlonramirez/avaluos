@@ -6,6 +6,8 @@ import org.jboss.seam.framework.EntityQuery;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.persistence.Query;
+
 @Name("permisoList")
 public class PermisoList extends EntityQuery<Permiso> {
 
@@ -25,14 +27,22 @@ public class PermisoList extends EntityQuery<Permiso> {
 		return permiso;
 	}
 	
-	public Permiso getByUsuario(Usuario usuario, String codCasoUso) {
-		String ejbql = EJBQL+" WHERE casoUso.codigo = ? AND perfil = ?";
-		List<Permiso> permisos = getEntityManager().createQuery(ejbql)
-								.setParameter(1, codCasoUso)
-								.setParameter(2, usuario.getPerfil()).getResultList();
-		if (permisos.isEmpty()) {
-			return null;
+	public long getByMenu(Usuario usuario, String[] codigos) {
+		if (codigos.length == 0) {
+			return 0;
 		}
-		return permisos.get(0);
+		String ejbql = "SELECT COUNT(permiso) FROM Permiso permiso WHERE (";
+		for(String cod: codigos) {
+			ejbql += "casoUso.codigo = ? OR ";
+		}
+		ejbql = ejbql.substring(0, ejbql.length()-4);
+		ejbql += ") AND estado = 1 AND perfil = ?";
+		Query query = getEntityManager().createQuery(ejbql);
+		int i=1;
+		for(; i<=codigos.length; i++) {
+			query.setParameter(i, codigos[i-1]);
+		}
+		query.setParameter(i, usuario.getPerfil());
+		return (Long) query.getSingleResult();
 	}
 }
