@@ -1,6 +1,6 @@
 package org.domain.avaluosapl.entity;
 
-// Generated 2/04/2015 02:36:29 PM by Hibernate Tools 3.4.0.CR1
+// Generated 13/04/2015 04:42:53 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -35,24 +35,24 @@ public class Factura implements java.io.Serializable {
 	private double subtotal;
 	private double iva;
 	private double total;
-	private byte impresa;
+	private byte estado = 1;
 	private Set<ItemFactura> itemFacturas = new HashSet<ItemFactura>(0);
 
 	public Factura() {
 	}
 
 	public Factura(FormaPago formaPago, String numFactura, double subtotal,
-			double iva, double total, byte impresa) {
+			double iva, double total, byte estado) {
 		this.formaPago = formaPago;
 		this.numFactura = numFactura;
 		this.subtotal = subtotal;
 		this.iva = iva;
 		this.total = total;
-		this.impresa = impresa;
+		this.estado = estado;
 	}
 
 	public Factura(FormaPago formaPago, String numFactura, Date fechaExp,
-			double subtotal, double iva, double total, byte impresa,
+			double subtotal, double iva, double total, byte estado,
 			Set<ItemFactura> itemFacturas) {
 		this.formaPago = formaPago;
 		this.numFactura = numFactura;
@@ -60,7 +60,7 @@ public class Factura implements java.io.Serializable {
 		this.subtotal = subtotal;
 		this.iva = iva;
 		this.total = total;
-		this.impresa = impresa;
+		this.estado = estado;
 		this.itemFacturas = itemFacturas;
 	}
 
@@ -134,13 +134,13 @@ public class Factura implements java.io.Serializable {
 		this.total = total;
 	}
 
-	@Column(name = "impresa", nullable = false)
-	public byte getImpresa() {
-		return this.impresa;
+	@Column(name = "estado", nullable = false)
+	public byte getEstado() {
+		return this.estado;
 	}
 
-	public void setImpresa(byte impresa) {
-		this.impresa = impresa;
+	public void setEstado(byte estado) {
+		this.estado = estado;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "factura")

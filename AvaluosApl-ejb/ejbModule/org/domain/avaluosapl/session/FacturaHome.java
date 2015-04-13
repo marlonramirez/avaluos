@@ -119,7 +119,11 @@ public class FacturaHome extends EntityHome<Factura> {
 	}
 	
 	public void imprimir() {
-		
+		Factura fact = getInstance();
+		if(fact.getEstado() > 0 && fact.getEstado() < 4) {
+			fact.setEstado((byte)(fact.getEstado()+1));
+			update();
+		}
 	}
 
 }

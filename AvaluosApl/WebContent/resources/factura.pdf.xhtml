@@ -11,7 +11,7 @@
 				</p:footer>
 		</p:font>
 	</f:facet>
-	<s:div rendered="#{facturaHome.instance.impresa == 1}">
+	<s:div rendered="#{facturaHome.instance.estado == 3}">
 		<p:image value="/img/copia.jpg" rotation="50" underlying="true" indentationLeft="-50" />
 	</s:div>
 	<ui:param name="_avaluo" value="#{facturaHome.instance.itemFacturas.iterator().next().itemAvaluo.avaluo}" />

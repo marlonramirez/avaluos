@@ -1,6 +1,5 @@
 package org.domain.avaluosapl.session;
 
-import org.domain.avaluosapl.entity.Permiso;
 import org.domain.avaluosapl.entity.Usuario;
 import org.domain.avaluosapl.util.FacesUtils;
 import org.jboss.seam.ScopeType;
