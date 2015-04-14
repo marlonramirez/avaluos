@@ -16,6 +16,10 @@
         <rich:panel>
             <f:facet name="header">#{colaboradorHome.managed ? 'Editar' : 'Agregar'} Colaborador</f:facet>
 
+			<span class="error">
+	            <h:graphicImage value="/img/error.gif" rendered="#{colaboradorHome.msgPersonaError != null}" styleClass="errors"/>
+	            <h:outputText value="#{colaboradorHome.msgPersonaError}" styleClass="errors" />
+	        </span>
 			<rich:dataTable var="_persona"
                    value="#{colaboradorHome.instance.persona}"
               rowClasses="rvgRowOne,rvgRowTwo"

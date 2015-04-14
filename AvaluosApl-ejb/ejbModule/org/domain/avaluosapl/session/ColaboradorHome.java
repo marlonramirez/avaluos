@@ -23,6 +23,10 @@ public class ColaboradorHome extends EntityHome<Colaborador> {
 	CalificacionHome calificacionHome;
 	@In(create = true)
 	CompetenciaHome competenciaHome;
+	@In(create = true)
+	ColaboradorList colaboradorList;
+	
+	private String msgPersonaError;
 	
 	private ArrayList<Competencia> deleteComps = new ArrayList<Competencia>();
 
@@ -111,6 +115,10 @@ public class ColaboradorHome extends EntityHome<Colaborador> {
 	}
 	
 	public void guardar() {
+		validatePersona();
+		if(msgPersonaError != null) {
+			return;
+		}
 		Colaborador instance = getInstance();
 		persist();
 		for (Competencia comp: instance.getCompetencias()) {
@@ -120,6 +128,10 @@ public class ColaboradorHome extends EntityHome<Colaborador> {
 	}
 	
 	public void actualizar() {
+		validatePersona();
+		if(msgPersonaError != null) {
+			return;
+		}
 		Colaborador instance = getInstance();
 		update();
 		for (Competencia comp: deleteComps) {
@@ -131,6 +143,18 @@ public class ColaboradorHome extends EntityHome<Colaborador> {
 			}
 		}
 		getEntityManager().flush();
+	}
+	
+	public void validatePersona () {
+		Colaborador colaborador = colaboradorList.getByPersona(getInstance().getPersona());
+		msgPersonaError = null;
+		if (colaborador != null) {
+			msgPersonaError = "La persona ya se encuentra registrada como colaborador";
+		}
+	}
+
+	public String getMsgPersonaError() {
+		return msgPersonaError;
 	}
 
 }

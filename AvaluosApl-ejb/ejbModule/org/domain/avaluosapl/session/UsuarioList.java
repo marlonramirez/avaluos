@@ -48,4 +48,14 @@ public class UsuarioList extends EntityQuery<Usuario> {
 		}
 		return usuarios.get(0);
 	}
+	
+	public Usuario getByPersona(Persona persona) {
+		String ejbql = EJBQL+" WHERE persona.idPersona = ?";
+		List<Usuario> usuarios = getEntityManager().createQuery(ejbql)
+								.setParameter(1, persona.getIdPersona()).getResultList();
+		if(usuarios.isEmpty()) {
+			return null;
+		}
+		return usuarios.get(0);
+	}
 }

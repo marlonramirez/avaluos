@@ -30,4 +30,14 @@ public class ClienteList extends EntityQuery<Cliente> {
 		List<Cliente> clientes = getEntityManager().createQuery(ejbql).setParameter(1, id).getResultList();
 		return clientes.isEmpty()?null:clientes.get(0);
 	}
+	
+	public Cliente getByPersona(Persona persona) {
+		String ejbql = EJBQL+" WHERE persona.idPersona = ?";
+		List<Cliente> usuarios = getEntityManager().createQuery(ejbql)
+								.setParameter(1, persona.getIdPersona()).getResultList();
+		if(usuarios.isEmpty()) {
+			return null;
+		}
+		return usuarios.get(0);
+	}
 }

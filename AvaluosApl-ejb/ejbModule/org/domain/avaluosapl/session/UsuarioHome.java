@@ -15,6 +15,10 @@ public class UsuarioHome extends EntityHome<Usuario> {
 	PersonaHome personaHome;
 	@In(create = true)
 	PerfilHome perfilHome;
+	@In(create = true)
+	UsuarioList usuarioList;
+	
+	private String msgPersonaError;
 
 	public void setUsuarioIdUsuarioPersona(Integer id) {
 		setId(id);
@@ -62,29 +66,45 @@ public class UsuarioHome extends EntityHome<Usuario> {
 	}
 	
 	public void guardar() {
-		try {
-			Usuario instance = getInstance();
-			String sPassword = Authenticator.getSecurePassword(instance.getClave(), Authenticator.getSalt());
-			instance.setClave(sPassword);
+		if(validate()) {
 			persist();
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (NoSuchProviderException e) {
-			e.printStackTrace();
 		}
 	}
 	
 	public void actualizar() {
+		if(validate()) {
+			update();
+		}
+	}
+	
+	public boolean validate () {
+		validatePersona();
+		if (msgPersonaError != null) {
+			return false;
+		}
 		try {
 			Usuario instance = getInstance();
 			String sPassword = Authenticator.getSecurePassword(instance.getClave(), Authenticator.getSalt());
 			instance.setClave(sPassword);
-			update();
+			return true;
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		} catch (NoSuchProviderException e) {
 			e.printStackTrace();
 		}
+		return false;
+	}
+	
+	public void validatePersona () {
+		Usuario user = usuarioList.getByPersona(getInstance().getPersona());
+		msgPersonaError = null;
+		if (user != null) {
+			msgPersonaError = "La persona ya se encuentra registrada como usuario";
+		}
+	}
+
+	public String getMsgPersonaError() {
+		return msgPersonaError;
 	}
 
 }

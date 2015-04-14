@@ -1,6 +1,7 @@
 package org.domain.avaluosapl.session;
 
 import org.domain.avaluosapl.entity.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -16,8 +17,11 @@ public class ClienteHome extends EntityHome<Cliente> {
 	PersonaHome personaHome;
 	@In(create = true)
 	PersonaJuridicaHome personaJuridicaHome;
+	@In(create = true)
+	ClienteList clienteList;
 	
 	private int persona;
+	private String msgPersonaError;
 
 	public void setClienteIdClientePersona(Integer id) {
 		setId(id);
@@ -77,6 +81,10 @@ public class ClienteHome extends EntityHome<Cliente> {
 	}
 	
 	public void guardar() {
+		validatePersona();
+		if (msgPersonaError != null) {
+			return;
+		}
 		persist();
 		if (persona == 1) {
 			createPersonaJuridica();
@@ -84,6 +92,10 @@ public class ClienteHome extends EntityHome<Cliente> {
 	}
 	
 	public void actualizar() {
+		validatePersona();
+		if (msgPersonaError != null) {
+			return;
+		}
 		update();
 		Cliente cliente = getInstance();
 		if (persona == 0 && !cliente.getPersonaJuridicas().isEmpty()) {
@@ -107,6 +119,18 @@ public class ClienteHome extends EntityHome<Cliente> {
 		getEntityManager().persist(pj);
 		getEntityManager().flush();
 		getInstance().getPersonaJuridicas().add(pj);
+	}
+	
+	public void validatePersona () {
+		Cliente cliente = clienteList.getByPersona(getInstance().getPersona());
+		msgPersonaError = null;
+		if (cliente != null) {
+			msgPersonaError = "La persona ya se encuentra registrada como cliente";
+		}
+	}
+
+	public String getMsgPersonaError() {
+		return msgPersonaError;
 	}
 
 }

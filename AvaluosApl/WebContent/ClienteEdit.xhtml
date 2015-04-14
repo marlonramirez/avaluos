@@ -17,6 +17,10 @@
             <f:facet name="header">#{clienteHome.managed ? 'Editar' : 'Agregar'} Cliente</f:facet>
 
 
+			<span class="error">
+	            <h:graphicImage value="/img/error.gif" rendered="#{clienteHome.msgPersonaError != null}" styleClass="errors"/>
+	            <h:outputText value="#{clienteHome.msgPersonaError}" styleClass="errors" />
+	        </span>
 			<rich:dataTable var="_persona"
                    value="#{clienteHome.instance.persona}"
               rowClasses="rvgRowOne,rvgRowTwo"

@@ -29,4 +29,14 @@ public class ColaboradorList extends EntityQuery<Colaborador> {
 		String ejbql = EJBQL+" WHERE colaborador.cargo.idCargo = ?";
 		return getEntityManager().createQuery(ejbql).setParameter(1, id).getResultList();
 	}
+	
+	public Colaborador getByPersona(Persona persona) {
+		String ejbql = EJBQL+" WHERE persona.idPersona = ?";
+		List<Colaborador> usuarios = getEntityManager().createQuery(ejbql)
+								.setParameter(1, persona.getIdPersona()).getResultList();
+		if(usuarios.isEmpty()) {
+			return null;
+		}
+		return usuarios.get(0);
+	}
 }
