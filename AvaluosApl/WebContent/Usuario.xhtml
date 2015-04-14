@@ -72,6 +72,7 @@
 
         <s:button view="/UsuarioEdit.xhtml"
                     id="edit"
+                    rendered="#{sessionApp.hasPermiso('CU03')}"
                  value="Editar"/>
 
         <s:button view="/#{empty usuarioFrom ? 'UsuarioList' : usuarioFrom}.xhtml"

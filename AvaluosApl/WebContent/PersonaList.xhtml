@@ -10,7 +10,7 @@
 
 <ui:define name="body">
 
-    <h:form id="personaSearch" styleClass="edit">
+    <h:form id="personaSearch" styleClass="edit" rendered="#{sessionApp.usuario.perfil.nombre != 'Cliente'}">
 
         <rich:simpleTogglePanel label="Busqueda" switchType="ajax">
 

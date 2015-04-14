@@ -3,11 +3,11 @@ package org.domain.avaluosapl.session;
 import org.domain.avaluosapl.entity.Usuario;
 import org.domain.avaluosapl.util.FacesUtils;
 import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Scope;
 
-@org.jboss.seam.annotations.Name(value = "sessionApp")
-@org.jboss.seam.annotations.Scope(ScopeType.SESSION)
-@org.jboss.seam.annotations.Install(precedence = 0)
-@org.jboss.seam.annotations.intercept.BypassInterceptors
+@Name(value = "sessionApp")
+@Scope(ScopeType.SESSION)
 public class SessionApp {
 	private Usuario usuario;
 	

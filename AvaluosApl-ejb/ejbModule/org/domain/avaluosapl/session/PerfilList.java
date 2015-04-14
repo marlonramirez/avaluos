@@ -11,7 +11,9 @@ public class PerfilList extends EntityQuery<Perfil> {
 
 	private static final String EJBQL = "select perfil from Perfil perfil";
 
-	private static final String[] RESTRICTIONS = { "lower(perfil.nombre) like lower(concat(#{perfilList.perfil.nombre},'%'))", };
+	private static final String[] RESTRICTIONS = {
+		"lower(perfil.nombre) like lower(concat(#{perfilList.perfil.nombre},'%'))",
+	};
 
 	private Perfil perfil = new Perfil();
 

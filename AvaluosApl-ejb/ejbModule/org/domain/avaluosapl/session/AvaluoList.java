@@ -1,6 +1,7 @@
 package org.domain.avaluosapl.session;
 
 import org.domain.avaluosapl.entity.*;
+import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.framework.EntityQuery;
 import java.util.Arrays;
@@ -8,6 +9,8 @@ import java.util.List;
 
 @Name("avaluoList")
 public class AvaluoList extends EntityQuery<Avaluo> {
+	@In(create = true)
+	SessionApp sessionApp;
 
 	private static final String EJBQL = "select avaluo from Avaluo avaluo";
 
@@ -21,6 +24,14 @@ public class AvaluoList extends EntityQuery<Avaluo> {
 		setEjbql(EJBQL);
 		setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));
 		setMaxResults(25);
+	}
+	
+	public List<Avaluo> getResultList() {
+		Usuario user = sessionApp.getUsuario();
+		if (user.getPerfil().getNombre().equalsIgnoreCase("Cliente")) {
+			setEjbql(EJBQL+" WHERE activo.idCliente = "+user.getPersona().getIdPersona());
+		}
+		return super.getResultList();
 	}
 
 	public Avaluo getAvaluo() {

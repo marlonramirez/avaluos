@@ -24,6 +24,8 @@ public class Authenticator
     
     @In(create = true)
     SessionApp sessionApp;
+    @In(create = true)
+    UsuarioList usuarioList;
 
     public boolean authenticate()
     {
@@ -34,7 +36,7 @@ public class Authenticator
 		try {
 			String password = getSecurePassword(credentials.getPassword(), getSalt());
 			String usuario = credentials.getUsername();
-			UsuarioList usuarioList = (UsuarioList) FacesUtils.getManagedBean("usuarioList");
+			//UsuarioList usuarioList = (UsuarioList) FacesUtils.getManagedBean("usuarioList");
 			Usuario user = usuarioList.access(usuario, password);
 			if (user != null) {
 				sessionApp.setUsuario(user);
