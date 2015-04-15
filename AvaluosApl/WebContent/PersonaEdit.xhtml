@@ -29,7 +29,7 @@
 		                  var="_tipo" label="#{_tipo.descripcion}" 
 		                  noSelectionLabel="--SELECCIONAR--" />
 		                <s:convertEntity />
-		                <a:support event="onchange" reRender="tipoDocField,save" ajaxSingle="true"/>
+		                <a:support event="onchange" reRender="tipoDocField,numDocField,save" ajaxSingle="true"/>
 		              </h:selectOneMenu>
             </s:decorate>
 
@@ -39,7 +39,7 @@
                 <ui:param name="next" value="true" />
                 <h:inputText id="numDoc"
                            size="25"
-                      maxlength="25"
+                      maxlength="25" validator="#{personaHome.validateDoc}"
                       	  required="true"
                           value="#{personaHome.instance.numDoc}">
                     <a:support event="onblur" reRender="numDocField" bypassUpdates="true" ajaxSingle="true"/>
@@ -78,9 +78,11 @@
                 <ui:define name="label">Email</ui:define>
                 <h:inputText id="email"
                        required="true"
-                           size="100"
+                           size="100" validator="#{personaHome.validateEmail}"
                       maxlength="120"
-                      value="#{personaHome.instance.email}"/>
+                      value="#{personaHome.instance.email}">
+                      <a:support event="onblur" reRender="emailField" bypassUpdates="true" ajaxSingle="true" />
+                </h:inputText>
             </s:decorate>
 
 

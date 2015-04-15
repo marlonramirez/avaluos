@@ -49,4 +49,25 @@ public class PersonaList extends EntityQuery<Persona> {
 		String ejbql = EJBQL+" WHERE persona.idPersona =  ?";
 		return (Persona) getEntityManager().createQuery(ejbql).setParameter(1, id).getSingleResult();
 	}
+	
+	public Persona getByDoc(TipoDoc tipo, String num) {
+		String ejbql = EJBQL+" WHERE tipoDoc = ? AND numDoc = ?";
+		List<Persona> personas = getEntityManager().createQuery(ejbql)
+								.setParameter(1, tipo)
+								.setParameter(2, num).getResultList();
+		if(personas.isEmpty()) {
+			return null;
+		}
+		return personas.get(0);
+	}
+	
+	public Persona getByEmail(String email) {
+		String ejbql = EJBQL+" WHERE email = ?";
+		List<Persona> personas = getEntityManager().createQuery(ejbql)
+								.setParameter(1, email).getResultList();
+		if(personas.isEmpty()) {
+			return null;
+		}
+		return personas.get(0);
+	}
 }
