@@ -48,13 +48,14 @@
             </rich:column>
         </rich:dataTable>
         
-        	<h:panelGrid>
+        	<h:panelGrid rendered="#{avaluoHome.managed}">
         		<s:decorate id="numOrdenField" template="layout/edit.xhtml">
 	                <ui:define name="label">Número de orden</ui:define>
 	                <h:inputText id="numOrden"
 	                       required="true"
 	                           size="25"
 	                      maxlength="25"
+	                      disabled="true"
 	                          value="#{avaluoHome.instance.numOrden}">
 	                    <a:support event="onblur" reRender="numOrdenField" bypassUpdates="true" ajaxSingle="true"/>
 	                </h:inputText>
@@ -219,7 +220,7 @@
 
             <h:commandButton id="save"
                           value="Guardar"
-                         action="#{avaluoHome.persist}"
+                         action="#{avaluoHome.guardar}"
                        disabled="#{!avaluoHome.wired}"
                        rendered="#{!avaluoHome.managed}"/>
 

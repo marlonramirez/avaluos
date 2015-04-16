@@ -94,6 +94,14 @@ public class AvaluoHome extends EntityHome<Avaluo> {
 		getInstance().getItemAvaluos().remove(item);
 	}
 	
+	public void guardar() {
+		getInstance().setNumOrden(getInstance().getCiudad().getAbbr());
+		persist();
+		getInstance().setNumOrden(getInstance().getNumOrden()+getInstance().getIdAvaluo());
+		getEntityManager().merge(getInstance());
+		getEntityManager().flush();
+	}
+	
 	public void actualizar() {
 		Avaluo instance = getInstance();
 		if (avaluoPDF != null) {
