@@ -105,7 +105,7 @@
     <div class="actionButtons">
 
         <s:button view="/ColaboradorEdit.xhtml"
-                    id="edit"
+                    id="edit" rendered="#{sessionApp.hasPermiso('CU12')}"
                  value="Editar"/>
 
         <s:button view="/#{empty colaboradorFrom ? 'ColaboradorList' : colaboradorFrom}.xhtml"

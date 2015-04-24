@@ -116,7 +116,7 @@
                    value="Editar"
              propagation="none"
                       id="colaboradorEdit"
-                rendered="#{empty from}">
+                rendered="#{empty from and sessionApp.hasPermiso('CU12')}">
                 <f:param name="colaboradorIdColaboradorPersona"
                         value="#{_colaborador.idColaboradorPersona}"/>
             </s:link>
@@ -163,7 +163,7 @@
     
     <s:div styleClass="actionButtons" rendered="#{empty from}">
         <s:button view="/ColaboradorEdit.xhtml"
-                    id="create"
+                    id="create" rendered="#{sessionApp.hasPermiso('CU11')}"
            propagation="none"
                  value="Crear colaborador">
             <f:param name="colaboradorIdColaboradorPersona"/>

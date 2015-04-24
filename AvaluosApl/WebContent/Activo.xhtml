@@ -99,7 +99,7 @@
     <div class="actionButtons">
 
         <s:button view="/ActivoEdit.xhtml"
-                    id="edit"
+                    id="edit" rendered="#{sessionApp.hasPermiso('CU18')}"
                  value="Editar"/>
 
         <s:button view="/#{empty activoFrom ? 'ActivoList' : activoFrom}.xhtml"

@@ -10,23 +10,23 @@
         <s:link id="menuHomeId" view="/home.xhtml" value="Home" propagation="none"/>
     </rich:toolBarGroup>
     <!-- @Menú avaluos -->
-    <rich:dropDownMenu showDelay="250" hideDelay="0" submitMode="none">
+    <rich:dropDownMenu showDelay="250" hideDelay="0" submitMode="none" rendered="#{sessionApp.hasPermiso('CU19,CU22,CU25')}">
         <f:facet name="label">Avaluos</f:facet>
-	<rich:menuItem>
+	<rich:menuItem rendered="#{sessionApp.hasPermiso('CU19')}">
     	<s:link view="/ActivoList.xhtml"
            	value="Activos"
            	id="ActivoId"
 			includePageParams="false"
      		propagation="none"/>
      </rich:menuItem>
-     <rich:menuItem>
+     <rich:menuItem rendered="#{sessionApp.hasPermiso('CU22')}">
     	<s:link view="/AvaluoList.xhtml"
            	value="Avaluos"
            	id="AvaluoId"
 			includePageParams="false"
      		propagation="none"/>
      </rich:menuItem>
-	<rich:menuItem>
+	<rich:menuItem rendered="#{sessionApp.hasPermiso('CU25')}">
     	<s:link view="/FacturaList.xhtml"
            	value="Facturas"
            	id="FacturaId"
@@ -36,16 +36,16 @@
     </rich:dropDownMenu>
     <!-- :Menú avaluos -->
     <!-- @Menú Perfiles -->
-    <rich:dropDownMenu showDelay="250" hideDelay="0" submitMode="none">
+    <rich:dropDownMenu showDelay="250" hideDelay="0" submitMode="none" rendered="#{sessionApp.hasPermiso('CU04,CU07,CU10,CU13,CU16')}">
         <f:facet name="label">Perfiles</f:facet>
-     <rich:menuItem>
+     <rich:menuItem rendered="#{sessionApp.hasPermiso('CU10')}">
     	<s:link view="/PersonaList.xhtml"
            	value="Personas"
            	id="PersonaId"
 			includePageParams="false"
      		propagation="none"/>
      </rich:menuItem>
-	<rich:menuItem rendered="#{sessionApp.hasPermiso('CU15')}">
+	<rich:menuItem rendered="#{sessionApp.hasPermiso('CU04')}">
     	<s:link view="/UsuarioList.xhtml"
            	value="Usuarios"
            	id="UsuarioId"
@@ -53,21 +53,21 @@
      		propagation="none"/>
      </rich:menuItem>
 	
-	<rich:menuItem>
+	<rich:menuItem rendered="#{sessionApp.hasPermiso('CU07')}">
     	<s:link view="/ClienteList.xhtml"
            	value="Clientes"
            	id="ClienteId"
 			includePageParams="false"
      		propagation="none"/>
      </rich:menuItem>
-	<rich:menuItem>
+	<rich:menuItem rendered="#{sessionApp.hasPermiso('CU13')}">
     	<s:link view="/ColaboradorList.xhtml"
            	value="Colaboradores"
            	id="ColaboradorId"
 			includePageParams="false"
      		propagation="none"/>
      </rich:menuItem>
-     <rich:menuItem>
+     <rich:menuItem rendered="#{sessionApp.hasPermiso('CU16')}">
     	<s:link view="/PerfilList.xhtml"
            	value="Perfiles"
            	id="PerfilId"
@@ -77,7 +77,7 @@
     </rich:dropDownMenu>
     <!-- :Menú perfiles -->
     <!-- @Parametrización -->
-    <rich:dropDownMenu showDelay="250" hideDelay="0" submitMode="none">
+    <rich:dropDownMenu showDelay="250" hideDelay="0" submitMode="none" rendered="#{sessionApp.hasPermiso('CU26')}">
     <f:facet name="label">Parametrización</f:facet>
     	<rich:menuItem>
 	    	<s:link view="/ActEconomicaList.xhtml"

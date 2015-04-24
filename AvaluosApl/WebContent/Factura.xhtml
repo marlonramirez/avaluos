@@ -102,14 +102,14 @@
     <div class="actionButtons">
 
         <s:button view="/FacturaEdit.xhtml"
-                    id="edit"
+                    id="edit" rendered="#{sessionApp.hasPermiso('CU24')}"
                  value="Editar"/>
 
         <s:button view="/#{empty facturaFrom ? 'FacturaList' : facturaFrom}.xhtml"
                     id="done"
                  value="Aceptar"/>
                  
-        <s:button value="Imprimir" view="/resources/factura.pdf.xhtml" action="#{facturaHome.imprimir()}">
+        <s:button value="Imprimir" view="/resources/factura.pdf.xhtml" action="#{facturaHome.imprimir()}" rendered="#{sessionApp.hasPermiso('CU27')}">
         	<f:param name="facturaIdFactura" value="#{facturaHome.instance.idFactura}" />
         </s:button>
     </div>

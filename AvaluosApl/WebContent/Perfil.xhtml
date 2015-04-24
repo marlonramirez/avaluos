@@ -31,7 +31,7 @@
     <div class="actionButtons">
 
         <s:button view="/PerfilEdit.xhtml"
-                    id="edit"
+                    id="edit" rendered="#{sessionApp.hasPermiso('CU15')}"
                  value="Editar"/>
 
         <s:button view="/#{empty perfilFrom ? 'PerfilList' : perfilFrom}.xhtml"

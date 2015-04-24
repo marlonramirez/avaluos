@@ -19,7 +19,7 @@ public class CasoUsoList extends EntityQuery<CasoUso> {
 	public CasoUsoList() {
 		setEjbql(EJBQL);
 		setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));
-		setMaxResults(25);
+		setMaxResults(50);
 	}
 
 	public CasoUso getCasoUso() {

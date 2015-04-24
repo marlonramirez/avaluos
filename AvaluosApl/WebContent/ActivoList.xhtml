@@ -118,7 +118,7 @@
                    value="Editar"
              propagation="none"
                       id="activoEdit"
-                rendered="#{empty from}">
+                rendered="#{empty from and sessionApp.hasPermiso('CU18')}">
                 <f:param name="activoIdActivo"
                         value="#{_activo.idActivo}"/>
             </s:link>
@@ -165,7 +165,7 @@
 
     <s:div styleClass="actionButtons" rendered="#{empty from}">
         <s:button view="/ActivoEdit.xhtml"
-                    id="create"
+                    id="create" rendered="#{sessionApp.hasPermiso('CU17')}"
            propagation="none"
                  value="Crear activo">
             <f:param name="activoIdActivo"/>

@@ -115,7 +115,7 @@
     <div class="actionButtons">
 
         <s:button view="/AvaluoEdit.xhtml"
-                    id="edit"
+                    id="edit" rendered="#{sessionApp.hasPermiso('CU21')}"
                  value="Editar"/>
 
         <s:button view="/#{empty avaluoFrom ? 'AvaluoList' : avaluoFrom}.xhtml"

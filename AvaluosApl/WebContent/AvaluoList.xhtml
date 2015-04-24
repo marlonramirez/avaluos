@@ -174,7 +174,7 @@
                    value="Editar"
              propagation="none"
                       id="avaluoEdit"
-                rendered="#{empty from}">
+                rendered="#{empty from and sessionApp.hasPermiso('CU21')}">
                 <f:param name="avaluoIdAvaluo"
                         value="#{_avaluo.idAvaluo}"/>
             </s:link>
@@ -221,7 +221,7 @@
 
     <s:div styleClass="actionButtons" rendered="#{empty from}">
         <s:button view="/AvaluoEdit.xhtml"
-                    id="create"
+                    id="create" rendered="#{sessionApp.hasPermiso('CU20')}"
            propagation="none"
                  value="Crear avaluo">
             <f:param name="avaluoIdAvaluo"/>

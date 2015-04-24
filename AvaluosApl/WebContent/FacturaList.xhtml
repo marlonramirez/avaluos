@@ -133,7 +133,7 @@
                    value="Editar"
              propagation="none"
                       id="facturaEdit"
-                rendered="#{empty from}">
+                rendered="#{empty from and sessionApp.hasPermiso('CU24')}">
                 <f:param name="facturaIdFactura"
                         value="#{_factura.idFactura}"/>
             </s:link>
@@ -180,7 +180,7 @@
 
     <s:div styleClass="actionButtons" rendered="#{empty from}">
         <s:button view="/FacturaEdit.xhtml"
-                    id="create"
+                    id="create" rendered="#{sessionApp.hasPermiso('CU23')}"
            propagation="none"
                  value="Crear factura">
             <f:param name="facturaIdFactura"/>

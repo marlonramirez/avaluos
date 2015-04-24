@@ -124,7 +124,7 @@
                    value="Editar"
              propagation="none"
                       id="clienteEdit"
-                rendered="#{empty from}">
+                rendered="#{empty from and sessionApp.hasPermiso('CU06')}">
                 <f:param name="clienteIdClientePersona"
                         value="#{_cliente.idClientePersona}"/>
             </s:link>
@@ -171,7 +171,7 @@
 
     <s:div styleClass="actionButtons" rendered="#{empty from}">
         <s:button view="/ClienteEdit.xhtml"
-                    id="create"
+                    id="create" rendered="#{sessionApp.hasPermiso('CU05')}"
            propagation="none"
                  value="Crear cliente">
             <f:param name="clienteIdClientePersona"/>

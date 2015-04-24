@@ -97,7 +97,7 @@
     <div class="actionButtons">
 
         <s:button view="/PersonaEdit.xhtml"
-                    id="edit"
+                    id="edit" rendered="#{sessionApp.hasPermiso('CU09')}"
                  value="Editar"/>
 
         <s:button view="/#{empty personaFrom ? 'PersonaList' : personaFrom}.xhtml"

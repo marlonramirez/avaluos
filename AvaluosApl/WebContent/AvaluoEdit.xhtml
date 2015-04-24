@@ -194,7 +194,7 @@
 				    </rich:tab>
 				</rich:tabPanel>
 				
-				<s:decorate id="cargarAvaluoField" template="layout/edit.xhtml">
+				<s:decorate id="cargarAvaluoField" template="layout/edit.xhtml" rendered="#{sessionApp.hasPermiso('CU28')}">
 			        <ui:define name="label">Cargar archivo</ui:define>
 						<rich:fileUpload id="cargarAvaluo" 
 				           transferErrorLabel="Error Transferencia" progressLabel="Cargando"

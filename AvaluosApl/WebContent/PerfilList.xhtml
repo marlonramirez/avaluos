@@ -91,7 +91,7 @@
                    value="Editar"
              propagation="none"
                       id="perfilEdit"
-                rendered="#{empty from}">
+                rendered="#{empty from and sessionApp.hasPermiso('CU15')}">
                 <f:param name="perfilIdPerfil"
                         value="#{_perfil.idPerfil}"/>
             </s:link>
@@ -138,7 +138,7 @@
 
     <s:div styleClass="actionButtons" rendered="#{empty from}">
         <s:button view="/PerfilEdit.xhtml"
-                    id="create"
+                    id="create" rendered="#{sessionApp.hasPermiso('CU14')}"
            propagation="none"
                  value="Crear perfil">
             <f:param name="perfilIdPerfil"/>
