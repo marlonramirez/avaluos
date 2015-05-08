@@ -16,7 +16,10 @@ public class UsuarioList extends EntityQuery<Usuario> {
 
 	private static final String[] RESTRICTIONS = {
 			"lower(usuario.login) like lower(concat(#{usuarioList.usuario.login},'%'))",
-			"lower(usuario.clave) like lower(concat(#{usuarioList.usuario.clave},'%'))", };
+			"usuario.persona.tipoDoc.idTipoDoc = #{usuarioList.usuario.persona.tipoDoc.idTipoDoc}",
+			"lower(usuario.persona.numDoc) like lower(concat(#{usuarioList.usuario.persona.numDoc},'%'))",
+			"lower(usuario.persona.nombres) like lower(concat(#{usuarioList.usuario.persona.nombres},'%'))",
+			"lower(usuario.persona.apellidos) like lower(concat(#{usuarioList.usuario.persona.apellidos},'%'))", };
 
 	private Usuario usuario = new Usuario();
 

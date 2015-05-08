@@ -13,6 +13,28 @@
     <h:form id="clienteSearch" styleClass="edit">
 
         <rich:simpleTogglePanel label="Busqueda" switchType="ajax">
+        
+        	<h:panelGrid columns="2">
+				<f:facet name="header">
+			         <h:outputText value="Documento"/>
+			      </f:facet>  
+			      
+			      <s:decorate id="tipoDocField" template="layout/display.xhtml">
+	                <ui:define name="label">Tipo</ui:define>
+	                <h:selectOneMenu id="tipoDoc" 
+			                value="#{clienteList.cliente.persona.tipoDoc.idTipoDoc}">
+			                <s:selectItems value="#{tipoDocList.resultList}"
+			                  var="_tipo" itemValue="#{_tipo.idTipoDoc}" label="#{_tipo.descripcion}" 
+			                  noSelectionLabel="--SELECCIONAR--" />
+			              </h:selectOneMenu>
+	            </s:decorate>
+			
+	            <s:decorate template="layout/display.xhtml">
+	                <ui:define name="label">Número</ui:define>
+	                <h:inputText id="numDoc" value="#{clienteList.cliente.persona.numDoc}" />
+	                <ui:param name="next" value="true" />
+	            </s:decorate>
+            </h:panelGrid>
 
             <s:decorate template="layout/display.xhtml">
                 <ui:define name="label">Filtrar por</ui:define>

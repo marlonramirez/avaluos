@@ -10,6 +10,9 @@
 
    <param name="from"/>
    <param name="login" value="#{usuarioList.usuario.login}"/>
-   <param name="clave" value="#{usuarioList.usuario.clave}"/>
+   <param name="tipoDoc" value="#{usuarioList.usuario.persona.tipoDoc.idTipoDoc}"/>
+   <param name="numDoc" value="#{usuarioList.usuario.persona.numDoc}"/>
+   <param name="nombres" value="#{usuarioList.usuario.persona.nombres}"/>
+   <param name="apellidos" value="#{usuarioList.usuario.persona.apellidos}"/>
 
 </page>

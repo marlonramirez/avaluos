@@ -9,5 +9,7 @@
    <param name="logic" value="#{clienteList.restrictionLogicOperator}"/>
 
    <param name="from"/>
+   <param name="tipoDoc" value="#{clienteList.cliente.persona.tipoDoc.idTipoDoc}"/>
+   <param name="numDoc" value="#{clienteList.cliente.persona.numDoc}"/>
 
 </page>

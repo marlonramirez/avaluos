@@ -11,7 +11,10 @@ public class ClienteList extends EntityQuery<Cliente> {
 
 	private static final String EJBQL = "select cliente from Cliente cliente";
 
-	private static final String[] RESTRICTIONS = {};
+	private static final String[] RESTRICTIONS = {
+		"cliente.persona.tipoDoc.idTipoDoc = #{clienteList.cliente.persona.tipoDoc.idTipoDoc}",
+		"lower(cliente.persona.numDoc) like lower(concat(#{clienteList.cliente.persona.numDoc},'%'))",
+	};
 
 	private Cliente cliente = new Cliente();
 

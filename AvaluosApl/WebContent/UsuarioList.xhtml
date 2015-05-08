@@ -14,14 +14,44 @@
 
         <rich:simpleTogglePanel label="Busqueda" switchType="ajax">
 
+			<h:panelGrid columns="2">
+				<f:facet name="header">
+			         <h:outputText value="Documento"/>
+			      </f:facet>  
+			      
+			      <s:decorate id="tipoDocField" template="layout/display.xhtml">
+	                <ui:define name="label">Tipo</ui:define>
+	                <h:selectOneMenu id="tipoDoc" 
+			                value="#{usuarioList.usuario.persona.tipoDoc.idTipoDoc}">
+			                <s:selectItems value="#{tipoDocList.resultList}"
+			                  var="_tipo" itemValue="#{_tipo.idTipoDoc}" label="#{_tipo.descripcion}" 
+			                  noSelectionLabel="--SELECCIONAR--" />
+			              </h:selectOneMenu>
+	            </s:decorate>
+			
+	            <s:decorate template="layout/display.xhtml">
+	                <ui:define name="label">Número</ui:define>
+	                <h:inputText id="numDoc" value="#{usuarioList.usuario.persona.numDoc}" />
+	                <ui:param name="next" value="true" />
+	            </s:decorate>
+            </h:panelGrid>
+			
+			<h:panelGrid columns="2">
+	            <s:decorate template="layout/display.xhtml">
+	                <ui:define name="label">Nombres</ui:define>
+	                <h:inputText id="nombres" value="#{usuarioList.usuario.persona.nombres}" size="30"/>
+	            </s:decorate>
+	
+	            <s:decorate template="layout/display.xhtml">
+	                <ui:define name="label">Apellidos</ui:define>
+	                <ui:param name="next" value="true" />
+	                <h:inputText id="apellidos" value="#{usuarioList.usuario.persona.apellidos}" size="30"/>
+	            </s:decorate>
+	        </h:panelGrid>
+
             <s:decorate template="layout/display.xhtml">
                 <ui:define name="label">Login</ui:define>
                 <h:inputText id="login" value="#{usuarioList.usuario.login}"/>
-            </s:decorate>
-
-            <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Clave</ui:define>
-                <h:inputText id="clave" value="#{usuarioList.usuario.clave}"/>
             </s:decorate>
 
             <s:decorate template="layout/display.xhtml">
