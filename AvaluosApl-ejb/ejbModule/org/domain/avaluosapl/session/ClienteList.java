@@ -17,8 +17,12 @@ public class ClienteList extends EntityQuery<Cliente> {
 	};
 
 	private Cliente cliente = new Cliente();
+	private String nit;
 
 	public ClienteList() {
+		Persona persona = new Persona();
+		persona.setTipoDoc(new TipoDoc());
+		cliente.setPersona(persona);
 		setEjbql(EJBQL);
 		setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));
 		setMaxResults(25);
@@ -42,5 +46,13 @@ public class ClienteList extends EntityQuery<Cliente> {
 			return null;
 		}
 		return usuarios.get(0);
+	}
+
+	public void setNit(String nit) {
+		this.nit = nit;
+	}
+
+	public String getNit() {
+		return nit;
 	}
 }

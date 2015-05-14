@@ -24,6 +24,9 @@ public class UsuarioList extends EntityQuery<Usuario> {
 	private Usuario usuario = new Usuario();
 
 	public UsuarioList() {
+		Persona persona = new Persona();
+		persona.setTipoDoc(new TipoDoc());
+		usuario.setPersona(persona);
 		setEjbql(EJBQL);
 		setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));
 		setMaxResults(25);
