@@ -113,6 +113,7 @@
 		                <ui:define name="label">Valor numerico</ui:define>
 		                <h:inputText id="valorNum" required="true"
 		                          value="#{tangibleHome.instance.valorNum}">
+		                          <f:convertNumber pattern="###,###"/>
 		                    <a:support event="onblur" reRender="valorNumField" bypassUpdates="true" ajaxSingle="true"/>
 		                </h:inputText>
 		            </s:decorate>

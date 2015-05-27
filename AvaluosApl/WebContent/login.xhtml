@@ -1,5 +1,7 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
     xmlns:s="http://jboss.com/products/seam/taglib"
     xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -14,9 +16,7 @@
 
         <rich:panel>
             <f:facet name="header">Autenticación</f:facet>
-
             <p>Por favor ingrese sus datos</p>
-
             <div class="dialog">
                 <h:panelGrid columns="2" rowClasses="prop" columnClasses="name,value">
                     <h:outputLabel for="username">Usuario</h:outputLabel>
@@ -30,7 +30,6 @@
                                           value="#{rememberMe.enabled}"/>
                 </h:panelGrid>
             </div>
-
         </rich:panel>
 
         <div class="actionButtons">

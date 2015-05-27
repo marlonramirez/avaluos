@@ -136,7 +136,9 @@
                     <ui:param name="propertyPath" value="avaluo.valorRazonable"/>
                 </ui:include>
             </f:facet>
-            <h:outputText value="#{_avaluo.valorRazonable}"/>
+            <h:outputText value="#{_avaluo.valorRazonable}">
+            	<f:convertNumber pattern="###,###"/>
+            </h:outputText>
         </h:column>
         <h:column>
             <f:facet name="header">

@@ -89,6 +89,7 @@
 	                <h:inputText id="valorRazonable"
 	                       required="true"
 	                          value="#{avaluoHome.instance.valorRazonable}">
+	                          <f:convertNumber pattern="###,###"/>
 	                    <a:support event="onblur" reRender="valorRazonableField" bypassUpdates="true" ajaxSingle="true"/>
 	                </h:inputText>
 	            </s:decorate>

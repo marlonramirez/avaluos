@@ -26,7 +26,7 @@
         max-request-size="1000000" 
         url-pattern="*.seam"/>
    
-   <document:document-store use-extensions="true"/>
+  <!-- <document:document-store use-extensions="true"/> -->
 
    <core:manager concurrent-request-timeout="500"
                  conversation-timeout="120000"
