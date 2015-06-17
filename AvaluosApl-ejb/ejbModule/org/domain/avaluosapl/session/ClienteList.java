@@ -9,10 +9,11 @@ import java.util.List;
 @Name("clienteList")
 public class ClienteList extends EntityQuery<Cliente> {
 
-	private static final String EJBQL = "select cliente from Cliente cliente";
+	private static final String EJBQL = "select cliente from Cliente cliente, PersonaJuridica pj";
 
 	private static final String[] RESTRICTIONS = {
 		"cliente.persona.tipoDoc.idTipoDoc = #{clienteList.cliente.persona.tipoDoc.idTipoDoc}",
+		"cliente = pj.cliente AND pj.nit like lower(concat(#{clienteList.nit},'%'))",
 		"lower(cliente.persona.numDoc) like lower(concat(#{clienteList.cliente.persona.numDoc},'%'))",
 	};
 
@@ -39,7 +40,7 @@ public class ClienteList extends EntityQuery<Cliente> {
 	}
 	
 	public Cliente getByPersona(Persona persona) {
-		String ejbql = EJBQL+" WHERE persona.idPersona = ?";
+		String ejbql = EJBQL+" WHERE cliente.persona.idPersona = ?";
 		List<Cliente> usuarios = getEntityManager().createQuery(ejbql)
 								.setParameter(1, persona.getIdPersona()).getResultList();
 		if(usuarios.isEmpty()) {
